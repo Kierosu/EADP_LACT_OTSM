@@ -12,5 +12,9 @@ public partial class _Default : System.Web.UI.Page
 
     }
 
- 
+    protected void Menu1_MenuItemClick(object sender, MenuEventArgs e)
+    {
+        int index = Int32.Parse(e.Item.Value);
+        MultiView1.ActiveViewIndex = index;
+    }
 }
