@@ -3,8 +3,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <div>
-        
+    <div style="height: 684px">
+        <div style="border-color:black; width:390px; height: 305px; position:center;">
+
+        </div>
     </div>
 </asp:Content>
 
