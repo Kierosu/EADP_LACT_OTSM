@@ -16,8 +16,8 @@ public partial class MasterPage : System.Web.UI.MasterPage
         
     }
 
-    protected void ripple1_Click(object sender, EventArgs e)
+    protected void ripple1_Click1(object sender, EventArgs e)
     {
-         
+        Response.Redirect("Login.aspx");
     }
 }

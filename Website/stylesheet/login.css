@@ -1,0 +1,45 @@
+﻿/* Style the tab */
+.navbarTab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.navbarTab .tablinks {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.navbarTab .tablinks:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.navbarTab .active {
+  background-color: #ccc;
+}
+
+.btnLogin{
+    position:absolute; 
+    top: 245px; 
+    left: 102px; 
+    width: 304px; 
+    height: 36px;
+    text-align: center;
+    transition: all 0.5s linear 0s !important;
+    border: 3px solid #357ebd;
+    border-radius: 4px;
+    background-color: white;
+}
+.btnLogin:hover{
+    background-color: #428bca;
+    color: white;
+    cursor: pointer;
+}

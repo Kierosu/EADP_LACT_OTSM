@@ -6,6 +6,7 @@
 <head runat="server">
     <title></title>
     <link href="stylesheet/masterpage.css" rel="stylesheet" />
+
     <asp:ContentPlaceHolder id="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -30,7 +31,7 @@
                <button class="ripple" id="ripple">Login</button>  -->
                
                 <asp:Button ID="search" runat="server" Text="Search"  OnClick="search_Click"/>
-                <asp:Button ID="ripple1" runat="server" Text="Login"/>
+                <asp:Button ID="ripple1" runat="server" Text="Login" OnClick="ripple1_Click1"/>
                  
                
             </div>
