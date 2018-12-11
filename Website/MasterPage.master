@@ -31,8 +31,7 @@
                <button class="ripple" id="ripple">Login</button>  -->
                
                 <asp:Button ID="search" runat="server" Text="Search"  OnClick="search_Click"/>
-                <asp:Button ID="ripple1" runat="server" Text="Login" OnClick="ripple1_Click1"/>
-                 
+                <asp:Button ID="ripple1" runat="server" Text="Login" OnClick="ripple1_Click1"/>     
                
             </div>
              

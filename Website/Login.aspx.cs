@@ -14,7 +14,7 @@ public partial class Login : System.Web.UI.Page
 
     protected void btnStudent_Click(object sender, EventArgs e)
     {
-        lblMessage.Text = "Use your admin number as username";
+        lblMessage.Text = "Use your admin number as username and your myNYP Portal password";
         btnStudent.CssClass = "tablinks active";
         btnStaff.CssClass = "tablinks";
         btnAdmin.CssClass = "tablinks";
@@ -22,7 +22,7 @@ public partial class Login : System.Web.UI.Page
 
     protected void btnStaff_Click(object sender, EventArgs e)
     {
-        lblMessage.Text = "Use your staff number as username";
+        lblMessage.Text = "Use your staff ID as username and your NYP's email password";
         btnStudent.CssClass = "tablinks";
         btnStaff.CssClass = "tablinks active";
         btnAdmin.CssClass = "tablinks";
