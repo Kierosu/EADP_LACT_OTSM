@@ -22,7 +22,7 @@
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Trips</a></li>
                 <li><a href="#">View Interview</a></li>
-                <li><a href="#">Statistics</a></li>
+                <li><a href="http://localhost:49423/Homepage.aspx">Statistics</a></li>
                 </ul> 
                 
                 <asp:TextBox ID="accordion_search_bar" runat="server" Width="315px"></asp:TextBox>
