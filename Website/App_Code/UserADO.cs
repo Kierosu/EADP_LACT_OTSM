@@ -29,7 +29,7 @@ namespace LACTWebsite
 
             da.Fill(ds, "userTable");
             int noOfRow = ds.Tables["userTable"].Rows.Count;
-            if (rec_cnt > 0)
+            if (noOfRow > 0)
             {
 
             }
