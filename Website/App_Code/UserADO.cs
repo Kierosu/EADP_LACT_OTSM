@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
 using System.Web;
 
@@ -29,7 +28,7 @@ namespace LACTWebsite
 
             da.Fill(ds, "userTable");
             int noOfRow = ds.Tables["userTable"].Rows.Count;
-            if (rec_cnt > 0)
+            if (noOfRow > 0)
             {
 
             }
