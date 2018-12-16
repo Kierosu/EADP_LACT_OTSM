@@ -6,78 +6,177 @@
 <head runat="server">
     <title></title>
     <link href="stylesheet/masterpage.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <!-- Bootstrap core CSS -->
+  <link href="Content/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Material Design Bootstrap -->
+  <link href="Content/mdb.min.css" rel="stylesheet"/>
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script src="Scripts/jquery-3.3.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script src="Scripts/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script src="Scripts/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script src="Scripts/mdb.min.js"></script>
+  <!--/.Double navigation-->
+  <style>
+    body {
+        padding-top: 100px;
+    }
+    @media (max-width: 979px) {
+    body {
+        padding-top: 0px;
+        }
+    }
+  </style>
 
     <asp:ContentPlaceHolder id="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
-<body>
-    <form id="form1" runat="server">
-    <!-- nav bar -->
-    <header>
-    <div class="hold">
-        <div class="header">
-            <div class="container">
-                
-                <ul class="nav">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Trips</a></li>
-                <li><a href="#">View Interview</a></li>
-                <li><a href="#">Statistics</a></li>
-                </ul> 
-                
-                <asp:TextBox ID="accordion_search_bar" runat="server" Width="315px"></asp:TextBox>
-                 
-               <!--<button class="ripple" id="search">🔍</button> 
-               <button class="ripple" id="ripple">Login</button>  -->
-               
-                <asp:Button ID="search" runat="server" Text="Search"  OnClick="search_Click"/>
-                <asp:Button ID="ripple1" runat="server" Text="Login" OnClick="ripple1_Click1"/>     
-               
-            </div>
-             
-       </div>
+<!-- nav bar -->
+    <body>
+
+  <!--Double navigation-->
+  <header>
+
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark cyan darken-4 scrolling-navbar">
+	<a class="navbar-brand" href="#">
+    <img src="img/lactLogo.PNG" height="55" alt="mdb logo"/>
+  </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Trips </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">View Interview </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Statistics </a>
+        </li>
+      </ul>
+	  <form class="form-inline my-2 my-lg-0 ml-auto">
+		<input class="form-control" type="search" placeholder="Search" aria-label="Search">
+		<button class="btn btn-outline-white btn-md my-2 my-sm-0 ml-3" type="submit">Search</button>
+	  </form>
+
+      <ul class="navbar-nav nav-flex-icons">
+	   <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-user"></i> <span class="clearfix d-none d-sm-inline-block">Account</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">My Profile</a>
+            <a class="dropdown-item" href="#">Log Out</a>
+          </div>
+        </li>
+      </ul>
     </div>
-         
-    </header>
-    <!--nav bar end-->
+  </nav>
+</header>
+<form runat="server">
     <div>
         <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
         
         </asp:ContentPlaceHolder>
     </div>
-    <!--footer -->
-      <div class="section">
-  <div class="footer">
-    <div class="container white">
-      <div class="col four left">
-        <h1>Heading 1 </h1>
-        <p>p1</p>
-        <p>p2</p>
-        <p>p3</p>
+</form>
+
+<!-- Footer -->
+<footer class="page-footer font-small cyan darken-4 pt-4">
+
+    <!-- Footer Links -->
+    <div class="container-fluid text-center text-md-left">
+
+      <!-- Grid row -->
+      <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-md-6 mt-md-0 mt-3">
+
+          <!-- Content -->
+          <h5 class="text-uppercase">Footer Content</h5>
+          <p>Here you can use rows and columns here to organize your footer content.</p>
+
+        </div>
+        <!-- Grid column -->
+
+        <hr class="clearfix w-100 d-md-none pb-3">
+
+        <!-- Grid column -->
+        <div class="col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h5 class="text-uppercase">Links</h5>
+
+            <ul class="list-unstyled">
+              <li>
+                <a href="#!">Link 1</a>
+              </li>
+              <li>
+                <a href="#!">Link 2</a>
+              </li>
+              <li>
+                <a href="#!">Link 3</a>
+              </li>
+              <li>
+                <a href="#!">Link 4</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h5 class="text-uppercase">Links</h5>
+
+            <ul class="list-unstyled">
+              <li>
+                <a href="#!">Link 1</a>
+              </li>
+              <li>
+                <a href="#!">Link 2</a>
+              </li>
+              <li>
+                <a href="#!">Link 3</a>
+              </li>
+              <li>
+                <a href="#!">Link 4</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
       </div>
-      <div class="col four left">
-        <h1>Heading 2 </h1>
-        <p>p1</p>
-        <p>p2</p>
-        <p>p3</p>
-      </div>
-      <div class="col four left">
-        <h1>Heading 3 </h1>
-        <p>p1</p>
-        <p>p2</p>
-        <p>p3</p>
-      </div>
-      <div class="col four left">
-        <h1>Heading 4 </h1>
-        <p>p1</p>
-        <p>p2</p>
-        <p><a href="http://www.google.com.sg">Google</a> or <a href="mailto:someone@example.com">Email me</a>.</p>
-      </div>
-      <div class="group"></div>
+      <!-- Grid row -->
+
     </div>
-  </div>
-</div>
-    <!-- footer end-->
-    </form>
+    <!-- Footer Links -->
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2018 Copyright:
+      <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
+    </div>
+    <!-- Copyright -->
+
+  </footer>
+  <!-- Footer -->
 </body>
+    
 </html>
