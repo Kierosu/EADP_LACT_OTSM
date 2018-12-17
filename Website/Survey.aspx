@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masterpage.master" AutoEventWireup="true" CodeFile="Survey.aspx.cs" Inherits="Default2" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Masterpage.master" AutoEventWireup="true" CodeFile="Survey.aspx.cs" Inherits="Default2" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
@@ -11,7 +11,7 @@
             width: 414px;
         }
         .auto-style2 {
-            width: 158px;
+            width: 11px;
         }
         .Star {
             background-image: url(images/Star.gif);
@@ -45,9 +45,16 @@
             font-size: 22px;
             float: right;
             width: 89px;
-        }
+        }                   
+        .listbox{    
+            border-top-style: none;
+	        border-right-style: none;
+	        border-left-style: none;
+	        border-bottom-style: none; 
+            overflow:hidden;
+                }
     </style>
-     
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <h3 class="title"style="background-color: black; color: #FFFFFF;">NYP Trip Survey</h3>
@@ -101,10 +108,25 @@
             
             </tr>
             <tr>
-                <td class="auto-style2" colspan="1">Mobile Contact : 
-                    </td>
+                <td class="auto-style2" colspan="1">Favourite aspect of the trip: </td>
                 <td class="auto-style1">
-                    <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                    <a>Please rate the aspect as in 1 being your most favourite and 5 being the least favourite.</a><asp:Panel ID="Panel1" runat="server">
+                         
+                        <asp:ListBox CssClass="listbox" ID="ListBox1" runat="server" Rows="6" ToolTip="List of aspects " Font-Italic="True">
+                        <asp:ListItem Value="1">Learning</asp:ListItem>
+                        <asp:ListItem Value="2">Sightseeing</asp:ListItem>
+                        <asp:ListItem Value="3">Shopping</asp:ListItem>
+                        <asp:ListItem Value="4">Culture</asp:ListItem>
+                        <asp:ListItem Value="5">Meals</asp:ListItem>
+                        <asp:ListItem Value="6">Hotel</asp:ListItem>
+                    </asp:ListBox> 
+
+                    <asp:Button ID="ButtonRemove" runat="server" OnClick="ButtonRemove_Click"  Text="&lt;" CausesValidation="False" ToolTip="Click to remove an aspect from your list" />
+                    <asp:Button ID="ButtonEnter" runat="server" OnClick="ButtonEnter_Click"  Text="&gt;" CausesValidation="False" ToolTip="Click to add an aspect to your list" /> 
+
+                    <asp:ListBox CssClass="listbox" ID="ListBox2" runat="server" BackColor="White" Rows="6" ToolTip="Your order of aspects"></asp:ListBox>
+                    </asp:Panel>
+                     
                    </td>
             
             </tr>
@@ -112,7 +134,7 @@
             <tr>
                 <td class="auto-style2" colspan="1"></td>
                 <td class="auto-style1">
-                    <asp:Button ID="ButtonClear" runat="server" Text="Clear" OnClick="ButtonClear_Click" />
+                    <asp:Button ID="ButtonClear" runat="server" Text="Clear" OnClick="ButtonClear_Click" CausesValidation="False" />
                     <asp:Button ID="ButtonSubmit" runat="server" Text="Submit" CssClass="auto-style3" OnClick="ButtonSubmit_Click" />
                    </td>
             
@@ -129,11 +151,10 @@
     <p>
 &nbsp;&nbsp;&nbsp;
     </p>
-        <asp:Panel ID="panelChoice" runat="server" Visible="False">
+        <asp:Panel ID="panelChoice" runat="server">
             Thank you doing the survey:<br />
             <asp:Label ID="Label1" runat="server"></asp:Label>
             <br />
         </asp:Panel>
 
 </asp:Content>
-
