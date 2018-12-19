@@ -32,10 +32,11 @@ public partial class Default2 : System.Web.UI.Page
             //variables to get all the data needed to put in database
             String review = textBoxComment.Text.ToString();
             String rating = Rating1.CurrentRating.ToString();
-            foreach (ListItem item in ListBox2.Items)
-            {
-                orderofaspects += item.ToString();
-            }
+            //User's order of aspects are stored in database via index in one whole string.
+                for (int i =0; i < 5; i++) {  
+                orderofaspects += ListBox2.Items[i].ToString() + "," ;
+                }
+                orderofaspects += ListBox2.Items[5].ToString();
             StringBuilder sqlCommand = new StringBuilder();
             sqlCommand.AppendLine("INSERT INTO TableStats (tdRating, tdReview, tdAspect)");
             sqlCommand.AppendLine("VALUES (@paratdRating, @paratdReview, @paratdAspect)");
