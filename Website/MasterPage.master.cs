@@ -8,16 +8,25 @@ using System.Web.UI.WebControls;
 public partial class MasterPage : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
-    { 
+    {
+        if(Session["ssFullName"] != null)
+        {
+            accButton.Style.Add("display", "inline-block");
+            loginBurron.Style.Add("display", "none");
+            txtAcc.InnerText = Session["ssFullName"].ToString();
+        }
+        else
+        {
+            accButton.Style.Add("display", "none");
+            loginBurron.Style.Add("display", "inline-block");
+        }
+        logoutButton.ServerClick += new EventHandler(logoutButton_Click);
+
     }
 
-    protected void search_Click(object sender, EventArgs e)
+    protected void logoutButton_Click(object sender, EventArgs e)
     {
-        
-    }
-
-    protected void ripple1_Click1(object sender, EventArgs e)
-    {
-        Response.Redirect("Login.aspx");
+        Session.Clear();
+        Response.Redirect("Homepage.aspx");
     }
 }
