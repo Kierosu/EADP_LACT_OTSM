@@ -121,7 +121,7 @@
             </div>
             <div>
                 <p>
-                    Using the 6 helping words in the following box, order the aspects as in 1st position being the best aspect and 6th being the worst.
+                    Using the 6 helping words in the following box, please order the aspects as in the 1st being your LEAST FAVOURITE aspect and 6th being your MOST FAVOURITE aspect.
                 </p>
                 <br />
                 <p>
@@ -129,8 +129,7 @@
                 </p>
             </div>
         </div></td>
-                <td class="auto-style1">
-                    <a>Please rate the aspect as in 1 being your most favourite and 5 being the least favourite.</a><asp:Panel ID="Panel1" runat="server">
+                <td class="auto-style1"><asp:Panel ID="Panel1" runat="server">
                          
                         <asp:ListBox CssClass="listbox" ID="ListBox1" runat="server" Rows="6" ToolTip="List of aspects " Font-Italic="True">
                         <asp:ListItem Value="1">Learning</asp:ListItem>
