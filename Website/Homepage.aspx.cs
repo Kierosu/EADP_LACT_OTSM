@@ -14,7 +14,22 @@ public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        ButtonBlog.Enabled = false;
+        ButtonBlog.Enabled = false;    
+    }
+    protected override void OnPreInit(EventArgs e)
+    {
+        base.OnPreInit(e);
+        if (Session["ssRole"] != null)
+        {
+            if (Session["ssRole"].ToString() == "staff")
+            {
+                this.MasterPageFile = "~/MasterPageStaff.master";
+            }
+            else if (Session["ssRole"].ToString() == "admin")
+            {
+                this.MasterPageFile = "~/MasterPageAdmin.master";
+            }
+        }      
     }
 
     protected void ButtonDetails_Click(object sender, EventArgs e)
