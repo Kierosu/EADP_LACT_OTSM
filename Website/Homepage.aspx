@@ -62,9 +62,31 @@
                                 </chartareas>
                             </asp:Chart>
                                 
-                             <asp:Label ID="LabelComments" runat="server" CssClass="comment"></asp:Label>
-                             <asp:Label ID="LabelAspects" runat="server"  CssClass="comment"></asp:Label>
-                                </div>
+                                  <asp:Label ID="LabelComments" runat="server" CssClass="comment" Visible="False"></asp:Label>
+                                  <asp:Label ID="LabelAspects" runat="server" CssClass="comment" Visible="False"></asp:Label>
+                                  <h4 style="text-decoration:underline;">Comments:</h4>
+            <asp:Repeater ID="Repeater1" runat="server">
+                <ItemTemplate>
+                    <div class="commentbox">
+                        <b>
+                            <asp:Label ID="Label1" runat="server" Text='<%#Eval("tdRating") %>'>'></asp:Label></b>&nbsp;(<asp:Label ID="Label2" runat="server" Text='<%#Eval("tdReview") %>'>'></asp:Label>):<br />
+                        <asp:Label ID="Label3" runat="server" Text='<%#Eval("tdAspect") %>'></asp:Label><br />
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
+            <div style="overflow: hidden;">
+                <asp:Repeater ID="rptPaging" runat="server" OnItemCommand="rptPaging_ItemCommand">
+                    <ItemTemplate>
+                        <asp:LinkButton ID="btnPage"
+                            Style="padding: 8px; margin: 2px; background: #007acc; border: solid 1px blue; font: 8px;"
+                            CommandName="Page" CommandArgument="<%# Container.DataItem %>"
+                            runat="server" ForeColor="White" Font-Bold="True" CausesValidation="false"><%# Container.DataItem %>
+                        </asp:LinkButton>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </div>
+        </div>
+                                 
                         </asp:Panel>
                     </asp:View>
                 </asp:MultiView>
