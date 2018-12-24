@@ -64,6 +64,16 @@
                                 
                                   <asp:Label ID="LabelComments" runat="server" CssClass="comment" Visible="False"></asp:Label>
                                   <asp:Label ID="LabelAspects" runat="server" CssClass="comment" Visible="False"></asp:Label>
+                                  <asp:Chart ID="Chart2" runat="server" Palette="SemiTransparent">
+                                      <Series>
+                                          <asp:Series ChartType="Pie" Name="Series2">
+                                          </asp:Series>
+                                      </Series>
+                                      <ChartAreas>
+                                          <asp:ChartArea Name="ChartArea2">
+                                          </asp:ChartArea>
+                                      </ChartAreas>
+                                  </asp:Chart>
                                   <h4 style="text-decoration:underline;">Comments:</h4>
             <asp:Repeater ID="Repeater1" runat="server">
                 <ItemTemplate>
