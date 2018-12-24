@@ -79,21 +79,25 @@ public partial class _Default : System.Web.UI.Page
         string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
         SqlConnection myConn = new SqlConnection(DBConnect);
 
-        StringBuilder sqlCommand = new StringBuilder();
-        sqlCommand.AppendLine("Select tdRating, tdReview, tdAspect from TableStats;");
-        sqlCommand.AppendLine("Select Learning, Sightseeing, Shopping, Culture, Meals, Hotel from TableAspects;");
+        //Stringbuilder sqlcommand = new Stringbuilder();
+        //sqlcommand.appendline("select tdrating, tdreview, tdaspect from tablestats;");
+        //sqlcommand.appendline("select learning, sightseeing, shopping, culture, meals, hotel from tableaspects;");
+
+        //data adapter; 2 for 2 tables
         SqlDataAdapter da = new SqlDataAdapter("Select tdRating, tdReview, tdAspect from TableStats;", myConn);
         //get info from TableStats and TableAspects
         DataSet ds = new DataSet();
         da.Fill(ds, "TableStats");
         da = new SqlDataAdapter("Select Learning, Sightseeing, Shopping, Culture, Meals, Hotel from TableAspects;", myConn);
         da.Fill(ds, "TableAspects");
+        //count rows
         int count = ds.Tables["TableStats"].Rows.Count;
         int aspectcount = ds.Tables["TableAspects"].Rows.Count;
         LabelComments.Text = "Comments from students: " + "<br />";
         //print out all data
         for (int i = 0; i < count; i++)
         {
+            //BAR CHART
             DataRow row = ds.Tables["TableStats"].Rows[i];
             LabelComments.Text += "Student " + (i + 1) + ": " + row["tdRating"].ToString() + "/5. Comment: " + row["tdReview"] + "<br/>";
             series.Points.AddXY("Student " + (i + 1).ToString(), row["tdRating"]);
@@ -109,6 +113,7 @@ public partial class _Default : System.Web.UI.Page
             ButtonDetails.Enabled = true;
             aspectsList = "";
         }
+        //PIE CHART
         DataTable table = ds.Tables["TableAspects"];
         // Declare aspect object variable.
         object sumLearning;
