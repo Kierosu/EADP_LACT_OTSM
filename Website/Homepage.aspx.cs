@@ -22,6 +22,24 @@ public partial class _Default : System.Web.UI.Page
             fillData();
         }
     }
+<<<<<<< HEAD
+=======
+    protected override void OnPreInit(EventArgs e)
+    {
+        base.OnPreInit(e);
+        if (Session["ssRole"] != null)
+        {
+            if (Session["ssRole"].ToString() == "staff")
+            {
+                this.MasterPageFile = "~/MasterPageStaff.master";
+            }
+            else if (Session["ssRole"].ToString() == "admin")
+            {
+                this.MasterPageFile = "~/MasterPageAdmin.master";
+            }
+        }
+    }
+>>>>>>> 34672d01ea3719b68970a407059b550d740c8e0d
 
     private void fillData()
     {
@@ -78,11 +96,19 @@ public partial class _Default : System.Web.UI.Page
         //database connection
         string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
         SqlConnection myConn = new SqlConnection(DBConnect);
+<<<<<<< HEAD
 
         //Stringbuilder sqlcommand = new Stringbuilder();
         //sqlcommand.appendline("select tdrating, tdreview, tdaspect from tablestats;");
         //sqlcommand.appendline("select learning, sightseeing, shopping, culture, meals, hotel from tableaspects;");
 
+=======
+
+        //Stringbuilder sqlcommand = new Stringbuilder();
+        //sqlcommand.appendline("select tdrating, tdreview, tdaspect from tablestats;");
+        //sqlcommand.appendline("select learning, sightseeing, shopping, culture, meals, hotel from tableaspects;");
+
+>>>>>>> 34672d01ea3719b68970a407059b550d740c8e0d
         //data adapter; 2 for 2 tables
         SqlDataAdapter da = new SqlDataAdapter("Select tdRating, tdReview, tdAspect from TableStats;", myConn);
         //get info from TableStats and TableAspects
