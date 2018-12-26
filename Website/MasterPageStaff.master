@@ -77,7 +77,7 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" id="manualNoti" runat="server">Manual</a>
-            <a class="dropdown-item">Automatic</a>
+            <a class="dropdown-item" id="autoNoti" runat="server">Automatic</a>
           </div>
         </li>
         <li class="nav-item">

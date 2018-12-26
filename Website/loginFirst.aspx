@@ -1,6 +1,18 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="loginFirst.aspx.cs" Inherits="loginFirst" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <style>
+        @media (max-width: 980px) {
+            #divContain{
+                margin-top:13%;
+            }
+        }
+        @media (max-width: 650px) {
+            #divContain{
+                margin-top:22%;
+            }
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div id="divContain" style="margin-bottom:19.6%;" class="container">

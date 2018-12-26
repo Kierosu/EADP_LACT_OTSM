@@ -31,8 +31,8 @@
         </div>
         <div class="form-group row">
             <div class="col-lg-1"></div>
-            <asp:Button ID="btnSend" runat="server" Text="Send" Width="120px" CssClass="btn btn-outline-primary btn-rounded waves-effect col-lg-2"/>
-            <asp:Button ID="btnClear" runat="server" Text="Clear" Width="120px" CssClass="btn btn-outline-danger btn-rounded waves-effect col-lg-2"/>
+            <asp:Button ID="btnSend" runat="server" Text="Send" CssClass="btn btn-outline-primary btn-rounded waves-effect col-lg-2"/>
+            <asp:Button ID="btnClear" runat="server" Text="Clear" CssClass="btn btn-outline-danger btn-rounded waves-effect col-lg-2"/>
         </div>
     </div>
 </asp:Content>
