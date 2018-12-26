@@ -56,8 +56,16 @@
         <li class="nav-item active">
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Trips </a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <span class="clearfix d-none d-sm-inline-block" runat="server">Trips</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item">Study Trips</a>
+            <a class="dropdown-item">Immersion Trips</a>
+            <a class="dropdown-item">Internship</a>
+          </div>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">View Interview </a>
@@ -67,22 +75,32 @@
         </li>
       </ul>
 	  <form class="form-inline my-2 my-lg-0 ml-auto">
-		<input class="form-control" type="search" placeholder="Search" aria-label="Search">
+		<input class="form-control" type="search" placeholder="Search" aria-label="Search" runat="server" />
 		<button class="btn btn-outline-white btn-md my-2 my-sm-0 ml-3" type="submit">Search</button>
 	  </form>
 
-      <ul class="navbar-nav nav-flex-icons">
+      <ul class="navbar-nav nav-flex-icons" style="display:none;" id="accButton" runat="server">
 	   <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-user"></i> <span class="clearfix d-none d-sm-inline-block">Account</span>
+            <i class="fa fa-user"></i> <span class="clearfix d-none d-sm-inline-block" id="txtAcc" runat="server">Account</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="#">My Profile</a>
-            <a class="dropdown-item" href="#">Log Out</a>
+            <a class="dropdown-item" id="logoutButton" runat="server">Log Out</a>
           </div>
         </li>
       </ul>
+
+       <ul class="navbar-nav" id="loginBurron" runat="server">
+	    <li class="nav-item">
+          <a class="nav-link" href="Login.aspx">
+              <i class="fa fa-sign-in"></i>
+              <span class="clearfix d-none d-sm-inline-block" id="spanLogin" runat="server">Login</span>
+          </a>
+        </li>
+      </ul>
+
     </div>
   </nav>
 </header>

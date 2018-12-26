@@ -4,35 +4,37 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using LACTWebsite;
 
 public partial class Login : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if(Session["ssUsername"] != null)
+        {
+            Response.Redirect("Homepage.aspx");
+        }   
     }
 
-    protected void btnStudent_Click(object sender, EventArgs e)
-    {
-        lblMessage.Text = "Use your admin number as username and your myNYP Portal password";
-        btnStudent.CssClass = "tablinks active";
-        btnStaff.CssClass = "tablinks";
-        btnAdmin.CssClass = "tablinks";
-    }
 
-    protected void btnStaff_Click(object sender, EventArgs e)
+    protected void btnLogin_Click(object sender, EventArgs e)
     {
-        lblMessage.Text = "Use your staff ID as username and your NYP's email password";
-        btnStudent.CssClass = "tablinks";
-        btnStaff.CssClass = "tablinks active";
-        btnAdmin.CssClass = "tablinks";
-    }
+        lblMsg.Visible = false;
+        User loginUser = new User();
+        UserADO userADO = new UserADO();
 
-    protected void btnAdmin_Click(object sender, EventArgs e)
-    {
-        lblMessage.Text = "Use your name (without space and as written in your IC) as username";
-        btnStudent.CssClass = "tablinks";
-        btnStaff.CssClass = "tablinks";
-        btnAdmin.CssClass = "tablinks active";
+        loginUser = userADO.Login(tbUsername.Text, tbPass.Text);
+        if(loginUser == null)
+        {
+            lblMsg.Visible = true;
+            lblMsg.Text = "Wrong username or password!";
+        }
+        else
+        {
+            Session["ssUsername"] = loginUser.userUsername;
+            Session["ssRole"] = loginUser.userRole;
+            Session["ssFullName"] = loginUser.userFullName;
+            Response.Redirect("Homepage.aspx");
+        }
     }
 }

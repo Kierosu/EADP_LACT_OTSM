@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
 using System.Web;
 
@@ -12,7 +11,7 @@ namespace LACTWebsite
     public class UserADO
     {
         string dbConnStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
-        public void Login(string username, string password)
+        public User Login(string username, string password)
         {
             SqlConnection userConn = new SqlConnection(dbConnStr);
 
@@ -20,23 +19,31 @@ namespace LACTWebsite
             DataSet ds = new DataSet();
 
             StringBuilder sqlQuery = new StringBuilder();
-            sqlQuery.AppendLine("SELECT @paraUsername, @paraPassword");
-            sqlQuery.AppendLine("FROM User");
+            sqlQuery.AppendLine("SELECT Username, Password, Role, FullName");
+            sqlQuery.AppendLine("FROM Users");
+            sqlQuery.AppendLine("WHERE Username = @paraUsername AND Password = @paraPassword");
 
             da = new SqlDataAdapter(sqlQuery.ToString(), userConn);
             da.SelectCommand.Parameters.AddWithValue("paraUsername", username);
             da.SelectCommand.Parameters.AddWithValue("paraPassword", password);
 
+            User loginUser = new User();
+
             da.Fill(ds, "userTable");
             int noOfRow = ds.Tables["userTable"].Rows.Count;
             if (noOfRow > 0)
             {
-
+                DataRow row = ds.Tables["userTable"].Rows[0];
+                loginUser.userUsername = row["Username"].ToString();
+                loginUser.userPassword = row["Password"].ToString();
+                loginUser.userRole = row["Role"].ToString();
+                loginUser.userFullName = row["FullName"].ToString();
             }
             else
             {
-
+                loginUser = null;
             }
+            return loginUser;
         }
     }
 
