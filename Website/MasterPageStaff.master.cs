@@ -21,10 +21,15 @@ public partial class MasterPageStaff : System.Web.UI.MasterPage
             loginBurron.Style.Add("display", "inline-block");
         }
         logoutButton.ServerClick += new EventHandler(logoutButton_Click);
+        manualNoti.ServerClick += new EventHandler(manualNoti_Click);
     }
     protected void logoutButton_Click(object sender, EventArgs e)
     {
         Session.Clear();
         Response.Redirect("Homepage.aspx");
+    }
+    protected void manualNoti_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("ManualNotifications.aspx");
     }
 }

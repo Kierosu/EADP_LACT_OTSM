@@ -11,7 +11,7 @@ namespace LACTWebsite
     public class UserADO
     {
         string dbConnStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
-        public User Login(string username, string password)
+        public User Login(string username, string password, string role)
         {
             SqlConnection userConn = new SqlConnection(dbConnStr);
 
@@ -21,11 +21,12 @@ namespace LACTWebsite
             StringBuilder sqlQuery = new StringBuilder();
             sqlQuery.AppendLine("SELECT Username, Password, Role, FullName");
             sqlQuery.AppendLine("FROM Users");
-            sqlQuery.AppendLine("WHERE Username = @paraUsername AND Password = @paraPassword");
+            sqlQuery.AppendLine("WHERE Username = @paraUsername AND Password = @paraPassword AND Role = @paraRole");
 
             da = new SqlDataAdapter(sqlQuery.ToString(), userConn);
             da.SelectCommand.Parameters.AddWithValue("paraUsername", username);
             da.SelectCommand.Parameters.AddWithValue("paraPassword", password);
+            da.SelectCommand.Parameters.AddWithValue("paraRole", role);
 
             User loginUser = new User();
 
