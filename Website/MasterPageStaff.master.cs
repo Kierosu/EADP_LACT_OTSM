@@ -21,19 +21,15 @@ public partial class MasterPageStaff : System.Web.UI.MasterPage
             loginBurron.Style.Add("display", "inline-block");
         }
         logoutButton.ServerClick += new EventHandler(logoutButton_Click);
-<<<<<<< HEAD
-=======
         manualNoti.ServerClick += new EventHandler(manualNoti_Click);
         autoNoti.ServerClick += new EventHandler(autoNoti_Click);
->>>>>>> 34672d01ea3719b68970a407059b550d740c8e0d
     }
     protected void logoutButton_Click(object sender, EventArgs e)
     {
         Session.Clear();
         Response.Redirect("Homepage.aspx");
     }
-<<<<<<< HEAD
-=======
+
     protected void manualNoti_Click(object sender, EventArgs e)
     {
         Response.Redirect("ManualNotifications.aspx");
@@ -42,5 +38,4 @@ public partial class MasterPageStaff : System.Web.UI.MasterPage
     {
         Response.Redirect("AutoNotifications.aspx");
     }
->>>>>>> 34672d01ea3719b68970a407059b550d740c8e0d
 }

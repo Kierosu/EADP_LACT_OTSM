@@ -2,14 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-<<<<<<< HEAD
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using LACTWebsite;
-=======
 using LACTWebsite;
 using System.Web.UI.HtmlControls;
->>>>>>> 34672d01ea3719b68970a407059b550d740c8e0d
+
 
 public partial class Login : System.Web.UI.Page
 {
@@ -18,31 +13,6 @@ public partial class Login : System.Web.UI.Page
         if(Session["ssUsername"] != null)
         {
             Response.Redirect("Homepage.aspx");
-<<<<<<< HEAD
-        }   
-    }
-
-
-    protected void btnLogin_Click(object sender, EventArgs e)
-    {
-        lblMsg.Visible = false;
-        User loginUser = new User();
-        UserADO userADO = new UserADO();
-
-        loginUser = userADO.Login(tbUsername.Text, tbPass.Text);
-        if(loginUser == null)
-        {
-            lblMsg.Visible = true;
-            lblMsg.Text = "Wrong username or password!";
-        }
-        else
-        {
-            Session["ssUsername"] = loginUser.userUsername;
-            Session["ssRole"] = loginUser.userRole;
-            Session["ssFullName"] = loginUser.userFullName;
-            Response.Redirect("Homepage.aspx");
-        }
-=======
         }
     }
 
@@ -107,6 +77,5 @@ public partial class Login : System.Web.UI.Page
         adminTab.CssClass = "nav-link";
         lblMsg.Text = "Use your admin number as username and your myNYP Portal password";
         lblErr.Visible = false;
->>>>>>> 34672d01ea3719b68970a407059b550d740c8e0d
     }
 }
