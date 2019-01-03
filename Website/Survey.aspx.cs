@@ -21,13 +21,14 @@ public partial class Default2 : System.Web.UI.Page
     int aspCulture;
     int aspShopping;
     protected void Page_Load(object sender, EventArgs e)
-    { 
+    {
+        TextBox2.Text = Session["ssFullName"].ToString();
     }
 
     protected void ButtonSubmit_Click(object sender, EventArgs e)
     { 
         if (ListBox1.Items.Count > 0) {
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please order ALL of the aspects.')", true);
+            ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Please order all of the aspects');", true);
         } 
         else
         {
