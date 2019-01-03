@@ -73,6 +73,10 @@
                                           <asp:ChartArea Name="ChartArea2">
                                           </asp:ChartArea>
                                       </ChartAreas>
+                                      <Legends>
+                                          <asp:Legend Name="Legend1">
+                                          </asp:Legend>
+                                      </Legends>
                                   </asp:Chart>
                                   <h4 style="text-decoration:underline;">Comments:</h4>
             <asp:Repeater ID="Repeater1" runat="server">
