@@ -22,6 +22,7 @@ public partial class Default2 : System.Web.UI.Page
     int aspShopping;
     protected void Page_Load(object sender, EventArgs e)
     {
+        TextBox1.Text = Session["ssUsername"].ToString();
         TextBox2.Text = Session["ssFullName"].ToString();
     }
 
