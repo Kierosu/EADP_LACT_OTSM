@@ -1,5 +1,5 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Homepage.aspx.cs" Inherits="_Default" %>
-
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <%@ Register assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" namespace="System.Web.UI.DataVisualization.Charting" tagprefix="asp" %>
  
 
@@ -38,6 +38,8 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
+        </asp:ToolkitScriptManager>
     <table style="width:100%;">
         
         <tr>
@@ -49,9 +51,10 @@
                     <asp:View ID="ViewBlog" runat="server"></asp:View>
                     <asp:View ID="ViewStats" runat="server">
                         
+                        
                         <asp:Panel ID="Panel1" runat="server">
                               <div >
-                            <asp:Chart ID="Chart1" runat="server" Width="316px" CssClass="inlineBlock" Palette="Fire">
+                            <asp:Chart ID="Chart1" runat="server" Width="316px" CssClass="inlineBlock" Palette="Pastel">
                                 <series>
                                     <asp:Series Name="Series1">
                                     </asp:Series>
@@ -64,7 +67,7 @@
                                 
                                   <asp:Label ID="LabelComments" runat="server" CssClass="comment" Visible="False"></asp:Label>
                                   <asp:Label ID="LabelAspects" runat="server" CssClass="comment" Visible="False"></asp:Label>
-                                  <asp:Chart ID="Chart2" runat="server" Palette="SemiTransparent">
+                                  <asp:Chart ID="Chart2" runat="server" Palette="SemiTransparent" Width="400px">
                                       <Series>
                                           <asp:Series ChartType="Pie" Name="Series2">
                                           </asp:Series>
@@ -83,8 +86,8 @@
                 <ItemTemplate>
                     <div class="commentbox">
                         <b>
-                            <asp:Label ID="Label1" runat="server" Text='<%#Eval("tdRating") %>'>'></asp:Label></b>&nbsp;(<asp:Label ID="Label2" runat="server" Text='<%#Eval("tdReview") %>'>'></asp:Label>):<br />
-                        <asp:Label ID="Label3" runat="server" Text='<%#Eval("tdAspect") %>'></asp:Label><br />
+                            <asp:Label ID="Label1" runat="server" Text='<%#Eval("tdRating") %>'>'></asp:Label> stars {</b>&nbsp;<asp:Label ID="Label2" runat="server" Text='<%#Eval("tdReview") %>'>'></asp:Label> }<br />
+                        Order : <asp:Label ID="Label3" runat="server" Text='<%#Eval("tdAspect") %>'></asp:Label><br />
                     </div>
                 </ItemTemplate>
             </asp:Repeater>
