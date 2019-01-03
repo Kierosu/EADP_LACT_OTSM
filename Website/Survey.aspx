@@ -1,140 +1,298 @@
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+<%@ Page Title="" Language="C#" MasterPageFile="~/Masterpage.master" AutoEventWireup="true" CodeFile="Survey.aspx.cs" Inherits="Default2" %>
 
-public partial class Default2 : System.Web.UI.Page
-{
-    // selecteditemtext and selectedindex for listbox item transfer
-    string selectedItemText;
-    int SelectedIndex;
-    //6 variables for 6 aspects
-    int aspLearning;
-    int aspSightseeing;
-    int aspMeals;
-    int aspHotel;
-    int aspCulture;
-    int aspShopping;
-    protected void Page_Load(object sender, EventArgs e)
-    {
-        TextBox2.Text = Session["ssFullName"].ToString();
-    }
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
-    protected void ButtonSubmit_Click(object sender, EventArgs e)
-    { 
-        if (ListBox1.Items.Count > 0) {
-            ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Please order all of the aspects');", true);
-        } 
-        else
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <style type="text/css">
+        .TextboxComment {
+            resize:none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .txtbox
         {
-            //string to be stored in TableStats, array used for TableAspects
-            String orderofaspects = "";
-            string[] aspects = new string[6];
-            //*IMPORTANT* connect to database
-            string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
-            SqlConnection myConn = new SqlConnection(DBConnect);
-            //add new row to database (create new data)
-            SqlCommand sqlCmd = new SqlCommand();
-            int result = 0;
-            //variables to get all the data needed to put in database
-            String review = textBoxComment.Text.ToString();
-            String rating = Rating1.CurrentRating.ToString();
-            //User's order of aspects are stored in string 'orderofaspects' via index in one whole string from 1-5 
-            //and the 6th index is separate because no comma at the end
-            for (int i =0; i < 5; i++) {  
-              orderofaspects += ListBox2.Items[i].ToString() + "," ;
-              aspects[i] = ListBox2.Items[i].ToString();
-                                        }
-                orderofaspects += ListBox2.Items[5].ToString();
-            //each item is stored in 'aspects' array (including 6th element)
-            for (int a = 0; a < 6; a++)
-                {
-                    aspects[a] = ListBox2.Items[a].ToString();
-                }
-            // find index + 1 of each item in string for each column in TableAspects
-            for (int j = 0; j < 6; j++)
-            {
-                if (aspects[j] == "Learning")
-                {
-                    aspLearning = j + 1;
-                }
-                else if (aspects[j] == "Sightseeing")
-                {
-                    aspSightseeing = j + 1;
-                }
-                else if (aspects[j] == "Shopping")
-                {
-                    aspShopping = j + 1;
-                }
-                else if (aspects[j] == "Culture")
-                {
-                    aspCulture = j + 1;
-                }
-                else if (aspects[j] == "Meals")
-                {
-                    aspMeals = j + 1;
-                }
-                else if (aspects[j] == "Hotel")
-                {
-                    aspHotel = j + 1;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+        .auto-style1 {
+            width: 414px;
+        }
+        .auto-style2 {
+            width: 11px;
+        }
+        .Star {
+            background-image: url(images/Star.gif);
+            height: 17px;
+            width: 17px;
+        }
+
+        .WaitingStar {
+            background-image: url(images/WaitingStar.gif);
+            height: 17px;
+            width: 17px;
+        }
+
+        .FilledStar {
+            background-image: url(images/FilledStar.gif);
+            height: 17px;
+            width: 17px;
+        }
+        .auto-style3 {
+            border-style: none;
+            border-color: inherit;
+            border-width: medium;
+            position: relative;
+            top: -32px;
+            right: 269px;
+            outline: none;
+            cursor: pointer;
+            color: black;
+            padding: 0px 10px;
+            border-radius: 2px;
+            font-size: 22px;
+            float: right;
+            width: 89px;
+        }                   
+        .listbox {    
+            border-top-style: none;
+	        border-right-style: none;
+	        border-left-style: none;
+	        border-bottom-style: none; 
+            overflow:hidden;
+         }
+        .clearbtn {
+             background-color: #4CAF50;   
+             border: none;  
+             color: white; 
+             font-size: 14px;  
+             margin: 4px 2px;  
+             cursor: pointer; 
+        }
+    </style>
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <h3 class="title"style="background-color: black; color: #FFFFFF;">NYP Trip Survey</h3>
+    <div>
+    
+        <table style="width:100%;">
+            <tr>
+                <td class="auto-style2">Admin Number :
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBox1" ErrorMessage="Admin number is required" Text="*" Font-Underline="False" ForeColor="Red"
+                        >*</asp:RequiredFieldValidator>
+                </td>
+                <td>
+                    <asp:TextBox ID="TextBox1" runat="server" cssclass="txtbox"></asp:TextBox>
+                </td>
+         
+            </tr>
+            <tr>
+                <td class="auto-style2">Name : 
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Name is required" ControlToValidate="TextBox2" Font-Underline="False" ForeColor="Red">*</asp:RequiredFieldValidator>
+                </td>
+                <td class="auto-style5">
+                    <asp:TextBox ID="TextBox2" runat="server" cssclass="txtbox"></asp:TextBox>
+                </td>
+
+            </tr>
+            <tr>
+                <td class="auto-style2" colspan="1">Trip ID :&nbsp; 
+                    </td>
+                <td class="auto-style1">
+                    <asp:TextBox ID="TextBoxTripID" runat="server" cssclass="txtbox"></asp:TextBox>
+                </td>
+            
+            </tr>
+            <tr>
+                <td class="auto-style2" colspan="1">Rate the Trip:
+                </td>
+                <td class="auto-style1">
+                    <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
+        </asp:ToolkitScriptManager>
+                    <asp:Rating ID="Rating1" runat="server" AutoPostBack="true"
+            StarCssClass="Star" WaitingStarCssClass="WaitingStar" EmptyStarCssClass="Star"
+            FilledStarCssClass="FilledStar">
+        </asp:Rating>
+                    &nbsp;</td>
+            
+            </tr>
+            <tr>
+                <td class="auto-style2" colspan="1">Write a short review:</td>
+                <td class="auto-style1">
+                    <asp:TextBox runat="server" ID="textBoxComment" TextMode="MultiLine" Rows="10" Height="200px" Width="376px" CssClass="TextboxComment"/></td>
+            
+            </tr>
+            <tr>
+                <td class="auto-style2" colspan="1">Favourite aspect of the trip: <asp:Button ID="btnInfo" runat="server" OnClientClick="return false;" Text="[?]" BorderStyle="None" ForeColor="#000066"/>
+                    <!-- "Wire frame" div used to transition from the button to the info panel -->
+        <div id="flyout" style="display: none; overflow: hidden; z-index: 2; background-color: #FFFFFF; border: solid 1px #D0D0D0;"></div>
+        
+
+        <!-- Info panel to be displayed as a flyout when the button is clicked -->
+        <div id="info" style="display: none; width: 250px; z-index: 2; opacity: 0; filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0); font-size: 12px; border: solid 1px #CCCCCC; background-color: #FFFFFF; padding: 5px;">
+            <div id="btnCloseParent" style="float: right; opacity: 0; filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);">
+                <asp:LinkButton id="btnClose" runat="server" OnClientClick="return false;" Text="X" ToolTip="Close"
+                    Style="background-color: #666666; color: #FFFFFF; text-align: center; font-weight: bold; text-decoration: none; border: outset thin #FFFFFF; padding: 5px;" />
+            </div>
+            <div>
+                <p>
+                    Using the 6 helping words in the following box, please order the aspects as in the 1st being your LEAST FAVOURITE aspect and 6th being your MOST FAVOURITE aspect.
+                </p>
+                <br />
+                <p>
+                    Please choose wisely as your answers will be reflected in the trip details.
+                </p>
+            </div>
+        </div></td>
+                <td class="auto-style1"><asp:Panel ID="Panel1" runat="server">
+                         
+                        <asp:ListBox CssClass="listbox" ID="ListBox1" runat="server" Rows="6" ToolTip="List of aspects " Font-Italic="True">
+                        <asp:ListItem Value="1">Learning</asp:ListItem>
+                        <asp:ListItem Value="2">Sightseeing</asp:ListItem>
+                        <asp:ListItem Value="3">Shopping</asp:ListItem>
+                        <asp:ListItem Value="4">Culture</asp:ListItem>
+                        <asp:ListItem Value="5">Meals</asp:ListItem>
+                        <asp:ListItem Value="6">Hotel</asp:ListItem>
+                    </asp:ListBox> 
+
+                    <asp:Button ID="ButtonRemove" runat="server" OnClick="ButtonRemove_Click"  Text="&lt;" CausesValidation="False" ToolTip="Click to remove an aspect from your list" />
+                    <asp:Button ID="ButtonEnter" runat="server" OnClick="ButtonEnter_Click"  Text="&gt;" CausesValidation="False" ToolTip="Click to add an aspect to your list" /> 
+
+                    <asp:ListBox CssClass="listbox" ID="ListBox2" runat="server" BackColor="White" Rows="6" ToolTip="Your order of aspects"></asp:ListBox>
+                    </asp:Panel>
+                     
+                   </td>
+            
+            </tr>
+            
+            <tr>
+                <td class="auto-style2" colspan="1">Suggestions to improve trip?</td>
+                <td class="auto-style1">
+                    <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+                   </td>
+            
+            </tr>
+            <tr>
+                <td class="auto-style2" colspan="1"></td>
+                <td class="auto-style1">
+                    <asp:Button ID="ButtonClear" runat="server" Text="Clear All" CssClass="clearbtn" OnClick="ButtonClear_Click" />
+                    <asp:Button ID="ButtonSubmit" runat="server" Text="Submit" CssClass="auto-style3" OnClick="ButtonSubmit_Click" />
+                   </td>
+            
+            </tr>
+            <tr>
+                <td class="auto-style2"></td>
+                <td class="auto-style1">
+                    <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red" HeaderText="Please resolve data entry error" />
+                </td>
+            </tr>
+        </table>
+    
+    </div>
+    <p>
+&nbsp;&nbsp;&nbsp;
+    </p>
+        <asp:Panel ID="panelChoice" runat="server" Visible="False">
+            Thank you doing the survey:<br />
+            <asp:Label ID="Label1" runat="server"></asp:Label>
+            <br />
+        </asp:Panel>
+         
+        
+
+        <script type="text/javascript">
+            // Move an element directly on top of another element (and optionally
+            // make it the same size)
+            function Cover(bottom, top, ignoreSize) {
+                var location = Sys.UI.DomElement.getLocation(bottom);
+                top.style.position = 'absolute';
+                top.style.top = location.y + 'px';
+                top.style.left = location.x + 'px';
+                if (!ignoreSize) {
+                    top.style.height = bottom.offsetHeight + 'px';
+                    top.style.width = bottom.offsetWidth + 'px';
                 }
             }
-            StringBuilder sqlCommand = new StringBuilder();
-            //Query to insert survey info into TableStats
-            //2 queries for 2 tables
-            sqlCommand.AppendLine("INSERT INTO TableStats (tdRating, tdReview, tdAspect)");
-            sqlCommand.AppendLine("VALUES (@paratdRating, @paratdReview, @paratdAspect);");
-            sqlCommand.AppendLine("INSERT INTO TableAspects (Learning, Sightseeing, Shopping, Culture, Meals, Hotel)");
-            sqlCommand.AppendLine("VALUES (@paraLearning, @paraSightseeing, @paraShopping, @paraCulture, @paraMeals, @paraHotel);");
-            sqlCmd = new SqlCommand(sqlCommand.ToString(), myConn);
-            //add values in parameters (prevent sql injection)
-            sqlCmd.Parameters.AddWithValue("@paratdRating", rating);
-            sqlCmd.Parameters.AddWithValue("@paratdReview", review);
-            sqlCmd.Parameters.AddWithValue("@paratdAspect", orderofaspects);
-            sqlCmd.Parameters.AddWithValue("@paraLearning", aspLearning);
-            sqlCmd.Parameters.AddWithValue("@paraSightseeing", aspSightseeing);
-            sqlCmd.Parameters.AddWithValue("@paraShopping", aspShopping);
-            sqlCmd.Parameters.AddWithValue("@paraCulture", aspCulture);
-            sqlCmd.Parameters.AddWithValue("@paraMeals", aspMeals);
-            sqlCmd.Parameters.AddWithValue("@paraHotel", aspHotel);
-            //execute queries
-            myConn.Open();
-            result = sqlCmd.ExecuteNonQuery();
-
-            myConn.Close();
-        }
-         
-    }
-
-    protected void ButtonClear_Click(object sender, EventArgs e)
-    {
-         
-    }
-
-
-    protected void ButtonEnter_Click(object sender, EventArgs e)
-    {
-        selectedItemText = ListBox1.SelectedItem.ToString();
-        SelectedIndex = ListBox1.SelectedIndex;
-        ListBox2.Items.Add(selectedItemText);
-        ListBox1.Items.RemoveAt(ListBox1.Items.IndexOf(ListBox1.SelectedItem));
-       
-      
-    }
-
-    protected void ButtonRemove_Click(object sender, EventArgs e)
-    {
-        selectedItemText = ListBox2.SelectedItem.ToString();
-        SelectedIndex = ListBox2.SelectedIndex;
+        </script>
         
-        ListBox2.Items.RemoveAt(ListBox2.Items.IndexOf(ListBox2.SelectedItem));
-        ListBox1.Items.Add(selectedItemText);
 
-    }
+        <asp:animationextender id="OpenAnimation" runat="server" TargetControlID="btnInfo">
+            <Animations>
+                <OnClick>
+                    <Sequence>
+                        <%-- Disable the button so it can't be clicked again --%>
+                        <EnableAction Enabled="false" />
+                        
 
-}
+                        <%-- Position the wire frame on top of the button and show it --%>
+                        <ScriptAction Script="Cover($get('ctl00_SampleContent_btnInfo'), $get('flyout'));" />
+                        <StyleAction AnimationTarget="flyout" Attribute="display" Value="block"/>
+                        
+
+                        <%-- Move the wire frame from the button's bounds to the info panel's bounds --%>
+                        <Parallel AnimationTarget="flyout" Duration=".3" Fps="25">
+                            <Move Horizontal="150" Vertical="-50" />
+                            <Resize Width="260" Height="280" />
+                            <Color PropertyKey="backgroundColor" StartValue="#AAAAAA" EndValue="#FFFFFF" />
+                        </Parallel>
+                        
+
+                        <%-- Move the info panel on top of the wire frame, fade it in, and hide the frame --%>
+                        <ScriptAction Script="Cover($get('flyout'), $get('info'), true);" />
+                        <StyleAction AnimationTarget="info" Attribute="display" Value="block"/>
+                        <FadeIn AnimationTarget="info" Duration=".2"/>
+                        <StyleAction AnimationTarget="flyout" Attribute="display" Value="none"/>
+                        
+
+                        <%-- Flash the text/border red and fade in the "close" button --%>
+                        <Parallel AnimationTarget="info" Duration=".5">
+                            <Color PropertyKey="color" StartValue="#666666" EndValue="#FF0000" />
+                            <Color PropertyKey="borderColor" StartValue="#666666" EndValue="#FF0000" />
+                        </Parallel>
+                        <Parallel AnimationTarget="info" Duration=".5">
+                            <Color PropertyKey="color" StartValue="#FF0000" EndValue="#666666" />
+                            <Color PropertyKey="borderColor" StartValue="#FF0000" EndValue="#666666" />
+                            <FadeIn AnimationTarget="btnCloseParent" MaximumOpacity=".9" />
+                        </Parallel>
+                    </Sequence>
+                </OnClick>
+            </Animations>
+        </asp:animationextender>
+        <asp:animationextender id="CloseAnimation" runat="server" TargetControlID="btnClose">
+            <Animations>
+                <OnClick>
+                    <Sequence AnimationTarget="info">
+                        <%--  Shrink the info panel out of view --%>
+                        <StyleAction Attribute="overflow" Value="hidden"/>
+                        <Parallel Duration=".3" Fps="15">
+                            <Scale ScaleFactor="0.05" Center="true" ScaleFont="true" FontUnit="px" />
+                            <FadeOut />
+                        </Parallel>
+                        
+
+                        <%--  Reset the sample so it can be played again --%>
+                        <StyleAction Attribute="display" Value="none"/>
+                        <StyleAction Attribute="width" Value="250px"/>
+                        <StyleAction Attribute="height" Value=""/>
+                        <StyleAction Attribute="fontSize" Value="12px"/>
+                        <OpacityAction AnimationTarget="btnCloseParent" Opacity="0" />
+                        
+
+                        <%--  Enable the button so it can be played again --%>
+                        <EnableAction AnimationTarget="btnInfo" Enabled="true" />
+                    </Sequence>
+                </OnClick>
+                <OnMouseOver>
+                    <Color Duration=".2" PropertyKey="color" StartValue="#FFFFFF" EndValue="#FF0000" />
+                </OnMouseOver>
+                <OnMouseOut>
+                    <Color Duration=".2" PropertyKey="color" StartValue="#FF0000" EndValue="#FFFFFF" />
+                </OnMouseOut>
+             </Animations>
+        </asp:animationextender>
+ 
+
+</asp:Content>
