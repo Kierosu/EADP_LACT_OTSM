@@ -90,6 +90,10 @@ public partial class _Default : System.Web.UI.Page
         //charts variables
         Series series = Chart1.Series["Series1"];
         Series pieseries = Chart2.Series["Series2"];
+
+        //show percentage in pie chart
+        pieseries.Label = "#VAL";
+        pieseries.LegendText = "#VALX" + " (" + "#PERCENT{P1}" + ")";
         //database connection
         string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
         SqlConnection myConn = new SqlConnection(DBConnect);
@@ -109,6 +113,7 @@ public partial class _Default : System.Web.UI.Page
         int count = ds.Tables["TableStats"].Rows.Count;
         int aspectcount = ds.Tables["TableAspects"].Rows.Count;
         LabelComments.Text = "Comments from students: " + "<br />";
+        Chart1.ChartAreas[0].AxisY.Maximum = 5;
         //print out all data
         for (int i = 0; i < count; i++)
         {
@@ -145,12 +150,12 @@ public partial class _Default : System.Web.UI.Page
         sumMeals = table.Compute("Sum(Meals)", string.Empty);
         sumHotel = table.Compute("Sum(Hotel)", string.Empty);
         //add to pie chart respectively
-        pieseries.Points.AddXY("Learning - " + sumLearning.ToString(), sumLearning);
-        pieseries.Points.AddXY("Sightseeing - " + sumSightSeeing.ToString(), sumSightSeeing);
-        pieseries.Points.AddXY("Shopping - " + sumShopping.ToString(), sumShopping);
-        pieseries.Points.AddXY("Culture - " + sumCulture.ToString(), sumCulture);
-        pieseries.Points.AddXY("Meals - " + sumMeals.ToString(), sumMeals);
-        pieseries.Points.AddXY("Hotel - " + sumHotel.ToString(), sumHotel);
+        pieseries.Points.AddXY("Learning", sumLearning);
+        pieseries.Points.AddXY("Sightseeing", sumSightSeeing);
+        pieseries.Points.AddXY("Shopping", sumShopping);
+        pieseries.Points.AddXY("Culture", sumCulture);
+        pieseries.Points.AddXY("Meals", sumMeals);
+        pieseries.Points.AddXY("Hotel", sumHotel);
     }
 
 
