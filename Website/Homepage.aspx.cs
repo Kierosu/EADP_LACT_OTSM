@@ -10,18 +10,37 @@ using System.Configuration;
 using System.Text;
 using System.Web.UI.DataVisualization.Charting;
 using System.Collections;
+using System.IO;
 
 public partial class _Default : System.Web.UI.Page
 {
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        ButtonBlog.Enabled = false;
+         
         if (!IsPostBack)
         {
+            //ButtonBlog.Enabled = false;
+            lblMessage.Visible = false;
+            hyperlink.Visible = false;
+            LoadImages();
             fillData();
         }
     }
+
+    private void LoadImages()
+    {
+        string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+        using (SqlConnection con = new SqlConnection(DBConnect))
+        {
+            SqlCommand cmd = new SqlCommand("Select * from TableImages", con);
+            con.Open();
+            SqlDataReader rdr = cmd.ExecuteReader();
+            GridView1.DataSource = rdr;
+            GridView1.DataBind();
+        }
+    }
+
     protected override void OnPreInit(EventArgs e)
     {
         base.OnPreInit(e);
@@ -70,17 +89,38 @@ public partial class _Default : System.Web.UI.Page
         Repeater1.DataBind();
     }
 
+    public int PageNumber
+    {
+        get
+        {
+            if (ViewState["PageNumber"] != null)
+                return Convert.ToInt32(ViewState["PageNumber"]);
+            else
+                return 0;
+        }
+        set
+        {
+            ViewState["PageNumber"] = value;
+        }
+    }
+
+    protected void rptPaging_ItemCommand(object source, RepeaterCommandEventArgs e)
+    {
+        PageNumber = Convert.ToInt32(e.CommandArgument) - 1;
+        fillData();
+    }
+
     protected void ButtonDetails_Click(object sender, EventArgs e)
     {
         MultiViewTrip.ActiveViewIndex = 0;
         ButtonDetails.Enabled = false;
         ButtonStats.Enabled = true;
-        LabelComments.Text = "";
     }
 
     protected void ButtonBlog_Click(object sender, EventArgs e)
     {
         MultiViewTrip.ActiveViewIndex = 1;
+        LoadImages();
     }
 
     protected void ButtonStats_Click(object sender, EventArgs e)
@@ -112,24 +152,15 @@ public partial class _Default : System.Web.UI.Page
         //count rows
         int count = ds.Tables["TableStats"].Rows.Count;
         int aspectcount = ds.Tables["TableAspects"].Rows.Count;
-        LabelComments.Text = "Comments from students: " + "<br />";
         Chart1.ChartAreas[0].AxisY.Maximum = 5;
         //print out all data
         for (int i = 0; i < count; i++)
         {
             //BAR CHART
             DataRow row = ds.Tables["TableStats"].Rows[i];
-            LabelComments.Text += "Student " + (i + 1) + ": " + row["tdRating"].ToString() + "/5. Comment: " + row["tdReview"] + "<br/>";
             series.Points.AddXY("Student " + (i + 1).ToString(), row["tdRating"]);
             aspectsList += row["tdAspect"];
             string[] aspects = aspectsList.Split(',');
-            for (int j = 0; j < aspects.Length; j++)
-            {
-                LabelAspects.Text += " Aspect " + (j + 1) + ": " + aspects[j];
-
-            }
-            LabelAspects.Text += "<br/>";
-            ButtonStats.Enabled = false;
             ButtonDetails.Enabled = true;
             aspectsList = "";
         }
@@ -158,26 +189,68 @@ public partial class _Default : System.Web.UI.Page
         pieseries.Points.AddXY("Hotel", sumHotel);
     }
 
-
-
-    public int PageNumber
+    protected void btnUpload_Click(object sender, EventArgs e)
     {
-        get
+        HttpPostedFile postedFile = FileUpload1.PostedFile;
+        string fileName = Path.GetFileName(postedFile.FileName);
+        string fileExtension = Path.GetExtension(fileName);
+        int fileSize = postedFile.ContentLength;
+
+        if (fileExtension.ToLower() == ".jpg" || fileExtension.ToLower() == ".bmp" ||
+            fileExtension.ToLower() == ".gif" || fileExtension.ToLower() == ".png")
         {
-            if (ViewState["PageNumber"] != null)
-                return Convert.ToInt32(ViewState["PageNumber"]);
-            else
-                return 0;
-        }
-        set
-        {
-            ViewState["PageNumber"] = value;
+            Stream stream = postedFile.InputStream;
+            BinaryReader binaryReader = new BinaryReader(stream);
+            byte[] bytes = binaryReader.ReadBytes((int)stream.Length);
+
+            string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(DBConnect))
+            {
+                SqlCommand cmd = new SqlCommand("spUploadImage", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter paramName = new SqlParameter()
+                {
+                    ParameterName = "@Name",
+                    Value = fileName
+                };
+                cmd.Parameters.Add(paramName);
+                SqlParameter paramSize = new SqlParameter()
+                {
+                    ParameterName = "@Size",
+                    Value = fileSize
+                };
+                cmd.Parameters.Add(paramSize);
+                SqlParameter paramImagedata = new SqlParameter()
+                {
+                    ParameterName = "@Imagedata",
+                    Value = bytes
+                };
+                cmd.Parameters.Add(paramImagedata);
+                SqlParameter paramNewId = new SqlParameter()
+                {
+                    ParameterName = "@NewId",
+                    Value = -1,
+                    Direction = ParameterDirection.Output
+                };
+                cmd.Parameters.Add(paramNewId);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                lblMessage.Visible = true;
+                lblMessage.Text = "Upload successful";
+                lblMessage.ForeColor = System.Drawing.Color.Green;
+                hyperlink.Visible = true;
+
+                LoadImages();
+            }
+  
         }
     }
 
-    protected void rptPaging_ItemCommand(object source, RepeaterCommandEventArgs e)
+    protected void ButtonMore_Click(object sender, EventArgs e)
     {
-        PageNumber = Convert.ToInt32(e.CommandArgument) - 1;
-        fillData();
+
     }
 }
