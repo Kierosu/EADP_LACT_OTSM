@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="Trip Creation" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="TripCreation.aspx.cs" Inherits="TripCreation" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+
     <style type="text/css">
         .auto-style1 {
             margin-bottom: 0px;
@@ -27,6 +28,16 @@
             }
         }
     </style>
+    <script type="text/javascript">
+
+        function diplomaClientValidation(sender, arguments) {
+            if (arguments.Value == "DIT" || arguments.Value == "DBI" || arguments.Value == "DEI" || arguments.Value == "DBT" || arguments.Value == "DSF" || arguments.Value == "DBA" || arguments.Value == "DFI")
+                arguments.IsValid = true;
+            else
+                arguments.IsValid = false;
+
+        };
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <br />  <br />  <br />  <br />  <br />  
@@ -67,7 +78,7 @@
         <asp:ListItem Value="South Korea">South Korea</asp:ListItem>
         <asp:ListItem Value="Japan">Japan</asp:ListItem>
     </asp:DropDownList>
-        <asp:CompareValidator ID="CompareValidator2" runat="server" ControlToValidate="ddlCountry" ForeColor="Red" ValueToCompare="0" Operator="NotEqual">* Please Choose a Country</asp:CompareValidator>
+        <asp:CompareValidator ID="CompareValidator2" runat="server" ControlToValidate="ddlCountry" ForeColor="Red" ValueToCompare="0" Operator="NotEqual">* Please Choose a Country </asp:CompareValidator>
     <asp:Label ID="LabelLoc" runat="server" Text="Location : "></asp:Label>
     <asp:TextBox ID="tbLocation" runat="server" CssClass="auto-style1"></asp:TextBox>
         <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="tbLocation" ForeColor="Red">* Please fill in Trip Location</asp:RequiredFieldValidator>
@@ -75,6 +86,7 @@
     <br />
     <div class="form-group">
     <asp:Label ID="LabelDiploma" runat="server" Text="Diploma : "></asp:Label>
+        <asp:CustomValidator ID="CustomValidator1" runat="server" ControlToValidate="chkDiploma" ForeColor="Red" ClientValidationFunction="diplomaClientValidation">*</asp:CustomValidator>
         <asp:CheckBoxList ID="chkDiploma" runat="server" RepeatDirection="Horizontal">
             <asp:ListItem Value="DIT">DIT</asp:ListItem>
             <asp:ListItem Value="DBI">DBI</asp:ListItem>
@@ -88,6 +100,7 @@
     <br />
     <div class="form-group">
         <asp:Label ID="LabelYear" runat="server" Text="Year  : "></asp:Label>
+        <asp:CustomValidator ID="CustomValidator2" runat="server" ErrorMessage="CustomValidator" ForeColor="Red">*</asp:CustomValidator>
         <asp:CheckBoxList ID="chkYear" runat="server" RepeatDirection="Horizontal">
             <asp:ListItem Value="1">1</asp:ListItem>
             <asp:ListItem Value="2">2</asp:ListItem>
@@ -97,9 +110,10 @@
         <asp:Label ID="LabelMinGPA" runat="server" Text="Min GPA : "></asp:Label>
         <asp:TextBox ID="tbGPAmin" runat="server" CssClass="auto-style1" Width="35px"></asp:TextBox>
 
+        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="tbGPAmin" ForeColor="Red">* Please fill in Minimum GPA required </asp:RequiredFieldValidator>
+
         <asp:Label ID="LabelSlots" runat="server" Text="Slots : "></asp:Label>
         <asp:TextBox ID="tbSlots" runat="server" CssClass="auto-style1" Width="35px"></asp:TextBox>
-        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="tbGPAmin" ForeColor="Red">* Please fill in Minimum GPA required </asp:RequiredFieldValidator>
         <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="tbSlots" ForeColor="Red">* Please fill in Number of Slots</asp:RequiredFieldValidator>
     </div>
     <br />
