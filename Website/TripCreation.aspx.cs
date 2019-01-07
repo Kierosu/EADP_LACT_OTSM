@@ -11,4 +11,104 @@ public partial class TripCreation : System.Web.UI.Page
     {
 
     }
+
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        validateGPAmin();
+        validateSlots();
+        validatePlaneFee();
+        validateInsuFee();
+        validateAccoFee();
+
+    }
+
+    private bool validateGPAmin()
+    {
+        double dataValues2 = 0;
+        lblGPAmin.Text = String.Empty;
+        if (!double.TryParse(tbGPAmin.Text.ToString(), out dataValues2))
+        {
+            lblGPAmin.Text += "* Please enter numbers only";
+        }
+        if (String.IsNullOrEmpty(lblGPAmin.Text))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    private bool validateSlots()
+    {
+        double dataValues2 = 0;
+        lblSlots.Text = String.Empty;
+        if (!double.TryParse(tbSlots.Text.ToString(), out dataValues2))
+        {
+            lblSlots.Text += "* Please enter numbers only";
+        }
+        if (String.IsNullOrEmpty(lblSlots.Text))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private bool validatePlaneFee()
+    {
+        double dataValues2 = 0;
+        lblPlaneErr.Text = String.Empty;
+        if (!double.TryParse(tbPlanefee.Text.ToString(), out dataValues2))
+        {
+            lblPlaneErr.Text += "* Please enter numbers only";
+        }
+        if (String.IsNullOrEmpty(lblPlaneErr.Text))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private bool validateInsuFee()
+    {
+        double dataValues2 = 0;
+        lblInsuErr.Text = String.Empty;
+        if (!double.TryParse(tbInsufee.Text.ToString(), out dataValues2))
+        {
+            lblInsuErr.Text += "* Please enter numbers only";
+        }
+        if (String.IsNullOrEmpty(lblInsuErr.Text))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private bool validateAccoFee()
+    {
+        double dataValues2 = 0;
+        lblAccoErr.Text = String.Empty;
+        if (!double.TryParse(tbAccofee.Text.ToString(), out dataValues2))
+        {
+            lblAccoErr.Text += "* Please enter numbers only";
+        }
+        if (String.IsNullOrEmpty(lblAccoErr.Text))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 }

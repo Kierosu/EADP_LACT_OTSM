@@ -29,14 +29,30 @@
         }
     </style>
     <script type="text/javascript">
-
-        function diplomaClientValidation(sender, arguments) {
-            if (arguments.Value == "DIT" || arguments.Value == "DBI" || arguments.Value == "DEI" || arguments.Value == "DBT" || arguments.Value == "DSF" || arguments.Value == "DBA" || arguments.Value == "DFI")
-                arguments.IsValid = true;
-            else
-                arguments.IsValid = false;
-
+        function diplomaClientValidation(source, args) {
+           var chkListModules = document.getElementById('<%= chkDiploma.ClientID %>');
+           var chkListinputs = chkListModules.getElementsByTagName("input");
+           for (var i = 0; i < chkListinputs.length; i++) {
+               if (chkListinputs[i].checked) {
+                   args.IsValid = true;
+                   return;
+               }
+           }
+           args.IsValid = false;
         };
+
+        function yearClientValidation(source, args) {
+           var chkListModules = document.getElementById('<%= chkYear.ClientID %>');
+           var chkListinputs = chkListModules.getElementsByTagName("input");
+           for (var i = 0; i < chkListinputs.length; i++) {
+               if (chkListinputs[i].checked) {
+                   args.IsValid = true;
+                   return;
+               }
+           }
+           args.IsValid = false;
+        };
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
@@ -86,7 +102,7 @@
     <br />
     <div class="form-group">
     <asp:Label ID="LabelDiploma" runat="server" Text="Diploma : "></asp:Label>
-        <asp:CustomValidator ID="CustomValidator1" runat="server" ControlToValidate="chkDiploma" ForeColor="Red" ClientValidationFunction="diplomaClientValidation">*</asp:CustomValidator>
+        <asp:CustomValidator ID="CustomValidator1" runat="server" ForeColor="Red" ClientValidationFunction="diplomaClientValidation">* Please choose at least 1 diploma</asp:CustomValidator>
         <asp:CheckBoxList ID="chkDiploma" runat="server" RepeatDirection="Horizontal">
             <asp:ListItem Value="DIT">DIT</asp:ListItem>
             <asp:ListItem Value="DBI">DBI</asp:ListItem>
@@ -100,7 +116,7 @@
     <br />
     <div class="form-group">
         <asp:Label ID="LabelYear" runat="server" Text="Year  : "></asp:Label>
-        <asp:CustomValidator ID="CustomValidator2" runat="server" ErrorMessage="CustomValidator" ForeColor="Red">*</asp:CustomValidator>
+        <asp:CustomValidator ID="CustomValidator2" runat="server" ErrorMessage="CustomValidator" ForeColor="Red"  ClientValidationFunction="yearClientValidation">* Please choose at least 1 year of Students</asp:CustomValidator>
         <asp:CheckBoxList ID="chkYear" runat="server" RepeatDirection="Horizontal">
             <asp:ListItem Value="1">1</asp:ListItem>
             <asp:ListItem Value="2">2</asp:ListItem>
@@ -112,9 +128,12 @@
 
         <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="tbGPAmin" ForeColor="Red">* Please fill in Minimum GPA required </asp:RequiredFieldValidator>
 
+        <asp:Label ID="lblGPAmin" runat="server" ForeColor="Red"></asp:Label>
+
         <asp:Label ID="LabelSlots" runat="server" Text="Slots : "></asp:Label>
         <asp:TextBox ID="tbSlots" runat="server" CssClass="auto-style1" Width="35px"></asp:TextBox>
-        <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="tbSlots" ForeColor="Red">* Please fill in Number of Slots</asp:RequiredFieldValidator>
+        <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="tbSlots" ForeColor="Red">* Please fill in Number of Slots </asp:RequiredFieldValidator>
+        <asp:Label ID="lblSlots" runat="server" ForeColor="Red"></asp:Label>
     </div>
     <br />
     <div class="form-group">
@@ -253,24 +272,22 @@
     <div class="form-group">
         <asp:Label ID="Label1" runat="server" Text="Plane Ticket Fees : $"></asp:Label>
         <asp:TextBox ID="tbPlanefee" runat="server"></asp:TextBox>
-        <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ControlToValidate="tbPlanefee" ForeColor="Red">* Please fill in Plane Fee</asp:RequiredFieldValidator>
+        <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ControlToValidate="tbPlanefee" ForeColor="Red">* Please fill in Plane Fee </asp:RequiredFieldValidator>
+        <asp:Label ID="lblPlaneErr" runat="server" ForeColor="Red"></asp:Label>
     </div>
     <br />
     <div class="form-group">
         <asp:Label ID="Label2" runat="server" Text="Insurance Fees : $"></asp:Label>
         <asp:TextBox ID="tbInsufee" runat="server"></asp:TextBox>
-        <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ControlToValidate="tbInsufee" ForeColor="Red">* Please fill in Insurance Fee</asp:RequiredFieldValidator>
+        <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ControlToValidate="tbInsufee" ForeColor="Red">* Please fill in Insurance Fee </asp:RequiredFieldValidator>
+        <asp:Label ID="lblInsuErr" runat="server" ForeColor="Red"></asp:Label>
     </div>
     <br />
     <div class="form-group">
         <asp:Label ID="Label4" runat="server" Text="Accomodation Fees : $"></asp:Label>
         <asp:TextBox ID="tbAccofee" runat="server"></asp:TextBox>
-        <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ControlToValidate="tbAccofee" ForeColor="Red">* Please fill in Accomodation Fee</asp:RequiredFieldValidator>
-    </div>
-    <br />
-    <div class="form-group">
-        <asp:Label ID="Label5" runat="server" Text="Total Fees : $"></asp:Label>
-        <asp:Label ID="lblTotalfees" runat="server"></asp:Label>
+        <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ControlToValidate="tbAccofee" ForeColor="Red">* Please fill in Accomodation Fee </asp:RequiredFieldValidator>
+        <asp:Label ID="lblAccoErr" runat="server" ForeColor="Red"></asp:Label>
     </div>
     <br />
     <asp:Label ID="LabelDetails" runat="server" Text="Details : "></asp:Label>
@@ -278,7 +295,7 @@
     <br />
     <asp:TextBox ID="tbDetails" runat="server" CssClass="auto-style1" Height="110px" Width="253px"></asp:TextBox>
     <br />
-    <asp:Button ID="Button1" runat="server" CssClass="btn btn-info" Text="Confirm" />
+    <asp:Button ID="Button1" runat="server" CssClass="btn btn-info" Text="Confirm" OnClick="Button1_Click" />
 
 </asp:Content>
 
