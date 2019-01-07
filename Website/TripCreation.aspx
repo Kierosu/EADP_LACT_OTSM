@@ -126,14 +126,14 @@
         <asp:Label ID="LabelMinGPA" runat="server" Text="Min GPA : "></asp:Label>
         <asp:TextBox ID="tbGPAmin" runat="server" CssClass="auto-style1" Width="35px"></asp:TextBox>
 
-        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="tbGPAmin" ForeColor="Red">* Please fill in Minimum GPA required </asp:RequiredFieldValidator>
-
         <asp:Label ID="lblGPAmin" runat="server" ForeColor="Red"></asp:Label>
+
+        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="tbGPAmin" ForeColor="Red">* Please fill in Minimum GPA required </asp:RequiredFieldValidator>
 
         <asp:Label ID="LabelSlots" runat="server" Text="Slots : "></asp:Label>
         <asp:TextBox ID="tbSlots" runat="server" CssClass="auto-style1" Width="35px"></asp:TextBox>
-        <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="tbSlots" ForeColor="Red">* Please fill in Number of Slots </asp:RequiredFieldValidator>
         <asp:Label ID="lblSlots" runat="server" ForeColor="Red"></asp:Label>
+        <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="tbSlots" ForeColor="Red">* Please fill in Number of Slots </asp:RequiredFieldValidator>
     </div>
     <br />
     <div class="form-group">
@@ -194,13 +194,14 @@
             <asp:ListItem Value="2019">2019</asp:ListItem>
             <asp:ListItem Value="2020">2020</asp:ListItem>
         </asp:DropDownList>
+        <asp:Label ID="lblDateErr" runat="server" ForeColor="Red"></asp:Label>
         <asp:CompareValidator ID="CompareValidator3" runat="server" ControlToValidate="ddlStartday" ForeColor="Red" ValueToCompare="0" Operator="NotEqual">* Please Choose a Day </asp:CompareValidator>
         <asp:CompareValidator ID="CompareValidator4" runat="server" ControlToValidate="ddlStartmth" ForeColor="Red" ValueToCompare="0" Operator="NotEqual">* Please Choose a Month </asp:CompareValidator>
         <asp:CompareValidator ID="CompareValidator5" runat="server" ControlToValidate="ddlStartyear" ForeColor="Red" ValueToCompare="0" Operator="NotEqual">* Please Choose a Year</asp:CompareValidator>
     </div>
     <br />
     <div class="form-group">
-        <asp:Label ID="Label8" runat="server" Text="Start Date : "></asp:Label>
+        <asp:Label ID="Label8" runat="server" Text="End Date : "></asp:Label>
         <asp:DropDownList ID="ddlEndday" runat="server">
             <asp:ListItem Value="0">DD</asp:ListItem>
             <asp:ListItem Value="1">1</asp:ListItem>
@@ -272,22 +273,22 @@
     <div class="form-group">
         <asp:Label ID="Label1" runat="server" Text="Plane Ticket Fees : $"></asp:Label>
         <asp:TextBox ID="tbPlanefee" runat="server"></asp:TextBox>
-        <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ControlToValidate="tbPlanefee" ForeColor="Red">* Please fill in Plane Fee </asp:RequiredFieldValidator>
         <asp:Label ID="lblPlaneErr" runat="server" ForeColor="Red"></asp:Label>
+        <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ControlToValidate="tbPlanefee" ForeColor="Red">* Please fill in Plane Fee </asp:RequiredFieldValidator>
     </div>
     <br />
     <div class="form-group">
         <asp:Label ID="Label2" runat="server" Text="Insurance Fees : $"></asp:Label>
         <asp:TextBox ID="tbInsufee" runat="server"></asp:TextBox>
-        <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ControlToValidate="tbInsufee" ForeColor="Red">* Please fill in Insurance Fee </asp:RequiredFieldValidator>
         <asp:Label ID="lblInsuErr" runat="server" ForeColor="Red"></asp:Label>
+        <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ControlToValidate="tbInsufee" ForeColor="Red">* Please fill in Insurance Fee </asp:RequiredFieldValidator>
     </div>
     <br />
     <div class="form-group">
         <asp:Label ID="Label4" runat="server" Text="Accomodation Fees : $"></asp:Label>
         <asp:TextBox ID="tbAccofee" runat="server"></asp:TextBox>
-        <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ControlToValidate="tbAccofee" ForeColor="Red">* Please fill in Accomodation Fee </asp:RequiredFieldValidator>
         <asp:Label ID="lblAccoErr" runat="server" ForeColor="Red"></asp:Label>
+        <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ControlToValidate="tbAccofee" ForeColor="Red">* Please fill in Accomodation Fee </asp:RequiredFieldValidator>
     </div>
     <br />
     <asp:Label ID="LabelDetails" runat="server" Text="Details : "></asp:Label>
