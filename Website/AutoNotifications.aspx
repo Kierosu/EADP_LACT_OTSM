@@ -23,11 +23,24 @@
             <p class="col-lg-10" style="font-size:15px">You can set an event in order to send notifications (for example: after seleceting students for interview, a notification will automatically be sent to them)</p>
         </div>
         <div class="row">
-            <asp:Button ID="btnAddNoti" runat="server" Text="Add" CssClass="btn btn-outline-primary btn-rounded waves-effect col-lg-2"/>
+            <asp:Button ID="btnAddNoti" runat="server" Text="Add" CssClass="btn btn-outline-primary btn-rounded waves-effect col-lg-2" OnClick="btnAddNoti_Click"/>
         </div>
         <div class="row">
-            <p class="col-lg-10" style="font-size:15px; display:none; color:red;" id="noneMsg" runat="server">You seems to have no auto notifications. Click the add button to add a new one!</p>
-            <asp:GridView ID="gvAutoNoti" runat="server"></asp:GridView>
+            <p class="col-lg-10" style="font-size:15px; display:none; color:red;" id="noneMsg" runat="server"></p>
+            <asp:GridView ID="gvAutoNoti" runat="server" AutoGenerateColumns="False" CssClass="table table-responsive table-bordered table-hover" Width="98%" OnRowCommand="gvAutoNoti_RowCommand">
+                <Columns>
+                    <asp:BoundField DataField="autoID" HeaderText="ID" />
+                    <asp:BoundField DataField="autoSubject" HeaderText="Subject" />
+                    <asp:BoundField DataField="autoEvent" HeaderText="Event" />
+                    <asp:BoundField DataField="autoMessage" HeaderText="Message" />
+                    <asp:ButtonField Text="Edit" ControlStyle-CssClass="btn btn-outline-primary btn-rounded waves-effect" CommandName="Edit">
+<ControlStyle CssClass="btn btn-outline-primary btn-rounded waves-effect"></ControlStyle>
+                    </asp:ButtonField>
+                    <asp:ButtonField Text="Delete" ControlStyle-CssClass="btn btn-outline-danger btn-rounded waves-effect" CommandName="Delete_Noti">
+<ControlStyle CssClass="btn btn-outline-danger btn-rounded waves-effect"></ControlStyle>
+                    </asp:ButtonField>
+                </Columns>
+            </asp:GridView>
         </div>
      </div>
 </asp:Content>

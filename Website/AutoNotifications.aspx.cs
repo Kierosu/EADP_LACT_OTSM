@@ -23,12 +23,20 @@ public partial class AutoNotifications : System.Web.UI.Page
         }
 
         string username = Session["ssUsername"].ToString();
-        AutoNoti autoNotiUser = new AutoNoti();
+        List<AutoNoti> listOfAuto = new List<AutoNoti>();
         NotificationsADO autoADO = new NotificationsADO();
-        autoNotiUser = autoADO.GetAutoData(username);
-        if(autoNotiUser == null)
+        listOfAuto = autoADO.GetAutoDataList(username);
+        if(listOfAuto == null)
         {
             noneMsg.Style.Add("display","inline-block");
+            noneMsg.InnerText = "You seems to have no auto notifications. Click the add button to add a new one!";
+        }
+        else
+        {
+            noneMsg.Style.Add("display", "none");
+
+            gvAutoNoti.DataSource = listOfAuto;
+            gvAutoNoti.DataBind();
         }
     }
     protected override void OnPreInit(EventArgs e)
@@ -43,6 +51,40 @@ public partial class AutoNotifications : System.Web.UI.Page
             else if (Session["ssRole"].ToString() == "admin")
             {
                 this.MasterPageFile = "~/MasterPageAdmin.master";
+            }
+        }
+    }
+
+    protected void btnAddNoti_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("AddAutoNoti.aspx");
+    }
+
+
+    protected void gvAutoNoti_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Edit")
+        {
+            int i = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = gvAutoNoti.Rows[i];
+            Session["ssAutoNotiID"] = row.Cells[0].Text;
+            Response.Redirect("EditAutoNoti.aspx");
+        }
+        else if(e.CommandName == "Delete_Noti")
+        {
+            int i = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = gvAutoNoti.Rows[i];
+            int id  = int.Parse(row.Cells[0].Text);
+            NotificationsADO notiADO = new NotificationsADO();
+            int result = notiADO.DeleteAutoNoti(Session["ssUsername"].ToString(), id);
+            if (result != 1)
+            {
+                noneMsg.Style.Add("display", "inline-block");
+                noneMsg.InnerText = "There seems to be an error deleting the notification";
+            }
+            else
+            {
+                Response.Redirect("AutoNotifications.aspx");
             }
         }
     }

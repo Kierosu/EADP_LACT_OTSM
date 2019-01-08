@@ -85,13 +85,6 @@
                     <asp:TextBox ID="tbPass" runat="server" TextMode="Password" CssClass="col-lg-8 form-control mb-4" style=""></asp:TextBox>
                     <asp:RequiredFieldValidator ID="validatePass" runat="server" ErrorMessage="Password required" ControlToValidate="tbPass" ForeColor="Red" Font-Size="30px">*</asp:RequiredFieldValidator>    
                 </div>
-
-                <div class="row" style="margin-bottom:3%; margin-top:-2.5%;">
-                    <div class="col-lg-2">
-                    </div>
-                    <asp:CheckBox ID="chkbxRemember" runat="server" Text="Remember me" CssClass="col-lg-3"/>  
-                    
-                </div>
                 <div class="row">
                     <div class="col-lg-3">
                     </div>
