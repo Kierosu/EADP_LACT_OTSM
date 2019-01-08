@@ -1,5 +1,5 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Homepage.aspx.cs" Inherits="_Default" %>
-
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <%@ Register assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" namespace="System.Web.UI.DataVisualization.Charting" tagprefix="asp" %>
  
 
@@ -13,7 +13,6 @@
             height: 24px;
             width: 123px;
         }
-
         .button {
             text-align: center;
             text-decoration: none;
@@ -32,26 +31,84 @@
         .inlineBlock {
             display:inline-block;
         }
-         
-}
+        .blog {
+             margin-left:auto;
+             margin-right:auto;
+             top: 0;
+        }
+        .buttonmore {   
+            position:relative;
+            bottom:0;
+            right:0;
+        }
+        .buttoncancelmore {
+            position:relative;
+            top: 0px;
+            right: 0px;
+        }
+        .modalBackground {
+            background-color:black;
+            filter:alpha(opacity=90) !important;
+            opacity:0.6 !important;
+            z-index:20;
+        }
+        .modalpopup {
+            padding:20px 0px 24px 10px;
+            position:relative;
+            width:450px;
+            height:66px;
+            background-color:white;
+            border:1px solid black;
+        }
+        
+        
     </style>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
+    </asp:ToolkitScriptManager>
     <table style="width:100%;">
-        
         <tr>
-             
             <td class="auto-style2"><asp:Button ID="ButtonDetails" runat="server" class="button" Text="Details" Width="120px" OnClick="ButtonDetails_Click" /></td>
             <td  rowspan="3">
                 <asp:MultiView ID="MultiViewTrip" runat="server" ActiveViewIndex="0">
                     <asp:View ID="ViewDetails" runat="server"><p>hii</p><span class="fas fa-igloo"></span></asp:View>
-                    <asp:View ID="ViewBlog" runat="server"></asp:View>
+                    <asp:View ID="ViewBlog" runat="server">
+                        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" GridLines="Horizontal" CssClass="blog">
+                            <%-- BLOGS --%>
+                            <Columns>
+                                <%--<asp:BoundField DataField="Id" HeaderText ="Id" />
+                                <asp:BoundField DataField="Name" HeaderText ="Name" />
+                                <asp:BoundField DataField="Size" HeaderText ="Size (bytes)" />--%>
+                                <asp:TemplateField HeaderText="Blogs" ControlStyle-CssClass="comment">
+                                    <ItemTemplate>
+                                        <%# "Time sent: " + DateTime.Now.ToString() + "<br />" + Eval("Id") + " : " + Eval("Name")%>
+                                        <asp:Image ID="Image1" runat="server" Height="100px" Width="100px"
+                                            ImageUrl='<%#"data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("Imagedata")) %>'/>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+                        <asp:FileUpload ID="FileUpload1" runat="server" CssClass="inlineBlock"/>
+                        <br />
+                        <br />
+                        <asp:Button ID="btnUpload" runat="server" Text="Upload" OnClick="btnUpload_Click" />
+                        <br />
+                        <br />
+                        <asp:Label ID="lblMessage" runat="server"></asp:Label>
+                        <br />
+                        <br />
+                        <asp:HyperLink ID="hyperlink" runat="server">View Uploaded Image</asp:HyperLink>
+                        <br />
+                        <br />
+                         
+                    </asp:View>
                     <asp:View ID="ViewStats" runat="server">
-                        
+                        <%-- CHARTS --%>
                         <asp:Panel ID="Panel1" runat="server">
                               <div >
-                            <asp:Chart ID="Chart1" runat="server" Width="316px" CssClass="inlineBlock" Palette="Fire">
+                            <asp:Chart ID="Chart1" runat="server" Width="316px" CssClass="inlineBlock" Palette="Pastel">
                                 <series>
                                     <asp:Series Name="Series1">
                                     </asp:Series>
@@ -61,10 +118,7 @@
                                     </asp:ChartArea>
                                 </chartareas>
                             </asp:Chart>
-                                
-                                  <asp:Label ID="LabelComments" runat="server" CssClass="comment" Visible="False"></asp:Label>
-                                  <asp:Label ID="LabelAspects" runat="server" CssClass="comment" Visible="False"></asp:Label>
-                                  <asp:Chart ID="Chart2" runat="server" Palette="SemiTransparent">
+                                  <asp:Chart ID="Chart2" runat="server" Palette="SemiTransparent" Width="400px">
                                       <Series>
                                           <asp:Series ChartType="Pie" Name="Series2">
                                           </asp:Series>
@@ -73,14 +127,19 @@
                                           <asp:ChartArea Name="ChartArea2">
                                           </asp:ChartArea>
                                       </ChartAreas>
+                                      <Legends>
+                                          <asp:Legend Name="Legend1">
+                                          </asp:Legend>
+                                      </Legends>
                                   </asp:Chart>
+                                  <%-- COMMENTS --%>
                                   <h4 style="text-decoration:underline;">Comments:</h4>
             <asp:Repeater ID="Repeater1" runat="server">
                 <ItemTemplate>
                     <div class="commentbox">
                         <b>
-                            <asp:Label ID="Label1" runat="server" Text='<%#Eval("tdRating") %>'>'></asp:Label></b>&nbsp;(<asp:Label ID="Label2" runat="server" Text='<%#Eval("tdReview") %>'>'></asp:Label>):<br />
-                        <asp:Label ID="Label3" runat="server" Text='<%#Eval("tdAspect") %>'></asp:Label><br />
+                            <asp:Label ID="Label1" runat="server" Text='<%#Eval("tdRating") %>'>'></asp:Label> stars {</b>&nbsp;<asp:Label ID="Label2" runat="server" Text='<%#Eval("tdReview") %>'>'></asp:Label> }<br />
+                        Order : <asp:Label ID="Label3" runat="server" Text='<%#Eval("tdAspect") %>'></asp:Label><br />
                     </div>
                 </ItemTemplate>
             </asp:Repeater>
@@ -95,8 +154,15 @@
                     </ItemTemplate>
                 </asp:Repeater>
             </div>
-        </div>
-                                 
+        </div>           
+        <%--extra information part --%> 
+        <asp:Button ID="ButtonMore" runat="server" Text="Read More" CssClass="buttonmore" OnClick="ButtonMore_Click" />
+        <asp:Panel ID="PanelMore" runat="server" CssClass="modalpopup">
+            Extra information here.
+            <asp:Button ID="ButtonCancelMore" runat="server" Text="x" CssClass="buttoncancelmore" BorderColor="White" BorderStyle="None" ForeColor="#990000" />
+
+        </asp:Panel>
+        <asp:ModalPopupExtender ID="ModalPopupExtender1" runat="server" TargetControlID="ButtonMore" BackgroundCssClass="modalBackground" PopupControlID="PanelMore" CancelControlID="ButtonCancelMore"></asp:ModalPopupExtender>
                         </asp:Panel>
                     </asp:View>
                 </asp:MultiView>
@@ -104,14 +170,12 @@
         </tr>
         <tr>
             <td class="auto-style3">
-                <asp:Button ID="ButtonBlog" runat="server" class="button" Text="Blogs" Width="120px" OnClick="ButtonBlog_Click" /></td>
+            <asp:Button ID="ButtonBlog" runat="server" class="button" Text="Blogs" Width="120px" OnClick="ButtonBlog_Click" />
+            </td>
         </tr>
         <tr>
-		              	<td class="auto-style2"><asp:Button ID="ButtonStats" runat="server" class="button" Text="Statistics" Width="120px" OnClick="ButtonStats_Click" />
-
-		              	</td>
-             
+		    <td class="auto-style2"><asp:Button ID="ButtonStats" runat="server" class="button" Text="Statistics" Width="120px" OnClick="ButtonStats_Click" />
+            </td> 
         </tr>
-         
         </table>
 </asp:Content>

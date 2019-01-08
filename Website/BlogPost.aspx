@@ -1,8 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="BlogPost.aspx.cs" Inherits="BlogPost" %>
+﻿<%@ Page Title="Blog Creation" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="BlogPost.aspx.cs" Inherits="BlogPost" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <asp:Label ID="Label4" runat="server" Text="Blog Creation" Font-Size="30px"></asp:Label>
+    <br />    
     <asp:Label ID="Label1" runat="server" Text="Blog Title : "></asp:Label>
     <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
     <br />
