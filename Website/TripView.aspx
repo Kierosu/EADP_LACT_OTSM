@@ -36,6 +36,7 @@
             <asp:BoundField HeaderText="Location" DataField="TripLocation" />
             <asp:BoundField HeaderText="Start Date" DataField="TripStartDate" />
             <asp:BoundField HeaderText="Teacher-In-Charge" DataField="TripTeacherInCharge" />
+            <asp:BoundField HeaderText="Slots" DataField="TripSlots" />
             <asp:CommandField HeaderText="Click For More Info" ShowHeader="True" ShowSelectButton="True" />
         </Columns>
     </asp:GridView>

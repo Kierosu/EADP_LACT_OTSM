@@ -53,7 +53,7 @@ public partial class TripView : System.Web.UI.Page
                 myTD.TripLocation = row["TripName"].ToString();
                 myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
                 myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
-
+                myTD.TripSlots = row["TripSlots"].ToString();
                 //  Step 9: Add each timeDeposit instance to array list
                 tdList.Add(myTD);
             }
