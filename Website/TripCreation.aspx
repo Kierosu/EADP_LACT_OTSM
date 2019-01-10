@@ -106,11 +106,10 @@
         <asp:CheckBoxList ID="chkDiploma" runat="server" RepeatDirection="Horizontal">
             <asp:ListItem Value="DIT">DIT</asp:ListItem>
             <asp:ListItem Value="DBI">DBI</asp:ListItem>
-            <asp:ListItem Value="DEI">DEI</asp:ListItem>
-            <asp:ListItem Value="DBT">DBT</asp:ListItem>
+            <asp:ListItem Value="DCS">DCS</asp:ListItem>
             <asp:ListItem Value="DSF">DSF</asp:ListItem>
-            <asp:ListItem Value="DBA">DBA</asp:ListItem>
             <asp:ListItem Value="DFI">DFI</asp:ListItem>
+            <asp:ListItem Value="DBA">DBA</asp:ListItem>
         </asp:CheckBoxList>
     </div>
     <br />

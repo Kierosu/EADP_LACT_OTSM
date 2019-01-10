@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 public partial class TripCreation : System.Web.UI.Page
 {
+   
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -20,7 +23,99 @@ public partial class TripCreation : System.Web.UI.Page
         validatePlaneFee();
         validateInsuFee();
         validateAccoFee();
+        
+        
 
+        if (lblGPAmin.Text == "")
+        {
+            if (lblSlots.Text == "")
+            {
+                if (lblPlaneErr.Text == "")
+                {
+                    if (lblInsuErr.Text == "")
+                    {
+                        if (lblAccoErr.Text == "")
+                        {
+                            string tripName = tbTripname.Text;
+                            string tripType = ddlTripType.SelectedValue;
+                            string tripCountry = ddlCountry.SelectedValue;
+                            string tripLocation = tbLocation.Text;
+                            string DipDIT = "";
+                            string DipDBI = "";
+                            string DipDCS = "";
+                            string DipDSF = "";
+                            string DipDFI = "";
+                            string DipDBA = "";
+
+                            foreach (ListItem diplomas in chkDiploma.Items)
+                            {
+                                if (diplomas.Selected == true)
+                                {
+                                    if(diplomas.Value == "DIT")
+                                    {
+                                        DipDIT = "DIT";
+                                    }
+                                    if (diplomas.Value == "DBI")
+                                    {
+                                        DipDBI = "DBI";
+                                    }
+                                    if (diplomas.Value == "DCS")
+                                    {
+                                        DipDCS = "DCS";
+                                    }
+                                    if (diplomas.Value == "DSF")
+                                    {
+                                        DipDSF = "DSF";
+                                    }
+                                    if (diplomas.Value == "DFI")
+                                    {
+                                        DipDFI = "DFI";
+                                    }
+                                    if (diplomas.Value == "DIT")
+                                    {
+                                        DipDBA = "DBA";
+                                    }
+                                }
+                            }
+
+                            string year1 = "";
+                            string year2 = "";
+                            string year3 = "";
+
+                            foreach (ListItem years in chkYear.Items)
+                            {
+                                if (years.Selected == true)
+                                {
+                                    if (years.Value == "1")
+                                    {
+                                        year1 = "1";
+                                    }
+                                    if (years.Value == "2")
+                                    {
+                                        year2 = "2";
+                                    }
+                                    if (years.Value == "3")
+                                    {
+                                        year3 = "3";
+                                    }
+                                }
+                            }
+
+                            string minGPA = tbGPAmin.Text;
+                            string slots = tbSlots.Text;
+                            string startDay = ddlStartday.SelectedValue;
+                            string startMth = ddlStartmth.SelectedValue;
+                            string startYear = ddlStartyear.SelectedValue;
+                            string startDate = startDay + "/" + startMth + "/" + startYear;
+
+
+
+                    }
+                }
+            }
+        }
+
+        }
     }
     private bool validateStartDate()
     {
@@ -31,7 +126,7 @@ public partial class TripCreation : System.Web.UI.Page
         string startDate = startDay + "/" + startMth + "/" + startYear;
         if (1 + 1 == 2)
         {
-            lblDateErr.Text += DateTime.Now.ToString("dd/MM/yyyy");
+            lblDateErr.Text += startDate;
         }
         if (String.IsNullOrEmpty(lblDateErr.Text))
         {
