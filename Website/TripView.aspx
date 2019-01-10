@@ -2,10 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
-        .auto-style1 {
-            margin-bottom: 0px;
-        }
-
+        
         @media (max-width: 980px) {
             #divContain{
                 margin-top:13%;
@@ -29,17 +26,19 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <br /><br /><br /><br /><br />
     <asp:Label ID="Label6" runat="server" Text="Trip View" Font-Size="30px"></asp:Label>
+    <asp:GridView ID="GridViewTD" runat="server" AutoGenerateColumns="False" Height="129px" Width="1599px" OnSelectedIndexChanged="GridViewTD_SelectedIndexChanged">
+        <Columns>
+            <asp:BoundField HeaderText="Trip Name" DataField="TripName" />
+            <asp:BoundField HeaderText="Type Of Trip" DataField="TripType" />
+            <asp:BoundField HeaderText="Country" DataField="TripCountry" />
+            <asp:BoundField HeaderText="Location" DataField="TripLocation" />
+            <asp:BoundField HeaderText="Start Date" DataField="TripStartDate" />
+            <asp:BoundField HeaderText="Teacher-In-Charge" DataField="TripTeacherInCharge" />
+            <asp:CommandField HeaderText="Click For More Info" ShowHeader="True" ShowSelectButton="True" />
+        </Columns>
+    </asp:GridView>
     <br />    
-    <p>
-        <asp:Label ID="Label1" runat="server" Text="Trip Name"></asp:Label>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <asp:Label ID="Label2" runat="server" Text="Type Of Trip"></asp:Label>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <asp:Label ID="Label3" runat="server" Text="Location"></asp:Label>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <asp:Label ID="Label4" runat="server" Text="Teacher-in-Charge"></asp:Label>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&nbsp;</strong><asp:Label ID="Label5" runat="server" Text="Details"></asp:Label>
-    </p>
 </asp:Content>
 
