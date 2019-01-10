@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,8 @@ using System.Web.UI.WebControls;
 
 public partial class TripCreation : System.Web.UI.Page
 {
-   
+    string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -17,7 +19,6 @@ public partial class TripCreation : System.Web.UI.Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-        validateStartDate();
         validateGPAmin();
         validateSlots();
         validatePlaneFee();
@@ -106,15 +107,79 @@ public partial class TripCreation : System.Web.UI.Page
                             string startDay = ddlStartday.SelectedValue;
                             string startMth = ddlStartmth.SelectedValue;
                             string startYear = ddlStartyear.SelectedValue;
-                            string startDate = startDay + "/" + startMth + "/" + startYear;
+                            string startDateR = startDay + "/" + startMth + "/" + startYear;
+                            DateTime startDate = Convert.ToDateTime(startDateR);
+                            string endDay = ddlEndday.SelectedValue;
+                            string endMth = ddlEndmth.SelectedValue;
+                            string endYear = ddlEndyear.SelectedValue;
+                            string endDateR = endDay + "/" + endMth + "/" + endYear;
+                            DateTime endDate = Convert.ToDateTime(endDateR);
+                            string teacherInCharge = lblTeacher.Text;
+                            string planeFee = tbPlanefee.Text;
+                            string insuFee = tbInsufee.Text;
+                            string accoFee = tbAccofee.Text;
+                            string tripDetails = tbDetails.Text;
+
+                            StringBuilder sqlStr = new StringBuilder();
+                            // Execute NonQuery return an integer value
+                            SqlCommand sqlCmd = new SqlCommand();
+                            // Step1 : Create SQL insert command to add record to TDMaster using     
+
+                            //         parameterised query in values clause
+                            //
+                            sqlStr.AppendLine("INSERT INTO TripInformation (TripName,TripType,TripCountry,TripLocation, ");
+                            sqlStr.AppendLine("DiplmaDIT,DiplmaDBI,DiplmaDCS,DiplmaDSF,DiplmaDFI,DiplmaDBA,");
+                            sqlStr.AppendLine("YearOne,YearTwo,YearThree,TripMinGPA,TripSlots,TripStartDate,");
+                            sqlStr.AppendLine("TripEndDate,TripTeacherInCharge,TripPlaneFee,TripInsuFee,TripAccoFee,TripDetails)");
+                            sqlStr.AppendLine("VALUES (@paraTripName,@paraTripType,@paraTripCountry,@paraTripLocation,@paraDiplmaDIT,");
+                            sqlStr.AppendLine("@paraDiplmaDBI,@paraDiplmaDCS,@paraDiplmaDSF,@paraDiplmaDFI,@paraDiplmaDBA,");
+                            sqlStr.AppendLine("@paraYearOne,@paraYearTwo,@paraYearThree,@paraTripMinGPA,@paraTripSlots,@paraTripStartDate,");
+                            sqlStr.AppendLine("@paraTripEndDate,@paraTripTeacherInCharge,@paraTripPlaneFee,@paraTripInsuFee,@paraTripAccoFee,@paraTripDetails)");
 
 
+                            // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
 
+                            SqlConnection myConn = new SqlConnection(DBConnect);
+
+                            sqlCmd = new SqlCommand(sqlStr.ToString(), myConn);
+
+                            // Step 3 : Add each parameterised query variable with value
+                            //          complete to add all parameterised queries
+                            sqlCmd.Parameters.AddWithValue("@paraTripName", tripName);
+                            sqlCmd.Parameters.AddWithValue("@paraTripType", tripType);
+                            sqlCmd.Parameters.AddWithValue("@paraTripCountry", tripCountry);
+                            sqlCmd.Parameters.AddWithValue("@paraTripLocation", tripLocation);
+                            sqlCmd.Parameters.AddWithValue("@paraDiplmaDIT", DipDIT);
+                            sqlCmd.Parameters.AddWithValue("@paraDiplmaDBI", DipDBI);
+                            sqlCmd.Parameters.AddWithValue("@paraDiplmaDCS", DipDCS);
+                            sqlCmd.Parameters.AddWithValue("@paraDiplmaDSF", DipDSF);
+                            sqlCmd.Parameters.AddWithValue("@paraDiplmaDFI", DipDFI);
+                            sqlCmd.Parameters.AddWithValue("@paraDiplmaDBA", DipDBA);
+                            sqlCmd.Parameters.AddWithValue("@paraYearOne", year1);
+                            sqlCmd.Parameters.AddWithValue("@paraYearTwo", year2);
+                            sqlCmd.Parameters.AddWithValue("@paraYearThree", year3);
+                            sqlCmd.Parameters.AddWithValue("@paraTripMinGPA", minGPA);
+                            sqlCmd.Parameters.AddWithValue("@paraTripSlots", slots);
+                            sqlCmd.Parameters.AddWithValue("@paraTripStartDate", startDate);
+                            sqlCmd.Parameters.AddWithValue("@paraTripEndDate", endDate);
+                            sqlCmd.Parameters.AddWithValue("@paraTripTeacherInCharge", teacherInCharge);
+                            sqlCmd.Parameters.AddWithValue("@paraTripPlaneFee", planeFee);
+                            sqlCmd.Parameters.AddWithValue("@paraTripInsuFee", insuFee);
+                            sqlCmd.Parameters.AddWithValue("@paraTripAccoFee", accoFee);
+                            sqlCmd.Parameters.AddWithValue("@paraTripDetails", tripDetails);
+                            
+                            // Step 4 Open connection the execute NonQuery of sql command   
+
+                            myConn.Open();
+                            sqlCmd.ExecuteNonQuery();
+
+                            // Step 5 :Close connection
+                            myConn.Close();
+
+                        }
                     }
                 }
             }
-        }
-
         }
     }
     private bool validateStartDate()
