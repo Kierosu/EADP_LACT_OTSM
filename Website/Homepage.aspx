@@ -60,18 +60,26 @@
             background-color:white;
             border:1px solid black;
         }
-        
-        
+        .image {
+            right: 0px;
+            bottom: 0px;
+        }
+        .TextboxComment {
+            resize:none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
     </style>
-
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
     </asp:ToolkitScriptManager>
     <table style="width:100%;">
         <tr>
             <td class="auto-style2"><asp:Button ID="ButtonDetails" runat="server" class="button" Text="Details" Width="120px" OnClick="ButtonDetails_Click" /></td>
-            <td  rowspan="3">
+            <td rowspan="3">
                 <asp:MultiView ID="MultiViewTrip" runat="server" ActiveViewIndex="0">
                     <asp:View ID="ViewDetails" runat="server"><p>hii</p><span class="fas fa-igloo"></span></asp:View>
                     <asp:View ID="ViewBlog" runat="server">
@@ -81,17 +89,21 @@
                                 <%--<asp:BoundField DataField="Id" HeaderText ="Id" />
                                 <asp:BoundField DataField="Name" HeaderText ="Name" />
                                 <asp:BoundField DataField="Size" HeaderText ="Size (bytes)" />--%>
-                                <asp:TemplateField HeaderText="Blogs" ControlStyle-CssClass="comment">
+                                <asp:BoundField DataField="Comment" HeaderText ="Blog Comment" />
+                                <asp:TemplateField ControlStyle-CssClass="comment">
                                     <ItemTemplate>
-                                        <%# "Time sent: " + DateTime.Now.ToString() + "<br />" + Eval("Id") + " : " + Eval("Name")%>
-                                        <asp:Image ID="Image1" runat="server" Height="100px" Width="100px"
-                                            ImageUrl='<%#"data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("Imagedata")) %>'/>
+                                        <%--<# "Time sent: " + DateTime.Now.ToString() + "<br />" + Eval("Id") + " : " + Eval("Name") + Eval("Comment")--%>
+                                         <asp:Image ID="Image1" runat="server" Height="100px" Width="100px"
+                                                                            ImageUrl='<%#"data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("Imagedata")) %>' CssClass="image" />
                                     </ItemTemplate>
+
                                 </asp:TemplateField>
+                               
                             </Columns>
                         </asp:GridView>
                         <asp:FileUpload ID="FileUpload1" runat="server" CssClass="inlineBlock"/>
                         <br />
+                        <asp:TextBox ID="TextBoxBlogComment" runat="server" AutoCompleteType="Disabled" TextMode="MultiLine" Rows="10" Height="200px" Width="376px" CssClass="TextboxComment"></asp:TextBox>
                         <br />
                         <asp:Button ID="btnUpload" runat="server" Text="Upload" OnClick="btnUpload_Click" />
                         <br />
@@ -107,7 +119,7 @@
                     <asp:View ID="ViewStats" runat="server">
                         <%-- CHARTS --%>
                         <asp:Panel ID="Panel1" runat="server">
-                              <div >
+                              <div>
                             <asp:Chart ID="Chart1" runat="server" Width="316px" CssClass="inlineBlock" Palette="Pastel">
                                 <series>
                                     <asp:Series Name="Series1">
@@ -118,20 +130,20 @@
                                     </asp:ChartArea>
                                 </chartareas>
                             </asp:Chart>
-                                  <asp:Chart ID="Chart2" runat="server" Palette="SemiTransparent" Width="400px">
-                                      <Series>
-                                          <asp:Series ChartType="Pie" Name="Series2">
-                                          </asp:Series>
-                                      </Series>
-                                      <ChartAreas>
-                                          <asp:ChartArea Name="ChartArea2">
-                                          </asp:ChartArea>
-                                      </ChartAreas>
-                                      <Legends>
-                                          <asp:Legend Name="Legend1">
-                                          </asp:Legend>
-                                      </Legends>
-                                  </asp:Chart>
+                            <asp:Chart ID="Chart2" runat="server" Palette="SemiTransparent" Width="400px">
+                                <Series>
+                                    <asp:Series ChartType="Pie" Name="Series2">
+                                    </asp:Series>
+                                </Series>
+                                <ChartAreas>
+                                    <asp:ChartArea Name="ChartArea2">
+                                    </asp:ChartArea>
+                                </ChartAreas>
+                                <Legends>
+                                    <asp:Legend Name="Legend1">
+                                    </asp:Legend>
+                                </Legends>
+                            </asp:Chart>
                                   <%-- COMMENTS --%>
                                   <h4 style="text-decoration:underline;">Comments:</h4>
             <asp:Repeater ID="Repeater1" runat="server">
@@ -159,13 +171,14 @@
         <asp:Button ID="ButtonMore" runat="server" Text="Read More" CssClass="buttonmore" OnClick="ButtonMore_Click" />
         <asp:Panel ID="PanelMore" runat="server" CssClass="modalpopup">
             Extra information here.
+            <br />
             <asp:Repeater ID="Repeater2" runat="server"> 
                 <ItemTemplate>
-            <asp:Label ID="Label4" runat="server" Text='<%#Eval("tdSuggestion") %>'></asp:Label>
+                <asp:Label ID="Label4" runat="server" Text='<%#Eval("tdSuggestion") %>'></asp:Label>
+                <br />
                 </ItemTemplate>
             </asp:Repeater>
             <asp:Button ID="ButtonCancelMore" runat="server" Text="x" CssClass="buttoncancelmore" BorderColor="White" BorderStyle="None" ForeColor="#990000" />
-
         </asp:Panel>
         <asp:ModalPopupExtender ID="ModalPopupExtender1" runat="server" TargetControlID="ButtonMore" BackgroundCssClass="modalBackground" PopupControlID="PanelMore" CancelControlID="ButtonCancelMore"></asp:ModalPopupExtender>
                         </asp:Panel>
@@ -179,7 +192,8 @@
             </td>
         </tr>
         <tr>
-		    <td class="auto-style2"><asp:Button ID="ButtonStats" runat="server" class="button" Text="Statistics" Width="120px" OnClick="ButtonStats_Click" />
+		    <td class="auto-style2">
+            <asp:Button ID="ButtonStats" runat="server" class="button" Text="Statistics" Width="120px" OnClick="ButtonStats_Click" />
             </td> 
         </tr>
         </table>
