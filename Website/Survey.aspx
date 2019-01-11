@@ -74,6 +74,7 @@
     </style>
 
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <h3 class="title"style="background-color: black; color: #FFFFFF;">NYP Trip Survey</h3>
     <div>
@@ -81,21 +82,17 @@
         <table style="width:100%;">
             <tr>
                 <td class="auto-style2">Admin Number :
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBox1" ErrorMessage="Admin number is required" Text="*" Font-Underline="False" ForeColor="Red"
-                        >*</asp:RequiredFieldValidator>
                 </td>
                 <td>
-                    <asp:TextBox ID="TextBox1" runat="server" cssclass="txtbox"></asp:TextBox>
+                    &nbsp;<asp:Label ID="LabelAdminNumber" runat="server"></asp:Label>
                 </td>
          
             </tr>
             <tr>
-                <td class="auto-style2">Name : 
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Name is required" ControlToValidate="TextBox2" Font-Underline="False" ForeColor="Red">*</asp:RequiredFieldValidator>
+                <td class="auto-style2">Name :  
                 </td>
                 <td class="auto-style5">
-                    <asp:TextBox ID="TextBox2" runat="server" cssclass="txtbox"></asp:TextBox>
-                </td>
+                    &nbsp;<asp:Label ID="LabelName" runat="server"></asp:Label></td>
 
             </tr>
             <tr>
@@ -171,7 +168,7 @@
             <tr>
                 <td class="auto-style2" colspan="1">Suggestions to improve trip?</td>
                 <td class="auto-style1">
-                    <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="TextBoxSuggestions" runat="server" TextMode="MultiLine" Rows="10" Height="200px" Width="376px" CssClass="TextboxComment"></asp:TextBox>
                    </td>
             
             </tr>
@@ -195,14 +192,7 @@
     <p>
 &nbsp;&nbsp;&nbsp;
     </p>
-        <asp:Panel ID="panelChoice" runat="server" Visible="False">
-            Thank you doing the survey:<br />
-            <asp:Label ID="Label1" runat="server"></asp:Label>
-            <br />
-        </asp:Panel>
          
-        
-
         <script type="text/javascript">
             // Move an element directly on top of another element (and optionally
             // make it the same size)
