@@ -159,6 +159,11 @@
         <asp:Button ID="ButtonMore" runat="server" Text="Read More" CssClass="buttonmore" OnClick="ButtonMore_Click" />
         <asp:Panel ID="PanelMore" runat="server" CssClass="modalpopup">
             Extra information here.
+            <asp:Repeater ID="Repeater2" runat="server"> 
+                <ItemTemplate>
+            <asp:Label ID="Label4" runat="server" Text='<%#Eval("tdSuggestion") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:Repeater>
             <asp:Button ID="ButtonCancelMore" runat="server" Text="x" CssClass="buttoncancelmore" BorderColor="White" BorderStyle="None" ForeColor="#990000" />
 
         </asp:Panel>
