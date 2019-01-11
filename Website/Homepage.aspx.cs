@@ -38,6 +38,7 @@ public partial class _Default : System.Web.UI.Page
             SqlDataReader rdr = cmd.ExecuteReader();
             GridView1.DataSource = rdr;
             GridView1.DataBind();
+            con.Close();
         }
     }
 
@@ -198,6 +199,7 @@ public partial class _Default : System.Web.UI.Page
         string fileName = Path.GetFileName(postedFile.FileName);
         string fileExtension = Path.GetExtension(fileName);
         int fileSize = postedFile.ContentLength;
+        string blogcomment = TextBoxBlogComment.Text;
 
         if (fileExtension.ToLower() == ".jpg" || fileExtension.ToLower() == ".bmp" ||
             fileExtension.ToLower() == ".gif" || fileExtension.ToLower() == ".png")
@@ -207,9 +209,11 @@ public partial class _Default : System.Web.UI.Page
             byte[] bytes = binaryReader.ReadBytes((int)stream.Length);
 
             string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+
+            //connect to database and insert info
             using (SqlConnection con = new SqlConnection(DBConnect))
             {
-                SqlCommand cmd = new SqlCommand("spUploadImage", con);
+                SqlCommand cmd = new SqlCommand("spUploadBlog", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 SqlParameter paramName = new SqlParameter()
@@ -218,18 +222,28 @@ public partial class _Default : System.Web.UI.Page
                     Value = fileName
                 };
                 cmd.Parameters.Add(paramName);
+
                 SqlParameter paramSize = new SqlParameter()
                 {
                     ParameterName = "@Size",
                     Value = fileSize
                 };
                 cmd.Parameters.Add(paramSize);
+
                 SqlParameter paramImagedata = new SqlParameter()
                 {
                     ParameterName = "@Imagedata",
                     Value = bytes
                 };
                 cmd.Parameters.Add(paramImagedata);
+
+                SqlParameter paramComment = new SqlParameter()
+                {
+                    ParameterName = "@Comment",
+                    Value = blogcomment
+                };
+                cmd.Parameters.Add(paramComment);
+
                 SqlParameter paramNewId = new SqlParameter()
                 {
                     ParameterName = "@NewId",
@@ -237,6 +251,7 @@ public partial class _Default : System.Web.UI.Page
                     Direction = ParameterDirection.Output
                 };
                 cmd.Parameters.Add(paramNewId);
+
                 con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
@@ -248,7 +263,13 @@ public partial class _Default : System.Web.UI.Page
 
                 LoadImages();
             }
-  
+        }
+        else
+        {
+            lblMessage.Visible = true;
+            lblMessage.ForeColor = System.Drawing.Color.Red;
+            lblMessage.Text = "Only images (.jpg, .png, .gif and .bmp) can be uploaded";
+            hyperlink.Visible = false;
         }
     }
 
