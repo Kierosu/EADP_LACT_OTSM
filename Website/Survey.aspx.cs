@@ -21,11 +21,15 @@ public partial class Default2 : System.Web.UI.Page
     int aspShopping;
     protected void Page_Load(object sender, EventArgs e)
     {
-            if (Session["ssUsername"] != null && Session["ssFullName"] != null)
-            {
-                TextBox1.Text = Session["ssUsername"].ToString();
-                TextBox2.Text = Session["ssFullName"].ToString();
-            }
+        if (Session["ssUsername"] != null && Session["ssFullName"] != null)
+        {
+            LabelAdminNumber.Text = Session["ssUsername"].ToString();
+            LabelName.Text = Session["ssFullName"].ToString();
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Please login first before doing the survey.');", true);
+        }
     }
 
     protected void ButtonSubmit_Click(object sender, EventArgs e)
@@ -92,15 +96,17 @@ public partial class Default2 : System.Web.UI.Page
             StringBuilder sqlCommand = new StringBuilder();
             //Query to insert survey info into TableStats
             //2 queries for 2 tables
-            sqlCommand.AppendLine("INSERT INTO TableStats (tdRating, tdReview, tdAspect)");
-            sqlCommand.AppendLine("VALUES (@paratdRating, @paratdReview, @paratdAspect);");
+            sqlCommand.AppendLine("INSERT INTO TableStats (tdRating, tdReview, tdAspect, tdSuggestion)");
+            sqlCommand.AppendLine("VALUES (@paratdRating, @paratdReview, @paratdAspect, @paratdSuggestion);");
             sqlCommand.AppendLine("INSERT INTO TableAspects (Learning, Sightseeing, Shopping, Culture, Meals, Hotel)");
             sqlCommand.AppendLine("VALUES (@paraLearning, @paraSightseeing, @paraShopping, @paraCulture, @paraMeals, @paraHotel);");
             sqlCmd = new SqlCommand(sqlCommand.ToString(), myConn);
-            //add values in parameters (prevent sql injection)
+            //add values in parameters (prevent sql injection) for TableStats
             sqlCmd.Parameters.AddWithValue("@paratdRating", rating);
             sqlCmd.Parameters.AddWithValue("@paratdReview", review);
             sqlCmd.Parameters.AddWithValue("@paratdAspect", orderofaspects);
+            sqlCmd.Parameters.AddWithValue("@paratdSuggestion", TextBoxSuggestions.Text);
+            //for TableAspects
             sqlCmd.Parameters.AddWithValue("@paraLearning", aspLearning);
             sqlCmd.Parameters.AddWithValue("@paraSightseeing", aspSightseeing);
             sqlCmd.Parameters.AddWithValue("@paraShopping", aspShopping);
