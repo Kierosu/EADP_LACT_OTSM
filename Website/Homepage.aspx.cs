@@ -70,7 +70,7 @@ public partial class _Default : System.Web.UI.Page
         DataView dv = new DataView(dt);
         pds.DataSource = dv;
         pds.AllowPaging = true;
-        pds.PageSize = 4;
+        pds.PageSize = 5;
         pds.CurrentPageIndex = PageNumber;
         if (pds.PageCount > 1)
         {
@@ -85,8 +85,11 @@ public partial class _Default : System.Web.UI.Page
         {
             rptPaging.Visible = false;
         }
+        //bind info to repeaters
         Repeater1.DataSource = pds;
         Repeater1.DataBind();
+        Repeater2.DataSource = pds;
+        Repeater2.DataBind();
     }
 
     public int PageNumber
@@ -143,7 +146,7 @@ public partial class _Default : System.Web.UI.Page
         //sqlcommand.appendline("select learning, sightseeing, shopping, culture, meals, hotel from tableaspects;");
 
         //data adapter; 2 for 2 tables
-        SqlDataAdapter da = new SqlDataAdapter("Select tdRating, tdReview, tdAspect from TableStats;", myConn);
+        SqlDataAdapter da = new SqlDataAdapter("Select tdRating, tdReview, tdAspect, tdSuggestion from TableStats;", myConn);
         //get info from TableStats and TableAspects
         DataSet ds = new DataSet();
         da.Fill(ds, "TableStats");
