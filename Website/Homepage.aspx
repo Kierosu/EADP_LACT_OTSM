@@ -70,6 +70,7 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
+
     </style>
 </asp:Content>
 
@@ -81,18 +82,24 @@
             <td class="auto-style2"><asp:Button ID="ButtonDetails" runat="server" class="button" Text="Details" Width="120px" OnClick="ButtonDetails_Click" /></td>
             <td rowspan="3">
                 <asp:MultiView ID="MultiViewTrip" runat="server" ActiveViewIndex="0">
-                    <asp:View ID="ViewDetails" runat="server"><p>hii</p><span class="fas fa-igloo"></span></asp:View>
+                    <asp:View ID="ViewDetails" runat="server"><p>Trip information here.</p><span class="fas fa-igloo"></span></asp:View>
                     <asp:View ID="ViewBlog" runat="server">
                         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" GridLines="Horizontal" CssClass="blog">
                             <%-- BLOGS --%>
                             <Columns>
                                 <%--<asp:BoundField DataField="Id" HeaderText ="Id" />
                                 <asp:BoundField DataField="Name" HeaderText ="Name" />
-                                <asp:BoundField DataField="Size" HeaderText ="Size (bytes)" />--%>
-                                <asp:BoundField DataField="Comment" HeaderText ="Blog Comment" />
+                                <asp:BoundField DataField="Size" HeaderText ="Size (bytes)" />
+                                <asp:BoundField DataField="Comment" HeaderText ="Blog Comment" />--%>
+                                 
+                                <asp:TemplateField  ShowHeader="True" HeaderText="Blog" ItemStyle-Width="300px">
+                                    <ItemTemplate>
+                                   <%# "Uploaded " + Eval("TimeOfUpload") + "<br /> Title: " + Eval("Title") + "<br />" + Eval("Comment")%>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField ControlStyle-CssClass="comment">
                                     <ItemTemplate>
-                                        <%--<# "Time sent: " + DateTime.Now.ToString() + "<br />" + Eval("Id") + " : " + Eval("Name") + Eval("Comment")--%>
+                                        <%--<%# "Time sent: " + DateTime.now.tostring() + "<br />" + Eval("Id") + " : " + Eval("Name") + Eval("Comment")%>--%>
                                          <asp:Image ID="Image1" runat="server" Height="100px" Width="100px"
                                                                             ImageUrl='<%#"data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("Imagedata")) %>' CssClass="image" />
                                     </ItemTemplate>
@@ -100,8 +107,11 @@
                                 </asp:TemplateField>
                                
                             </Columns>
+                            <RowStyle Width="150px"/>
                         </asp:GridView>
                         <asp:FileUpload ID="FileUpload1" runat="server" CssClass="inlineBlock"/>
+                        <br />
+                        <asp:TextBox ID="TextBoxBlogTitle" runat="server" AutoCompleteType="Disabled" placeholder="Add blog title here" Width="376px" MaxLength="42"></asp:TextBox>
                         <br />
                         <asp:TextBox ID="TextBoxBlogComment" runat="server" AutoCompleteType="Disabled" TextMode="MultiLine" Rows="10" Height="200px" Width="376px" CssClass="TextboxComment"></asp:TextBox>
                         <br />
