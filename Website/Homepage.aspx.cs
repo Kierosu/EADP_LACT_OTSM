@@ -134,6 +134,9 @@ public partial class _Default : System.Web.UI.Page
         //charts variables
         Series series = Chart1.Series["Series1"];
         Series pieseries = Chart2.Series["Series2"];
+         
+         
+        
 
         //show percentage in pie chart
         pieseries.Label = "#VAL";
@@ -142,10 +145,22 @@ public partial class _Default : System.Web.UI.Page
         string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
         SqlConnection myConn = new SqlConnection(DBConnect);
 
+        string text = "SELECT AVG(CONVERT(DECIMAL(16,2),tdRating))  FROM TableStats";
+        SqlCommand cmd = new SqlCommand(text, myConn);
+
         //Stringbuilder sqlcommand = new Stringbuilder();
         //sqlcommand.appendline("select tdrating, tdreview, tdaspect from tablestats;");
         //sqlcommand.appendline("select learning, sightseeing, shopping, culture, meals, hotel from tableaspects;");
-
+        myConn.Open();
+        decimal average = (decimal)cmd.ExecuteScalar();
+        if (text == null)
+        {
+            
+        }
+        else
+        {
+            Label5.Text = "Rating : " + Math.Round(average, 2).ToString();
+        }
         //data adapter; 2 for 2 tables
         SqlDataAdapter da = new SqlDataAdapter("Select tdRating, tdReview, tdAspect, tdSuggestion from TableStats;", myConn);
         //get info from TableStats and TableAspects
@@ -162,7 +177,7 @@ public partial class _Default : System.Web.UI.Page
         {
             //BAR CHART
             DataRow row = ds.Tables["TableStats"].Rows[i];
-            series.Points.AddXY("Student " + (i + 1).ToString(), row["tdRating"]);
+            series.Points.AddXY("Student " + (i + 1).ToString(), row["tdRating"].ToString());
             aspectsList += row["tdAspect"];
             string[] aspects = aspectsList.Split(',');
             ButtonDetails.Enabled = true;
@@ -191,6 +206,8 @@ public partial class _Default : System.Web.UI.Page
         pieseries.Points.AddXY("Culture", sumCulture);
         pieseries.Points.AddXY("Meals", sumMeals);
         pieseries.Points.AddXY("Hotel", sumHotel);
+         
+        myConn.Close();
     }
 
     protected void btnUpload_Click(object sender, EventArgs e)
@@ -294,4 +311,29 @@ public partial class _Default : System.Web.UI.Page
     {
 
     }
+
+    protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            string item = e.Row.Cells[0].Text;
+            foreach (Button button in e.Row.Cells[2].Controls.OfType<Button>())
+            {
+                if (button.CommandName == "Delete")
+                {
+                    button.Attributes["onclick"] = "if(!confirm('Do you want to delete " + item + "?')){ return false; };";
+                }
+            }
+        }
+    }
+
+    protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        int index = Convert.ToInt32(e.RowIndex);
+        DataTable dt = ViewState["dt"] as DataTable;
+        dt.Rows[index].Delete();
+        ViewState["dt"] = dt;
+        GridView1.DataBind();
+    }
+
 }
