@@ -70,6 +70,10 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
+        .toprightcorner{
+            top: 0px;
+            right: 0px;
+        }
 
     </style>
 </asp:Content>
@@ -84,7 +88,7 @@
                 <asp:MultiView ID="MultiViewTrip" runat="server" ActiveViewIndex="0">
                     <asp:View ID="ViewDetails" runat="server"><p>Trip information here.</p><span class="fas fa-igloo"></span></asp:View>
                     <asp:View ID="ViewBlog" runat="server">
-                        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" GridLines="Horizontal" CssClass="blog">
+                        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" GridLines="Horizontal" CssClass="blog" OnRowDataBound="GridView1_RowDataBound" OnRowDeleting="GridView1_RowDeleting">
                             <%-- BLOGS --%>
                             <Columns>
                                 <%--<asp:BoundField DataField="Id" HeaderText ="Id" />
@@ -105,6 +109,7 @@
                                     </ItemTemplate>
 
                                 </asp:TemplateField>
+                                <asp:CommandField ShowDeleteButton="True" ButtonType="Button" DeleteText="X" />
                                
                             </Columns>
                             <RowStyle Width="150px"/>
@@ -174,13 +179,15 @@
                             runat="server" ForeColor="White" Font-Bold="True" CausesValidation="false"><%# Container.DataItem %>
                         </asp:LinkButton>
                     </ItemTemplate>
-                </asp:Repeater>
+                </asp:Repeater>      
             </div>
-        </div>           
+             
+        </div>    
+                                   
         <%--extra information part --%> 
         <asp:Button ID="ButtonMore" runat="server" Text="Read More" CssClass="buttonmore" OnClick="ButtonMore_Click" />
         <asp:Panel ID="PanelMore" runat="server" CssClass="modalpopup">
-            Extra information here.
+            Extra information here. <asp:Label ID="Label5" runat="server" CssClass="toprightcorner"></asp:Label>
             <br />
             <asp:Repeater ID="Repeater2" runat="server"> 
                 <ItemTemplate>
