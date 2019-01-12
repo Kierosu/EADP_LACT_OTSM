@@ -199,7 +199,9 @@ public partial class _Default : System.Web.UI.Page
         string fileName = Path.GetFileName(postedFile.FileName);
         string fileExtension = Path.GetExtension(fileName);
         int fileSize = postedFile.ContentLength;
+        string blogtitle = TextBoxBlogTitle.Text;
         string blogcomment = TextBoxBlogComment.Text;
+        string blogtime = DateTime.Now.ToString("dd MMMM yyyy hh:mm tt");
 
         if (fileExtension.ToLower() == ".jpg" || fileExtension.ToLower() == ".bmp" ||
             fileExtension.ToLower() == ".gif" || fileExtension.ToLower() == ".png")
@@ -244,6 +246,20 @@ public partial class _Default : System.Web.UI.Page
                 };
                 cmd.Parameters.Add(paramComment);
 
+                SqlParameter paramNewTitle = new SqlParameter()
+                {
+                    ParameterName = "@Title",
+                    Value = blogtitle
+                };
+                cmd.Parameters.Add(paramNewTitle);
+
+                SqlParameter paramNewTimeOfUpload = new SqlParameter()
+                {
+                    ParameterName = "@TimeOfUpload",
+                    Value = blogtime
+                };
+                cmd.Parameters.Add(paramNewTimeOfUpload);
+
                 SqlParameter paramNewId = new SqlParameter()
                 {
                     ParameterName = "@NewId",
@@ -260,7 +276,8 @@ public partial class _Default : System.Web.UI.Page
                 lblMessage.Text = "Upload successful";
                 lblMessage.ForeColor = System.Drawing.Color.Green;
                 hyperlink.Visible = true;
-
+                TextBoxBlogTitle.Text = "";
+                TextBoxBlogComment.Text = "";
                 LoadImages();
             }
         }
