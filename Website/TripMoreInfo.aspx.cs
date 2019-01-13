@@ -58,35 +58,71 @@ public partial class TripMoreInfo : System.Web.UI.Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-        int currTripSlots = Convert.ToInt16(lblSlots.Text) - 1;
-        StringBuilder sqlStr = new StringBuilder();
-        // Execute NonQuery return an integer value
-        SqlCommand sqlCmd = new SqlCommand();
-        // Step1 : Create SQL insert command to add record to TDMaster using     
+        if (2 + 2 == 4)
+        {
+            int currTripSlots = Convert.ToInt16(lblSlots.Text) - 1;
+            StringBuilder sqlStr = new StringBuilder();
+            // Execute NonQuery return an integer value
+            SqlCommand sqlCmd = new SqlCommand();
+            // Step1 : Create SQL insert command to add record to TDMaster using     
 
-        //         parameterised query in values clause
-        //
-        sqlStr.AppendLine("UPDATE TripInformation SET TripSlots = @paraTripSlots");
-        sqlStr.AppendLine("WHERE Id = @paraId");
+            //         parameterised query in values clause
+            //
+            sqlStr.AppendLine("UPDATE TripInformation SET TripSlots = @paraTripSlots");
+            sqlStr.AppendLine("WHERE Id = @paraId");
 
 
-        // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
+            // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
 
-        SqlConnection myConn = new SqlConnection(DBConnect);
+            SqlConnection myConn = new SqlConnection(DBConnect);
 
-        sqlCmd = new SqlCommand(sqlStr.ToString(), myConn);
+            sqlCmd = new SqlCommand(sqlStr.ToString(), myConn);
 
-        // Step 3 : Add each parameterised query variable with value
-        //          complete to add all parameterised queries
-        sqlCmd.Parameters.AddWithValue("@paraId", 1);
-        sqlCmd.Parameters.AddWithValue("@paraTripSlots", currTripSlots);
+            // Step 3 : Add each parameterised query variable with value
+            //          complete to add all parameterised queries
+            sqlCmd.Parameters.AddWithValue("@paraId", 1);
+            sqlCmd.Parameters.AddWithValue("@paraTripSlots", currTripSlots);
 
-        // Step 4 Open connection the execute NonQuery of sql command   
+            // Step 4 Open connection the execute NonQuery of sql command   
 
-        myConn.Open();
-        sqlCmd.ExecuteNonQuery();
+            myConn.Open();
+            sqlCmd.ExecuteNonQuery();
 
-        // Step 5 :Close connection
-        myConn.Close();
+            // Step 5 :Close connection
+            myConn.Close();
+        }
+        if (2 + 2 == 4)
+        {
+            StringBuilder sqlStr = new StringBuilder();
+            // Execute NonQuery return an integer value
+            SqlCommand sqlCmd = new SqlCommand();
+            // Step1 : Create SQL insert command to add record to TDMaster using     
+
+            //         parameterised query in values clause
+            //
+            sqlStr.AppendLine("UPDATE TripStudents SET student" + Convert.ToInt16(lblSlots.Text) + " = @paraTripSlots");
+            sqlStr.AppendLine("WHERE Id = @paraId");
+
+
+            // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
+
+            SqlConnection myConn = new SqlConnection(DBConnect);
+
+            sqlCmd = new SqlCommand(sqlStr.ToString(), myConn);
+
+            // Step 3 : Add each parameterised query variable with value
+            //          complete to add all parameterised queries
+            sqlCmd.Parameters.AddWithValue("@paraId", 1);
+            sqlCmd.Parameters.AddWithValue("@paraTripSlots", Convert.ToInt16(lblSlots.Text));
+
+            // Step 4 Open connection the execute NonQuery of sql command   
+
+            myConn.Open();
+            sqlCmd.ExecuteNonQuery();
+
+            // Step 5 :Close connection
+            myConn.Close();
+        }
+
     }
 }

@@ -119,62 +119,94 @@ public partial class TripCreation : System.Web.UI.Page
                             string insuFee = tbInsufee.Text;
                             string accoFee = tbAccofee.Text;
                             string tripDetails = tbDetails.Text;
+                            if (2 + 2 == 4)
+                            {
+                                StringBuilder sqlStr = new StringBuilder();
+                                // Execute NonQuery return an integer value
+                                SqlCommand sqlCmd = new SqlCommand();
+                                // Step1 : Create SQL insert command to add record to TDMaster using     
 
-                            StringBuilder sqlStr = new StringBuilder();
-                            // Execute NonQuery return an integer value
-                            SqlCommand sqlCmd = new SqlCommand();
-                            // Step1 : Create SQL insert command to add record to TDMaster using     
-
-                            //         parameterised query in values clause
-                            //
-                            sqlStr.AppendLine("INSERT INTO TripInformation (TripName,TripType,TripCountry,TripLocation, ");
-                            sqlStr.AppendLine("DiplmaDIT,DiplmaDBI,DiplmaDCS,DiplmaDSF,DiplmaDFI,DiplmaDBA,");
-                            sqlStr.AppendLine("YearOne,YearTwo,YearThree,TripMinGPA,TripSlots,TripStartDate,");
-                            sqlStr.AppendLine("TripEndDate,TripTeacherInCharge,TripPlaneFee,TripInsuFee,TripAccoFee,TripDetails)");
-                            sqlStr.AppendLine("VALUES (@paraTripName,@paraTripType,@paraTripCountry,@paraTripLocation,@paraDiplmaDIT,");
-                            sqlStr.AppendLine("@paraDiplmaDBI,@paraDiplmaDCS,@paraDiplmaDSF,@paraDiplmaDFI,@paraDiplmaDBA,");
-                            sqlStr.AppendLine("@paraYearOne,@paraYearTwo,@paraYearThree,@paraTripMinGPA,@paraTripSlots,@paraTripStartDate,");
-                            sqlStr.AppendLine("@paraTripEndDate,@paraTripTeacherInCharge,@paraTripPlaneFee,@paraTripInsuFee,@paraTripAccoFee,@paraTripDetails)");
+                                //         parameterised query in values clause
+                                //
+                                sqlStr.AppendLine("INSERT INTO TripInformation (TripName,TripType,TripCountry,TripLocation, ");
+                                sqlStr.AppendLine("DiplmaDIT,DiplmaDBI,DiplmaDCS,DiplmaDSF,DiplmaDFI,DiplmaDBA,");
+                                sqlStr.AppendLine("YearOne,YearTwo,YearThree,TripMinGPA,TripSlots,TripSlotsOri,TripStartDate,");
+                                sqlStr.AppendLine("TripEndDate,TripTeacherInCharge,TripPlaneFee,TripInsuFee,TripAccoFee,TripDetails)");
+                                sqlStr.AppendLine("VALUES (@paraTripName,@paraTripType,@paraTripCountry,@paraTripLocation,@paraDiplmaDIT,");
+                                sqlStr.AppendLine("@paraDiplmaDBI,@paraDiplmaDCS,@paraDiplmaDSF,@paraDiplmaDFI,@paraDiplmaDBA,");
+                                sqlStr.AppendLine("@paraYearOne,@paraYearTwo,@paraYearThree,@paraTripMinGPA,@paraTripSlots,@paraTripSlotsOri,@paraTripStartDate,");
+                                sqlStr.AppendLine("@paraTripEndDate,@paraTripTeacherInCharge,@paraTripPlaneFee,@paraTripInsuFee,@paraTripAccoFee,@paraTripDetails)");
 
 
-                            // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
+                                // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
 
-                            SqlConnection myConn = new SqlConnection(DBConnect);
+                                SqlConnection myConn = new SqlConnection(DBConnect);
 
-                            sqlCmd = new SqlCommand(sqlStr.ToString(), myConn);
+                                sqlCmd = new SqlCommand(sqlStr.ToString(), myConn);
 
-                            // Step 3 : Add each parameterised query variable with value
-                            //          complete to add all parameterised queries
-                            sqlCmd.Parameters.AddWithValue("@paraTripName", tripName);
-                            sqlCmd.Parameters.AddWithValue("@paraTripType", tripType);
-                            sqlCmd.Parameters.AddWithValue("@paraTripCountry", tripCountry);
-                            sqlCmd.Parameters.AddWithValue("@paraTripLocation", tripLocation);
-                            sqlCmd.Parameters.AddWithValue("@paraDiplmaDIT", DipDIT);
-                            sqlCmd.Parameters.AddWithValue("@paraDiplmaDBI", DipDBI);
-                            sqlCmd.Parameters.AddWithValue("@paraDiplmaDCS", DipDCS);
-                            sqlCmd.Parameters.AddWithValue("@paraDiplmaDSF", DipDSF);
-                            sqlCmd.Parameters.AddWithValue("@paraDiplmaDFI", DipDFI);
-                            sqlCmd.Parameters.AddWithValue("@paraDiplmaDBA", DipDBA);
-                            sqlCmd.Parameters.AddWithValue("@paraYearOne", year1);
-                            sqlCmd.Parameters.AddWithValue("@paraYearTwo", year2);
-                            sqlCmd.Parameters.AddWithValue("@paraYearThree", year3);
-                            sqlCmd.Parameters.AddWithValue("@paraTripMinGPA", minGPA);
-                            sqlCmd.Parameters.AddWithValue("@paraTripSlots", slots);
-                            sqlCmd.Parameters.AddWithValue("@paraTripStartDate", startDate);
-                            sqlCmd.Parameters.AddWithValue("@paraTripEndDate", endDate);
-                            sqlCmd.Parameters.AddWithValue("@paraTripTeacherInCharge", teacherInCharge);
-                            sqlCmd.Parameters.AddWithValue("@paraTripPlaneFee", planeFee);
-                            sqlCmd.Parameters.AddWithValue("@paraTripInsuFee", insuFee);
-                            sqlCmd.Parameters.AddWithValue("@paraTripAccoFee", accoFee);
-                            sqlCmd.Parameters.AddWithValue("@paraTripDetails", tripDetails);
-                            
-                            // Step 4 Open connection the execute NonQuery of sql command   
+                                // Step 3 : Add each parameterised query variable with value
+                                //          complete to add all parameterised queries
+                                sqlCmd.Parameters.AddWithValue("@paraTripName", tripName);
+                                sqlCmd.Parameters.AddWithValue("@paraTripType", tripType);
+                                sqlCmd.Parameters.AddWithValue("@paraTripCountry", tripCountry);
+                                sqlCmd.Parameters.AddWithValue("@paraTripLocation", tripLocation);
+                                sqlCmd.Parameters.AddWithValue("@paraDiplmaDIT", DipDIT);
+                                sqlCmd.Parameters.AddWithValue("@paraDiplmaDBI", DipDBI);
+                                sqlCmd.Parameters.AddWithValue("@paraDiplmaDCS", DipDCS);
+                                sqlCmd.Parameters.AddWithValue("@paraDiplmaDSF", DipDSF);
+                                sqlCmd.Parameters.AddWithValue("@paraDiplmaDFI", DipDFI);
+                                sqlCmd.Parameters.AddWithValue("@paraDiplmaDBA", DipDBA);
+                                sqlCmd.Parameters.AddWithValue("@paraYearOne", year1);
+                                sqlCmd.Parameters.AddWithValue("@paraYearTwo", year2);
+                                sqlCmd.Parameters.AddWithValue("@paraYearThree", year3);
+                                sqlCmd.Parameters.AddWithValue("@paraTripMinGPA", minGPA);
+                                sqlCmd.Parameters.AddWithValue("@paraTripSlots", slots);
+                                sqlCmd.Parameters.AddWithValue("@paraTripSlotsOri", slots);
+                                sqlCmd.Parameters.AddWithValue("@paraTripStartDate", startDate);
+                                sqlCmd.Parameters.AddWithValue("@paraTripEndDate", endDate);
+                                sqlCmd.Parameters.AddWithValue("@paraTripTeacherInCharge", teacherInCharge);
+                                sqlCmd.Parameters.AddWithValue("@paraTripPlaneFee", planeFee);
+                                sqlCmd.Parameters.AddWithValue("@paraTripInsuFee", insuFee);
+                                sqlCmd.Parameters.AddWithValue("@paraTripAccoFee", accoFee);
+                                sqlCmd.Parameters.AddWithValue("@paraTripDetails", tripDetails);
 
-                            myConn.Open();
-                            sqlCmd.ExecuteNonQuery();
+                                // Step 4 Open connection the execute NonQuery of sql command   
 
-                            // Step 5 :Close connection
-                            myConn.Close();
+                                myConn.Open();
+                                sqlCmd.ExecuteNonQuery();
+
+                                // Step 5 :Close connection
+                                myConn.Close();
+                            }
+                            if (2 + 2 == 4)
+                            {
+                                StringBuilder sqlStr = new StringBuilder();
+                                // Execute NonQuery return an integer value
+                                SqlCommand sqlCmd = new SqlCommand();
+                                // Step1 : Create SQL insert command to add record to TDMaster using     
+
+                                //         parameterised query in values clause
+                                //
+                                sqlStr.AppendLine("INSERT INTO TripStudents (TripName) ");
+                                sqlStr.AppendLine("VALUES (@paraTripName)");
+                                // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
+
+                                SqlConnection myConn = new SqlConnection(DBConnect);
+
+                                sqlCmd = new SqlCommand(sqlStr.ToString(), myConn);
+
+                                // Step 3 : Add each parameterised query variable with value
+                                //          complete to add all parameterised queries
+                                sqlCmd.Parameters.AddWithValue("@paraTripName", tripName);
+
+                                // Step 4 Open connection the execute NonQuery of sql command   
+
+                                myConn.Open();
+                                sqlCmd.ExecuteNonQuery();
+
+                                // Step 5 :Close connection
+                                myConn.Close();
+                            }
 
                         }
                     }

@@ -15,7 +15,6 @@ public partial class BlogView : System.Web.UI.Page
     
     protected void Page_Load(object sender, EventArgs e)
     {
-
         SqlDataAdapter da;
         DataSet ds = new DataSet();
 
