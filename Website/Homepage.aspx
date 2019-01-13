@@ -81,12 +81,74 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
     </asp:ToolkitScriptManager>
-    <table style="width:100%;">
+      
+    <table style="width:100%; right: 0px;">
+             
         <tr>
-            <td class="auto-style2"><asp:Button ID="ButtonDetails" runat="server" class="button" Text="Details" Width="120px" OnClick="ButtonDetails_Click" /></td>
+            <td>
+            <asp:GridView ID="GridViewTrips" runat="server" CellPadding="3" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSource1" BackColor="#DEBA84" BorderColor="#DEBA84" BorderStyle="None" BorderWidth="1px" CellSpacing="2">
+            <Columns>
+                <asp:CommandField ShowSelectButton="True" />
+                <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
+                <asp:BoundField DataField="TripName" HeaderText="TripName" SortExpression="TripName" />
+                <asp:BoundField DataField="TripType" HeaderText="TripType" SortExpression="TripType" />
+            </Columns>
+            <FooterStyle BackColor="#F7DFB5" ForeColor="#8C4510" />
+            <HeaderStyle BackColor="#A55129" Font-Bold="True" ForeColor="White" />
+            <PagerStyle ForeColor="#8C4510" HorizontalAlign="Center" />
+            <RowStyle BackColor="#FFF7E7" ForeColor="#8C4510" />
+            <SelectedRowStyle BackColor="#738A9C" Font-Bold="True" ForeColor="White" />
+            <SortedAscendingCellStyle BackColor="#FFF1D4" />
+            <SortedAscendingHeaderStyle BackColor="#B95C30" />
+            <SortedDescendingCellStyle BackColor="#F1E5CE" />
+            <SortedDescendingHeaderStyle BackColor="#93451F" />
+            </asp:GridView>
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\LACT.mdf;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT [Id], [TripName], [TripType] FROM [TripInformation]"></asp:SqlDataSource>
+            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\LACT.mdf;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="SELECT * FROM [TripInformation] WHERE ([Id] = @Id)">
+            <SelectParameters>
+                <asp:ControlParameter ControlID="GridViewTrips" Name="Id" PropertyName="SelectedValue" Type="Int32" />
+            </SelectParameters>
+            </asp:SqlDataSource>
+
+            </td>
+            <td class="auto-style2">
+                <asp:Button ID="ButtonDetails" runat="server" class="button" Text="Details" Width="120px" OnClick="ButtonDetails_Click" />
+                <asp:Button ID="Button1" runat="server" class="button" Text="Blogs" Width="120px" OnClick="ButtonBlog_Click" />
+                <asp:Button ID="ButtonStats" runat="server" class="button" Text="Statistics" Width="120px" OnClick="ButtonStats_Click" />
+            </td>
+            
             <td rowspan="3">
                 <asp:MultiView ID="MultiViewTrip" runat="server" ActiveViewIndex="0">
-                    <asp:View ID="ViewDetails" runat="server"><p>Trip information here.</p><span class="fas fa-igloo"></span></asp:View>
+                    <asp:View ID="ViewDetails" runat="server"><p>Trip information here.</p>
+                        <asp:DetailsView ID="DetailsView1" runat="server" Height="50px" Width="125px" AutoGenerateRows="False" DataKeyNames="Id" DataSourceID="SqlDataSource2">
+                            <Fields>
+                                <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
+                                <asp:BoundField DataField="TripName" HeaderText="TripName" SortExpression="TripName" />
+                                <asp:BoundField DataField="TripType" HeaderText="TripType" SortExpression="TripType" />
+                                <asp:BoundField DataField="TripCountry" HeaderText="TripCountry" SortExpression="TripCountry" />
+                                <asp:BoundField DataField="TripLocation" HeaderText="TripLocation" SortExpression="TripLocation" />
+                                <asp:BoundField DataField="DiplmaDIT" HeaderText="DiplmaDIT" SortExpression="DiplmaDIT" />
+                                <asp:BoundField DataField="DiplmaDBI" HeaderText="DiplmaDBI" SortExpression="DiplmaDBI" />
+                                <asp:BoundField DataField="DiplmaDCS" HeaderText="DiplmaDCS" SortExpression="DiplmaDCS" />
+                                <asp:BoundField DataField="DiplmaDSF" HeaderText="DiplmaDSF" SortExpression="DiplmaDSF" />
+                                <asp:BoundField DataField="DiplmaDFI" HeaderText="DiplmaDFI" SortExpression="DiplmaDFI" />
+                                <asp:BoundField DataField="DiplmaDBA" HeaderText="DiplmaDBA" SortExpression="DiplmaDBA" />
+                                <asp:BoundField DataField="YearOne" HeaderText="YearOne" SortExpression="YearOne" />
+                                <asp:BoundField DataField="YearTwo" HeaderText="YearTwo" SortExpression="YearTwo" />
+                                <asp:BoundField DataField="YearThree" HeaderText="YearThree" SortExpression="YearThree" />
+                                <asp:BoundField DataField="TripMinGPA" HeaderText="TripMinGPA" SortExpression="TripMinGPA" />
+                                <asp:BoundField DataField="TripSlots" HeaderText="TripSlots" SortExpression="TripSlots" />
+                                <asp:BoundField DataField="TripStartDate" HeaderText="TripStartDate" SortExpression="TripStartDate" />
+                                <asp:BoundField DataField="TripEndDate" HeaderText="TripEndDate" SortExpression="TripEndDate" />
+                                <asp:BoundField DataField="TripTeacherInCharge" HeaderText="TripTeacherInCharge" SortExpression="TripTeacherInCharge" />
+                                <asp:BoundField DataField="TripPlaneFee" HeaderText="TripPlaneFee" SortExpression="TripPlaneFee" />
+                                <asp:BoundField DataField="TripInsuFee" HeaderText="TripInsuFee" SortExpression="TripInsuFee" />
+                                <asp:BoundField DataField="TripAccoFee" HeaderText="TripAccoFee" SortExpression="TripAccoFee" />
+                                <asp:BoundField DataField="TripDetails" HeaderText="TripDetails" SortExpression="TripDetails" />
+                            </Fields>
+                        </asp:DetailsView>
+
+                    </asp:View>
                     <asp:View ID="ViewBlog" runat="server">
                         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" GridLines="Horizontal" CssClass="blog" OnRowDataBound="GridView1_RowDataBound" OnRowDeleting="GridView1_RowDeleting">
                             <%-- BLOGS --%>
@@ -165,7 +227,7 @@
                 <ItemTemplate>
                     <div class="commentbox">
                         <b>
-                            <asp:Label ID="Label1" runat="server" Text='<%#Eval("tdRating") %>'>'></asp:Label> stars {</b>&nbsp;<asp:Label ID="Label2" runat="server" Text='<%#Eval("tdReview") %>'>'></asp:Label> }<br />
+                        <asp:Label ID="Label1" runat="server" Text='<%#Eval("tdRating") %>'>'></asp:Label> stars {</b>&nbsp;<asp:Label ID="Label2" runat="server" Text='<%#Eval("tdReview") %>'>'></asp:Label> }<br />
                         Order : <asp:Label ID="Label3" runat="server" Text='<%#Eval("tdAspect") %>'></asp:Label><br />
                     </div>
                 </ItemTemplate>
@@ -181,21 +243,23 @@
                     </ItemTemplate>
                 </asp:Repeater>      
             </div>
-             
+          
         </div>    
                                    
         <%--extra information part --%> 
         <asp:Button ID="ButtonMore" runat="server" Text="Read More" CssClass="buttonmore" OnClick="ButtonMore_Click" />
         <asp:Panel ID="PanelMore" runat="server" CssClass="modalpopup">
-            Extra information here. <asp:Label ID="Label5" runat="server" CssClass="toprightcorner"></asp:Label>
+            Extra information here. <asp:Label ID="Label5" runat="server" CssClass="toprightcorner"></asp:Label><asp:Button ID="ButtonCancelMore" runat="server" Text="x" CssClass="buttoncancelmore" BorderColor="White" BorderStyle="None" ForeColor="#990000" />
             <br />
             <asp:Repeater ID="Repeater2" runat="server"> 
                 <ItemTemplate>
-                <asp:Label ID="Label4" runat="server" Text='<%#Eval("tdSuggestion") %>'></asp:Label>
-                <br />
+                    <div class="commentbox">
+                    <asp:Label ID="Label4" runat="server" Text='<%#Eval("tdSuggestion") %>'></asp:Label>
+                    <br />
+                    </div>
                 </ItemTemplate>
             </asp:Repeater>
-            <asp:Button ID="ButtonCancelMore" runat="server" Text="x" CssClass="buttoncancelmore" BorderColor="White" BorderStyle="None" ForeColor="#990000" />
+             
         </asp:Panel>
         <asp:ModalPopupExtender ID="ModalPopupExtender1" runat="server" TargetControlID="ButtonMore" BackgroundCssClass="modalBackground" PopupControlID="PanelMore" CancelControlID="ButtonCancelMore"></asp:ModalPopupExtender>
                         </asp:Panel>
@@ -203,15 +267,6 @@
                 </asp:MultiView>
             </td>
         </tr>
-        <tr>
-            <td class="auto-style3">
-            <asp:Button ID="ButtonBlog" runat="server" class="button" Text="Blogs" Width="120px" OnClick="ButtonBlog_Click" />
-            </td>
-        </tr>
-        <tr>
-		    <td class="auto-style2">
-            <asp:Button ID="ButtonStats" runat="server" class="button" Text="Statistics" Width="120px" OnClick="ButtonStats_Click" />
-            </td> 
-        </tr>
+
         </table>
 </asp:Content>
