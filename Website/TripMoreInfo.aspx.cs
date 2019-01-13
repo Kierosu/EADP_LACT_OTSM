@@ -113,7 +113,7 @@ public partial class TripMoreInfo : System.Web.UI.Page
             // Step 3 : Add each parameterised query variable with value
             //          complete to add all parameterised queries
             sqlCmd.Parameters.AddWithValue("@paraId", 1);
-            sqlCmd.Parameters.AddWithValue("@paraTripSlots", Convert.ToInt16(lblSlots.Text));
+            sqlCmd.Parameters.AddWithValue("@paraTripSlots", "adminNo");
 
             // Step 4 Open connection the execute NonQuery of sql command   
 
