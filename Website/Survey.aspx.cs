@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 public partial class Default2 : System.Web.UI.Page
 {
@@ -21,14 +20,24 @@ public partial class Default2 : System.Web.UI.Page
     int aspCulture;
     int aspShopping;
     protected void Page_Load(object sender, EventArgs e)
-    { 
+    {
+        if (Session["ssUsername"] != null && Session["ssFullName"] != null)
+        {
+            LabelAdminNumber.Text = Session["ssUsername"].ToString();
+            LabelName.Text = Session["ssFullName"].ToString();
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Please login first before doing the survey.');", true);
+        }
     }
 
     protected void ButtonSubmit_Click(object sender, EventArgs e)
-    { 
-        if (ListBox1.Items.Count > 0) {
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please order ALL of the aspects.')", true);
-        } 
+    {
+        if (ListBox1.Items.Count > 0)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Please order all of the aspects');", true);
+        }
         else
         {
             //string to be stored in TableStats, array used for TableAspects
@@ -45,16 +54,17 @@ public partial class Default2 : System.Web.UI.Page
             String rating = Rating1.CurrentRating.ToString();
             //User's order of aspects are stored in string 'orderofaspects' via index in one whole string from 1-5 
             //and the 6th index is separate because no comma at the end
-            for (int i =0; i < 5; i++) {  
-              orderofaspects += ListBox2.Items[i].ToString() + "," ;
-              aspects[i] = ListBox2.Items[i].ToString();
-                                        }
-                orderofaspects += ListBox2.Items[5].ToString();
+            for (int i = 0; i < 5; i++)
+            {
+                orderofaspects += ListBox2.Items[i].ToString() + ",";
+                aspects[i] = ListBox2.Items[i].ToString();
+            }
+            orderofaspects += ListBox2.Items[5].ToString();
             //each item is stored in 'aspects' array (including 6th element)
             for (int a = 0; a < 6; a++)
-                {
-                    aspects[a] = ListBox2.Items[a].ToString();
-                }
+            {
+                aspects[a] = ListBox2.Items[a].ToString();
+            }
             // find index + 1 of each item in string for each column in TableAspects
             for (int j = 0; j < 6; j++)
             {
@@ -86,15 +96,17 @@ public partial class Default2 : System.Web.UI.Page
             StringBuilder sqlCommand = new StringBuilder();
             //Query to insert survey info into TableStats
             //2 queries for 2 tables
-            sqlCommand.AppendLine("INSERT INTO TableStats (tdRating, tdReview, tdAspect)");
-            sqlCommand.AppendLine("VALUES (@paratdRating, @paratdReview, @paratdAspect);");
+            sqlCommand.AppendLine("INSERT INTO TableStats (tdRating, tdReview, tdAspect, tdSuggestion)");
+            sqlCommand.AppendLine("VALUES (@paratdRating, @paratdReview, @paratdAspect, @paratdSuggestion);");
             sqlCommand.AppendLine("INSERT INTO TableAspects (Learning, Sightseeing, Shopping, Culture, Meals, Hotel)");
             sqlCommand.AppendLine("VALUES (@paraLearning, @paraSightseeing, @paraShopping, @paraCulture, @paraMeals, @paraHotel);");
             sqlCmd = new SqlCommand(sqlCommand.ToString(), myConn);
-            //add values in parameters (prevent sql injection)
+            //add values in parameters (prevent sql injection) for TableStats
             sqlCmd.Parameters.AddWithValue("@paratdRating", rating);
             sqlCmd.Parameters.AddWithValue("@paratdReview", review);
             sqlCmd.Parameters.AddWithValue("@paratdAspect", orderofaspects);
+            sqlCmd.Parameters.AddWithValue("@paratdSuggestion", TextBoxSuggestions.Text);
+            //for TableAspects
             sqlCmd.Parameters.AddWithValue("@paraLearning", aspLearning);
             sqlCmd.Parameters.AddWithValue("@paraSightseeing", aspSightseeing);
             sqlCmd.Parameters.AddWithValue("@paraShopping", aspShopping);
@@ -106,13 +118,26 @@ public partial class Default2 : System.Web.UI.Page
             result = sqlCmd.ExecuteNonQuery();
 
             myConn.Close();
+            
+            Response.Redirect("SurveyComplete.aspx");
         }
-         
+
     }
 
     protected void ButtonClear_Click(object sender, EventArgs e)
     {
-         
+        // Find your Account Sid and Token at twilio.com / console
+        //const string accountSid = "AC438c503e0ec86213653311e200474196";
+        //const string authToken = "05fcee3b0a642a1fa3f727861d51f1bc";
+
+        //TwilioClient.Init(accountSid, authToken);
+
+        //var message = MessageResource.Create(
+        //    body: "Your {{1}} code is {{2}}",
+        //    from: new Twilio.Types.PhoneNumber("whatsapp:+18144085587"),
+        //    to: new Twilio.Types.PhoneNumber("whatsapp:+6591306364")
+        //);
+        //Console.WriteLine(message.Sid);
     }
 
 
@@ -122,15 +147,15 @@ public partial class Default2 : System.Web.UI.Page
         SelectedIndex = ListBox1.SelectedIndex;
         ListBox2.Items.Add(selectedItemText);
         ListBox1.Items.RemoveAt(ListBox1.Items.IndexOf(ListBox1.SelectedItem));
-       
-      
+
+
     }
 
     protected void ButtonRemove_Click(object sender, EventArgs e)
     {
         selectedItemText = ListBox2.SelectedItem.ToString();
         SelectedIndex = ListBox2.SelectedIndex;
-        
+
         ListBox2.Items.RemoveAt(ListBox2.Items.IndexOf(ListBox2.SelectedItem));
         ListBox1.Items.Add(selectedItemText);
 

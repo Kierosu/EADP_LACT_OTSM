@@ -4,8 +4,18 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
-        .Textbox {
+        .TextboxComment {
             resize:none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .txtbox
+        {
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
         }
         .auto-style1 {
             width: 414px;
@@ -46,16 +56,25 @@
             float: right;
             width: 89px;
         }                   
-        .listbox{    
+        .listbox {    
             border-top-style: none;
 	        border-right-style: none;
 	        border-left-style: none;
 	        border-bottom-style: none; 
             overflow:hidden;
-                }
+         }
+        .clearbtn {
+             background-color: #4CAF50;   
+             border: none;  
+             color: white; 
+             font-size: 14px;  
+             margin: 4px 2px;  
+             cursor: pointer; 
+        }
     </style>
 
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <h3 class="title"style="background-color: black; color: #FFFFFF;">NYP Trip Survey</h3>
     <div>
@@ -63,28 +82,24 @@
         <table style="width:100%;">
             <tr>
                 <td class="auto-style2">Admin Number :
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBox1" ErrorMessage="Admin number is required" Text="*" Font-Underline="False" ForeColor="Red"
-                        >*</asp:RequiredFieldValidator>
                 </td>
                 <td>
-                    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                    &nbsp;<asp:Label ID="LabelAdminNumber" runat="server"></asp:Label>
                 </td>
          
             </tr>
             <tr>
-                <td class="auto-style2">Name : 
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Name is required" ControlToValidate="TextBox2" Font-Underline="False" ForeColor="Red">*</asp:RequiredFieldValidator>
+                <td class="auto-style2">Name :  
                 </td>
                 <td class="auto-style5">
-                    <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
-                </td>
+                    &nbsp;<asp:Label ID="LabelName" runat="server"></asp:Label></td>
 
             </tr>
             <tr>
                 <td class="auto-style2" colspan="1">Trip ID :&nbsp; 
                     </td>
                 <td class="auto-style1">
-                    <asp:TextBox ID="TextBoxTripID" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="TextBoxTripID" runat="server" cssclass="txtbox"></asp:TextBox>
                 </td>
             
             </tr>
@@ -104,7 +119,7 @@
             <tr>
                 <td class="auto-style2" colspan="1">Write a short review:</td>
                 <td class="auto-style1">
-                    <asp:TextBox runat="server" ID="textBoxComment" TextMode="MultiLine" Rows="10" Height="200px" Width="376px" CssClass="Textbox"/></td>
+                    <asp:TextBox runat="server" ID="textBoxComment" TextMode="MultiLine" Rows="10" Height="200px" Width="376px" CssClass="TextboxComment"/></td>
             
             </tr>
             <tr>
@@ -153,14 +168,14 @@
             <tr>
                 <td class="auto-style2" colspan="1">Suggestions to improve trip?</td>
                 <td class="auto-style1">
-                    <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="TextBoxSuggestions" runat="server" TextMode="MultiLine" Rows="10" Height="200px" Width="376px" CssClass="TextboxComment"></asp:TextBox>
                    </td>
             
             </tr>
             <tr>
                 <td class="auto-style2" colspan="1"></td>
                 <td class="auto-style1">
-                    <asp:Button ID="ButtonClear" runat="server" Text="Clear" OnClick="ButtonClear_Click" />
+                    <asp:Button ID="ButtonClear" runat="server" Text="Clear All" CssClass="clearbtn" OnClick="ButtonClear_Click" />
                     <asp:Button ID="ButtonSubmit" runat="server" Text="Submit" CssClass="auto-style3" OnClick="ButtonSubmit_Click" />
                    </td>
             
@@ -177,14 +192,7 @@
     <p>
 &nbsp;&nbsp;&nbsp;
     </p>
-        <asp:Panel ID="panelChoice" runat="server" Visible="False">
-            Thank you doing the survey:<br />
-            <asp:Label ID="Label1" runat="server"></asp:Label>
-            <br />
-        </asp:Panel>
          
-        
-
         <script type="text/javascript">
             // Move an element directly on top of another element (and optionally
             // make it the same size)

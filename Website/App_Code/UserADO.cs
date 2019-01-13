@@ -22,13 +22,12 @@ namespace LACTWebsite
             StringBuilder sqlQuery = new StringBuilder();
             sqlQuery.AppendLine("SELECT Username, Password, Role, FullName");
             sqlQuery.AppendLine("FROM Users");
-
             sqlQuery.AppendLine("WHERE Username = @paraUsername AND Password = @paraPassword AND Role = @paraRole");
 
             da = new SqlDataAdapter(sqlQuery.ToString(), userConn);
-            da.SelectCommand.Parameters.AddWithValue("paraUsername", username);
-            da.SelectCommand.Parameters.AddWithValue("paraPassword", password);
-            da.SelectCommand.Parameters.AddWithValue("paraRole", role);
+            da.SelectCommand.Parameters.AddWithValue("@paraUsername", username);
+            da.SelectCommand.Parameters.AddWithValue("@paraPassword", password);
+            da.SelectCommand.Parameters.AddWithValue("@paraRole", role);
 
             User loginUser = new User();
 

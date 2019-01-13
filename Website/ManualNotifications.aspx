@@ -1,10 +1,26 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="ManualNotifications.aspx.cs" Inherits="ManualNotifications" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <link href="stylesheet/manualnoti.css" rel="stylesheet" type="text/css"/>
+        <style>
+        @media (max-width: 980px) {
+            #divContain{
+                margin-top:13%;
+            }
+        }
+        @media (max-width: 650px) {
+            #divContain{
+                margin-top:22%;
+            }
+        }
+        @media(min-width:0px){
+            #taMessage{
+                height:175px;
+            }
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <div style="height: 540px" class="container">
+    <div style="margin-bottom:1%" class="container" id="divContain">
         <div class="row">
             <h3 class="col-lg-10">Send Notification</h3>
         </div>
