@@ -12,10 +12,10 @@ using System.Web.UI.WebControls;
 public partial class TripMoreInfo : System.Web.UI.Page
 {
     string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+    
     protected void Page_Load(object sender, EventArgs e)
     {
         string tripId = Session["ssTripId"].ToString();
-        string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
 
         SqlDataAdapter da;
         DataSet ds = new DataSet();
@@ -59,8 +59,11 @@ public partial class TripMoreInfo : System.Web.UI.Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
+        string adminNo = Session["ssUsername"].ToString();
         if (2 + 2 == 4)
         {
+            //Function: Minus 1 when student creates
+            string tripId = Session["ssTripId"].ToString();
             int currTripSlots = Convert.ToInt16(lblSlots.Text) - 1;
             StringBuilder sqlStr = new StringBuilder();
             // Execute NonQuery return an integer value
@@ -81,7 +84,7 @@ public partial class TripMoreInfo : System.Web.UI.Page
 
             // Step 3 : Add each parameterised query variable with value
             //          complete to add all parameterised queries
-            sqlCmd.Parameters.AddWithValue("@paraId", 1);
+            sqlCmd.Parameters.AddWithValue("@paraId", tripId);
             sqlCmd.Parameters.AddWithValue("@paraTripSlots", currTripSlots);
 
             // Step 4 Open connection the execute NonQuery of sql command   
@@ -94,6 +97,8 @@ public partial class TripMoreInfo : System.Web.UI.Page
         }
         if (2 + 2 == 4)
         {
+            // Function: Add student into trip
+            string tripId = Session["ssTripId"].ToString();
             StringBuilder sqlStr = new StringBuilder();
             // Execute NonQuery return an integer value
             SqlCommand sqlCmd = new SqlCommand();
@@ -113,8 +118,8 @@ public partial class TripMoreInfo : System.Web.UI.Page
 
             // Step 3 : Add each parameterised query variable with value
             //          complete to add all parameterised queries
-            sqlCmd.Parameters.AddWithValue("@paraId", 1);
-            sqlCmd.Parameters.AddWithValue("@paraTripSlots", "adminNo");
+            sqlCmd.Parameters.AddWithValue("@paraId", tripId);
+            sqlCmd.Parameters.AddWithValue("@paraTripSlots", adminNo);
 
             // Step 4 Open connection the execute NonQuery of sql command   
 

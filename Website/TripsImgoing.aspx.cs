@@ -9,15 +9,18 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class TripView : System.Web.UI.Page
+public partial class TripsImgoing : System.Web.UI.Page
 {
     string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+    int totalSlots=0;
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        string adminNo = Session["ssUsername"].ToString();
+        List<TripInformations> tdList = new List<TripInformations>();
+        List<TripInformations> tdList2 = new List<TripInformations>();
         if (2 + 2 == 4)
         {
-            // Trips Available
-            List<TripInformations> tdList = new List<TripInformations>();
             DataSet ds = new DataSet();
             DataTable tdData = new DataTable();
             //
@@ -25,7 +28,7 @@ public partial class TripView : System.Web.UI.Page
             //          where TD is not matured yet
 
             StringBuilder sqlStr = new StringBuilder();
-            sqlStr.AppendLine("SELECT * From TripInformation");
+            sqlStr.AppendLine("SELECT * From TripStudents");
 
             // Step 4 :Instantiate SqlConnection instance and SqlDataAdapter instance
 
@@ -46,42 +49,25 @@ public partial class TripView : System.Web.UI.Page
             {
                 foreach (DataRow row in ds.Tables["TableTD"].Rows)
                 {
-                    TripInformations myTD = new TripInformations();
 
-                    // Step 8 Set attribute of timeDeposit instance for each row of record in TableTD
-                    if(row["TripSlots"].ToString() != "0")
+                    TripInformations myTD = new TripInformations();
+                    for (int i = 0; i < totalSlots; i++)
                     {
-                        myTD.Id = Convert.ToInt16(row["Id"]);
-                        myTD.TripName = row["TripName"].ToString();
-                        myTD.TripType = row["TripType"].ToString();
-                        myTD.TripCountry = row["TripCountry"].ToString();
-                        myTD.TripLocation = row["TripLocation"].ToString();
-                        myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
-                        myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
-                        myTD.TripSlots = row["TripSlots"].ToString();
-                        //  Step 9: Add each timeDeposit instance to array list
-                        tdList.Add(myTD);
+                        if (adminNo == row["students" + totalSlots.ToString()].ToString())
+                        {
+                            myTD.Id = Convert.ToInt32(row["Id"]);
+                        }
                     }
+                    // Step 8 Set attribute of timeDeposit instance for each row of record in TableTD
                 }
             }
             else
             {
                 tdList = null;
             }
-
-            GridViewTD.DataSource = tdList;
-            GridViewTD.DataBind();
         }
-       
+
+        
     }
 
-
-
-    protected void GridViewTD_RowCommand(object sender, GridViewCommandEventArgs e)
-    {
-        int i = Convert.ToInt32(e.CommandArgument);
-        GridViewRow row = GridViewTD.Rows[i];
-        Session["ssTripId"] = row.Cells[0].Text;
-        Response.Redirect("TripMoreInfo.aspx");
-    }
 }

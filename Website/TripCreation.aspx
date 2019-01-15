@@ -265,11 +265,6 @@
     </div>
     <br />
     <div class="form-group">
-        <asp:Label ID="LabelTeachInCharge" runat="server" Text="Teacher - In - Charge : "></asp:Label>
-        <asp:Label ID="lblTeacher" runat="server"></asp:Label>
-    </div>
-    <br />
-    <div class="form-group">
         <asp:Label ID="Label1" runat="server" Text="Plane Ticket Fees : $"></asp:Label>
         <asp:TextBox ID="tbPlanefee" runat="server"></asp:TextBox>
         <asp:Label ID="lblPlaneErr" runat="server" ForeColor="Red"></asp:Label>

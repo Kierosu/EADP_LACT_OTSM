@@ -11,16 +11,13 @@ using System.Web.UI.WebControls;
 public partial class TripCreation : System.Web.UI.Page
 {
     string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+    string teacherInCharge = "";
+    string teacherInChargeNo = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (2 + 2 == 4)
-        {
-
-        }else
-        {
-            lblTeacher.Text = Session["ssUsername"].ToString();
-        }
+        teacherInCharge = Session["ssFullName"].ToString();
+        teacherInChargeNo = Session["ssUsername"].ToString();
     }
 
     protected void Button1_Click(object sender, EventArgs e)
@@ -120,7 +117,6 @@ public partial class TripCreation : System.Web.UI.Page
                             string endYear = ddlEndyear.SelectedValue;
                             string endDateR = endDay + "/" + endMth + "/" + endYear;
                             DateTime endDate = Convert.ToDateTime(endDateR);
-                            string teacherInCharge = lblTeacher.Text;
                             string planeFee = tbPlanefee.Text;
                             string insuFee = tbInsufee.Text;
                             string accoFee = tbAccofee.Text;
@@ -137,11 +133,11 @@ public partial class TripCreation : System.Web.UI.Page
                                 sqlStr.AppendLine("INSERT INTO TripInformation (TripName,TripType,TripCountry,TripLocation, ");
                                 sqlStr.AppendLine("DiplmaDIT,DiplmaDBI,DiplmaDCS,DiplmaDSF,DiplmaDFI,DiplmaDBA,");
                                 sqlStr.AppendLine("YearOne,YearTwo,YearThree,TripMinGPA,TripSlots,TripSlotsOri,TripStartDate,");
-                                sqlStr.AppendLine("TripEndDate,TripTeacherInCharge,TripPlaneFee,TripInsuFee,TripAccoFee,TripDetails)");
+                                sqlStr.AppendLine("TripEndDate,TripTeacherInCharge,TripTeacherInChargeNo,TripPlaneFee,TripInsuFee,TripAccoFee,TripDetails)");
                                 sqlStr.AppendLine("VALUES (@paraTripName,@paraTripType,@paraTripCountry,@paraTripLocation,@paraDiplmaDIT,");
                                 sqlStr.AppendLine("@paraDiplmaDBI,@paraDiplmaDCS,@paraDiplmaDSF,@paraDiplmaDFI,@paraDiplmaDBA,");
                                 sqlStr.AppendLine("@paraYearOne,@paraYearTwo,@paraYearThree,@paraTripMinGPA,@paraTripSlots,@paraTripSlotsOri,@paraTripStartDate,");
-                                sqlStr.AppendLine("@paraTripEndDate,@paraTripTeacherInCharge,@paraTripPlaneFee,@paraTripInsuFee,@paraTripAccoFee,@paraTripDetails)");
+                                sqlStr.AppendLine("@paraTripEndDate,@paraTripTeacherInCharge,@paraTripTeacherInChargeNo,@paraTripPlaneFee,@paraTripInsuFee,@paraTripAccoFee,@paraTripDetails)");
 
 
                                 // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
@@ -171,6 +167,7 @@ public partial class TripCreation : System.Web.UI.Page
                                 sqlCmd.Parameters.AddWithValue("@paraTripStartDate", startDate);
                                 sqlCmd.Parameters.AddWithValue("@paraTripEndDate", endDate);
                                 sqlCmd.Parameters.AddWithValue("@paraTripTeacherInCharge", teacherInCharge);
+                                sqlCmd.Parameters.AddWithValue("@paraTripTeacherInChargeNo", teacherInChargeNo);
                                 sqlCmd.Parameters.AddWithValue("@paraTripPlaneFee", planeFee);
                                 sqlCmd.Parameters.AddWithValue("@paraTripInsuFee", insuFee);
                                 sqlCmd.Parameters.AddWithValue("@paraTripAccoFee", accoFee);
@@ -193,8 +190,8 @@ public partial class TripCreation : System.Web.UI.Page
 
                                 //         parameterised query in values clause
                                 //
-                                sqlStr.AppendLine("INSERT INTO TripStudents (TripName) ");
-                                sqlStr.AppendLine("VALUES (@paraTripName)");
+                                sqlStr.AppendLine("INSERT INTO TripStudents (TripName, TripSlots) ");
+                                sqlStr.AppendLine("VALUES (@paraTripName, @paraTripSlots)");
                                 // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
 
                                 SqlConnection myConn = new SqlConnection(DBConnect);
@@ -204,6 +201,7 @@ public partial class TripCreation : System.Web.UI.Page
                                 // Step 3 : Add each parameterised query variable with value
                                 //          complete to add all parameterised queries
                                 sqlCmd.Parameters.AddWithValue("@paraTripName", tripName);
+                                sqlCmd.Parameters.AddWithValue("@paraTripSlots", slots);
 
                                 // Step 4 Open connection the execute NonQuery of sql command   
 
