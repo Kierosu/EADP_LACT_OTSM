@@ -129,4 +129,12 @@ public partial class TripsImgoing : System.Web.UI.Page
 
     }
 
+
+    protected void GridViewTD_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int i = Convert.ToInt32(e.CommandArgument);
+        GridViewRow row = GridViewTD.Rows[i];
+        Session["ssTripId"] = row.Cells[0].Text;
+        Response.Redirect("BlogView.aspx");
+    }
 }

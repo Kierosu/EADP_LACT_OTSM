@@ -15,6 +15,8 @@ public partial class BlogView : System.Web.UI.Page
     
     protected void Page_Load(object sender, EventArgs e)
     {
+        int tripId = Convert.ToInt32(Session["ssTripId"]);
+        // Show 1 picture from blog
         SqlDataAdapter da;
         DataSet ds = new DataSet();
 
@@ -29,7 +31,7 @@ public partial class BlogView : System.Web.UI.Page
 
         SqlConnection myConn = new SqlConnection(DBConnect);
         da = new SqlDataAdapter(sqlCommand.ToString(), myConn);
-        da.SelectCommand.Parameters.AddWithValue("paraId", 1);
+        da.SelectCommand.Parameters.AddWithValue("paraId", tripId);
         // fill dataset
         da.Fill(ds, "tripblogTable");
         int rec_cnt = ds.Tables["tripblogTable"].Rows.Count;
