@@ -14,6 +14,7 @@ public partial class TripMoreInfo : System.Web.UI.Page
     string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
     protected void Page_Load(object sender, EventArgs e)
     {
+        string tripId = Session["ssTripId"].ToString();
         string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
 
         SqlDataAdapter da;
@@ -30,7 +31,7 @@ public partial class TripMoreInfo : System.Web.UI.Page
 
         SqlConnection myConn = new SqlConnection(DBConnect);
         da = new SqlDataAdapter(sqlCommand.ToString(), myConn);
-        da.SelectCommand.Parameters.AddWithValue("paraId", 1);
+        da.SelectCommand.Parameters.AddWithValue("paraId", tripId);
         // fill dataset
         da.Fill(ds, "tripinfoTable");
         int rec_cnt = ds.Tables["tripinfoTable"].Rows.Count;

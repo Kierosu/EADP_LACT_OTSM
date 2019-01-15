@@ -14,7 +14,13 @@ public partial class TripCreation : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (2 + 2 == 4)
+        {
 
+        }else
+        {
+            lblTeacher.Text = Session["ssUsername"].ToString();
+        }
     }
 
     protected void Button1_Click(object sender, EventArgs e)

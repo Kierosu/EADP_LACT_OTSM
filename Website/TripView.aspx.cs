@@ -46,7 +46,7 @@ public partial class TripView : System.Web.UI.Page
                 TripInformations myTD = new TripInformations();
 
                 // Step 8 Set attribute of timeDeposit instance for each row of record in TableTD
-
+                myTD.Id = Convert.ToInt16(row["Id"]);
                 myTD.TripName = row["TripName"].ToString();
                 myTD.TripType = row["TripType"].ToString();
                 myTD.TripCountry = row["TripName"].ToString();
@@ -67,8 +67,13 @@ public partial class TripView : System.Web.UI.Page
         GridViewTD.DataBind();
     }
 
-    protected void GridViewTD_SelectedIndexChanged(object sender, EventArgs e)
+
+
+    protected void GridViewTD_RowCommand(object sender, GridViewCommandEventArgs e)
     {
+        int i = Convert.ToInt32(e.CommandArgument);
+        GridViewRow row = GridViewTD.Rows[i];
+        Session["ssTripId"] = row.Cells[0].Text;
         Response.Redirect("TripMoreInfo.aspx");
     }
 }
