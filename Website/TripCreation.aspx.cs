@@ -22,6 +22,7 @@ public partial class TripCreation : System.Web.UI.Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
+        validateStartDate();
         validateGPAmin();
         validateSlots();
         validatePlaneFee();
@@ -224,10 +225,24 @@ public partial class TripCreation : System.Web.UI.Page
         string startDay = ddlStartday.SelectedValue;
         string startMth = ddlStartmth.SelectedValue;
         string startYear = ddlStartyear.SelectedValue;
-        string startDate = startDay + "/" + startMth + "/" + startYear;
-        if (1 + 1 == 2)
+        string startDateR = startDay + "/" + startMth + "/" + startYear;
+        DateTime startDate = Convert.ToDateTime(startDateR);
+        string endDay = ddlEndday.SelectedValue;
+        string endMth = ddlEndmth.SelectedValue;
+        string endYear = ddlEndyear.SelectedValue;
+        string endDateR = endDay + "/" + endMth + "/" + endYear;
+        DateTime endDate = Convert.ToDateTime(endDateR);
+        
+        DateTime currentDate = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy"));
+        lblDateErr.Text += (currentDate - startDate).TotalDays;
+        lblDateErr.Text += (startDate - endDate).TotalDays;
+        if ((currentDate - startDate).TotalDays >=0)
         {
-            lblDateErr.Text += startDate;
+            lblDateErr.Text += "Please enter a date after today ";
+        }
+        if((endDate - startDate).TotalDays <= 0)
+        {
+            lblDateErr.Text += "End Date must be after Start date";
         }
         if (String.IsNullOrEmpty(lblDateErr.Text))
         {
@@ -248,12 +263,24 @@ public partial class TripCreation : System.Web.UI.Page
         }
         if (String.IsNullOrEmpty(lblGPAmin.Text))
         {
-            return true;
+            if (Convert.ToInt32(tbGPAmin.Text) > 4 || Convert.ToInt32(tbGPAmin.Text) < 0)
+            {
+                lblGPAmin.Text += "* Within 0 and 4 only ";
+            }
+            if (String.IsNullOrEmpty(lblGPAmin.Text))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
             return false;
         }
+        
     }
     private bool validateSlots()
     {
@@ -265,12 +292,28 @@ public partial class TripCreation : System.Web.UI.Page
         }
         if (String.IsNullOrEmpty(lblSlots.Text))
         {
-            return true;
+            if (Convert.ToInt32(tbSlots.Text) > 100)
+            {
+                lblSlots.Text += "* Max Slot 100 ";
+            }
+            if (Convert.ToInt32(tbSlots.Text) < 0)
+            {
+                lblSlots.Text += "* Slots has to be more than 0 ";
+            }
+            if (String.IsNullOrEmpty(lblSlots.Text))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
             return false;
         }
+        
     }
 
     private bool validatePlaneFee()
