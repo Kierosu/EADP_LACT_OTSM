@@ -14,9 +14,54 @@ public partial class TripView : System.Web.UI.Page
     string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
     protected void Page_Load(object sender, EventArgs e)
     {
+        string adminNo = Session["ssUsername"].ToString();
+        double gpa = 0;
+        string diploma = "";
+        string userYear = "";
         if (2 + 2 == 4)
         {
-            // Trips Available
+            TripInformations myTD = new TripInformations();
+            // Extract student gpa, diploma and year
+            DataSet ds = new DataSet();
+            DataTable tdData = new DataTable();
+            //
+            // Step 3 :Create SQLcommand to select all columns from TDMaster by parameterised customer id
+            //          where TD is not matured yet
+
+            StringBuilder sqlStr = new StringBuilder();
+            sqlStr.AppendLine("SELECT * From Users");
+            sqlStr.AppendLine("where Username = @paraUsername");
+
+            // Step 4 :Instantiate SqlConnection instance and SqlDataAdapter instance
+
+            SqlConnection myConn = new SqlConnection(DBConnect);
+            SqlDataAdapter da = new SqlDataAdapter(sqlStr.ToString(), myConn);
+
+            da.SelectCommand.Parameters.AddWithValue("paraUsername", adminNo);
+
+            // Step 6: fill dataset
+            da.Fill(ds, "TableTD");
+
+
+            // Step 7: Iterate the rows from TableTD above to create a collection of TD
+            //         for this particular customer 
+
+            int rec_cnt = ds.Tables["TableTD"].Rows.Count;
+            if (rec_cnt > 0)
+            {
+                DataRow row = ds.Tables["TableTD"].Rows[0];
+                gpa = Convert.ToDouble(row["GPA"]);
+                diploma = row["Diploma"].ToString();
+                userYear = row["userYear"].ToString();
+            }
+            else
+            {
+
+            }
+        }
+        if (2 + 2 == 4)
+        {
+            // Get all Trips Available
             List<TripInformations> tdList = new List<TripInformations>();
             DataSet ds = new DataSet();
             DataTable tdData = new DataTable();
@@ -51,16 +96,244 @@ public partial class TripView : System.Web.UI.Page
                     // Step 8 Set attribute of timeDeposit instance for each row of record in TableTD
                     if(row["TripSlots"].ToString() != "0")
                     {
-                        myTD.Id = Convert.ToInt16(row["Id"]);
-                        myTD.TripName = row["TripName"].ToString();
-                        myTD.TripType = row["TripType"].ToString();
-                        myTD.TripCountry = row["TripCountry"].ToString();
-                        myTD.TripLocation = row["TripLocation"].ToString();
-                        myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
-                        myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
-                        myTD.TripSlots = row["TripSlots"].ToString();
+                        if (gpa > Convert.ToDouble(row["TripMinGPA"]))
+                        {
+                            if(diploma == row["DiplmaDIT"].ToString())
+                            {
+                                if(userYear == row["YearOne"].ToString())
+                                {
+                                    myTD.Id = Convert.ToInt16(row["Id"]);
+                                    myTD.TripName = row["TripName"].ToString();
+                                    myTD.TripType = row["TripType"].ToString();
+                                    myTD.TripCountry = row["TripCountry"].ToString();
+                                    myTD.TripLocation = row["TripLocation"].ToString();
+                                    myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
+                                    myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
+                                    myTD.TripSlots = row["TripSlots"].ToString();
+                                    tdList.Add(myTD);
+                                }
+                                else if (userYear == row["YearTwo"].ToString())
+                                {
+                                    myTD.Id = Convert.ToInt16(row["Id"]);
+                                    myTD.TripName = row["TripName"].ToString();
+                                    myTD.TripType = row["TripType"].ToString();
+                                    myTD.TripCountry = row["TripCountry"].ToString();
+                                    myTD.TripLocation = row["TripLocation"].ToString();
+                                    myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
+                                    myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
+                                    myTD.TripSlots = row["TripSlots"].ToString();
+                                    tdList.Add(myTD);
+                                }
+                                else if(userYear == row["YearThree"].ToString())
+                                {
+                                    myTD.Id = Convert.ToInt16(row["Id"]);
+                                    myTD.TripName = row["TripName"].ToString();
+                                    myTD.TripType = row["TripType"].ToString();
+                                    myTD.TripCountry = row["TripCountry"].ToString();
+                                    myTD.TripLocation = row["TripLocation"].ToString();
+                                    myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
+                                    myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
+                                    myTD.TripSlots = row["TripSlots"].ToString();
+                                    tdList.Add(myTD);
+                                }
+                            }
+                            else if (diploma == row["DiplmaDBI"].ToString())
+                            {
+                                if (userYear == row["YearOne"].ToString())
+                                {
+                                    myTD.Id = Convert.ToInt16(row["Id"]);
+                                    myTD.TripName = row["TripName"].ToString();
+                                    myTD.TripType = row["TripType"].ToString();
+                                    myTD.TripCountry = row["TripCountry"].ToString();
+                                    myTD.TripLocation = row["TripLocation"].ToString();
+                                    myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
+                                    myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
+                                    myTD.TripSlots = row["TripSlots"].ToString();
+                                    tdList.Add(myTD);
+                                }
+                                else if (userYear == row["YearTwo"].ToString())
+                                {
+                                    myTD.Id = Convert.ToInt16(row["Id"]);
+                                    myTD.TripName = row["TripName"].ToString();
+                                    myTD.TripType = row["TripType"].ToString();
+                                    myTD.TripCountry = row["TripCountry"].ToString();
+                                    myTD.TripLocation = row["TripLocation"].ToString();
+                                    myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
+                                    myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
+                                    myTD.TripSlots = row["TripSlots"].ToString();
+                                    tdList.Add(myTD);
+                                }
+                                else if (userYear == row["YearThree"].ToString())
+                                {
+                                    myTD.Id = Convert.ToInt16(row["Id"]);
+                                    myTD.TripName = row["TripName"].ToString();
+                                    myTD.TripType = row["TripType"].ToString();
+                                    myTD.TripCountry = row["TripCountry"].ToString();
+                                    myTD.TripLocation = row["TripLocation"].ToString();
+                                    myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
+                                    myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
+                                    myTD.TripSlots = row["TripSlots"].ToString();
+                                    tdList.Add(myTD);
+                                }
+                            }
+                            else if (diploma == row["DiplmaDCS"].ToString())
+                            {
+                                if (userYear == row["YearOne"].ToString())
+                                {
+                                    myTD.Id = Convert.ToInt16(row["Id"]);
+                                    myTD.TripName = row["TripName"].ToString();
+                                    myTD.TripType = row["TripType"].ToString();
+                                    myTD.TripCountry = row["TripCountry"].ToString();
+                                    myTD.TripLocation = row["TripLocation"].ToString();
+                                    myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
+                                    myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
+                                    myTD.TripSlots = row["TripSlots"].ToString();
+                                    tdList.Add(myTD);
+                                }
+                                else if (userYear == row["YearTwo"].ToString())
+                                {
+                                    myTD.Id = Convert.ToInt16(row["Id"]);
+                                    myTD.TripName = row["TripName"].ToString();
+                                    myTD.TripType = row["TripType"].ToString();
+                                    myTD.TripCountry = row["TripCountry"].ToString();
+                                    myTD.TripLocation = row["TripLocation"].ToString();
+                                    myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
+                                    myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
+                                    myTD.TripSlots = row["TripSlots"].ToString();
+                                    tdList.Add(myTD);
+                                }
+                                else if (userYear == row["YearThree"].ToString())
+                                {
+                                    myTD.Id = Convert.ToInt16(row["Id"]);
+                                    myTD.TripName = row["TripName"].ToString();
+                                    myTD.TripType = row["TripType"].ToString();
+                                    myTD.TripCountry = row["TripCountry"].ToString();
+                                    myTD.TripLocation = row["TripLocation"].ToString();
+                                    myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
+                                    myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
+                                    myTD.TripSlots = row["TripSlots"].ToString();
+                                    tdList.Add(myTD);
+                                }
+                            }
+                            else if (diploma == row["DiplmaDSF"].ToString())
+                            {
+                                if (userYear == row["YearOne"].ToString())
+                                {
+                                    myTD.Id = Convert.ToInt16(row["Id"]);
+                                    myTD.TripName = row["TripName"].ToString();
+                                    myTD.TripType = row["TripType"].ToString();
+                                    myTD.TripCountry = row["TripCountry"].ToString();
+                                    myTD.TripLocation = row["TripLocation"].ToString();
+                                    myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
+                                    myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
+                                    myTD.TripSlots = row["TripSlots"].ToString();
+                                    tdList.Add(myTD);
+                                }
+                                else if (userYear == row["YearTwo"].ToString())
+                                {
+                                    myTD.Id = Convert.ToInt16(row["Id"]);
+                                    myTD.TripName = row["TripName"].ToString();
+                                    myTD.TripType = row["TripType"].ToString();
+                                    myTD.TripCountry = row["TripCountry"].ToString();
+                                    myTD.TripLocation = row["TripLocation"].ToString();
+                                    myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
+                                    myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
+                                    myTD.TripSlots = row["TripSlots"].ToString();
+                                    tdList.Add(myTD);
+                                }
+                                else if (userYear == row["YearThree"].ToString())
+                                {
+                                    myTD.Id = Convert.ToInt16(row["Id"]);
+                                    myTD.TripName = row["TripName"].ToString();
+                                    myTD.TripType = row["TripType"].ToString();
+                                    myTD.TripCountry = row["TripCountry"].ToString();
+                                    myTD.TripLocation = row["TripLocation"].ToString();
+                                    myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
+                                    myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
+                                    myTD.TripSlots = row["TripSlots"].ToString();
+                                    tdList.Add(myTD);
+                                }
+                            }
+                            else if (diploma == row["DiplmaDFI"].ToString())
+                            {
+                                if (userYear == row["YearOne"].ToString())
+                                {
+                                    myTD.Id = Convert.ToInt16(row["Id"]);
+                                    myTD.TripName = row["TripName"].ToString();
+                                    myTD.TripType = row["TripType"].ToString();
+                                    myTD.TripCountry = row["TripCountry"].ToString();
+                                    myTD.TripLocation = row["TripLocation"].ToString();
+                                    myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
+                                    myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
+                                    myTD.TripSlots = row["TripSlots"].ToString();
+                                    tdList.Add(myTD);
+                                }
+                                else if (userYear == row["YearTwo"].ToString())
+                                {
+                                    myTD.Id = Convert.ToInt16(row["Id"]);
+                                    myTD.TripName = row["TripName"].ToString();
+                                    myTD.TripType = row["TripType"].ToString();
+                                    myTD.TripCountry = row["TripCountry"].ToString();
+                                    myTD.TripLocation = row["TripLocation"].ToString();
+                                    myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
+                                    myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
+                                    myTD.TripSlots = row["TripSlots"].ToString();
+                                    tdList.Add(myTD);
+                                }
+                                else if (userYear == row["YearThree"].ToString())
+                                {
+                                    myTD.Id = Convert.ToInt16(row["Id"]);
+                                    myTD.TripName = row["TripName"].ToString();
+                                    myTD.TripType = row["TripType"].ToString();
+                                    myTD.TripCountry = row["TripCountry"].ToString();
+                                    myTD.TripLocation = row["TripLocation"].ToString();
+                                    myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
+                                    myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
+                                    myTD.TripSlots = row["TripSlots"].ToString();
+                                    tdList.Add(myTD);
+                                }
+                            }
+                            else if (diploma == row["DiplmaDBA"].ToString())
+                            {
+                                if (userYear == row["YearOne"].ToString())
+                                {
+                                    myTD.Id = Convert.ToInt16(row["Id"]);
+                                    myTD.TripName = row["TripName"].ToString();
+                                    myTD.TripType = row["TripType"].ToString();
+                                    myTD.TripCountry = row["TripCountry"].ToString();
+                                    myTD.TripLocation = row["TripLocation"].ToString();
+                                    myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
+                                    myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
+                                    myTD.TripSlots = row["TripSlots"].ToString();
+                                    tdList.Add(myTD);
+                                }
+                                else if (userYear == row["YearTwo"].ToString())
+                                {
+                                    myTD.Id = Convert.ToInt16(row["Id"]);
+                                    myTD.TripName = row["TripName"].ToString();
+                                    myTD.TripType = row["TripType"].ToString();
+                                    myTD.TripCountry = row["TripCountry"].ToString();
+                                    myTD.TripLocation = row["TripLocation"].ToString();
+                                    myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
+                                    myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
+                                    myTD.TripSlots = row["TripSlots"].ToString();
+                                    tdList.Add(myTD);
+                                }
+                                else if (userYear == row["YearThree"].ToString())
+                                {
+                                    myTD.Id = Convert.ToInt16(row["Id"]);
+                                    myTD.TripName = row["TripName"].ToString();
+                                    myTD.TripType = row["TripType"].ToString();
+                                    myTD.TripCountry = row["TripCountry"].ToString();
+                                    myTD.TripLocation = row["TripLocation"].ToString();
+                                    myTD.TripStartDate = Convert.ToDateTime(row["TripStartDate"]);
+                                    myTD.TripTeacherInCharge = row["TripTeacherInCharge"].ToString();
+                                    myTD.TripSlots = row["TripSlots"].ToString();
+                                    tdList.Add(myTD);
+                                }
+                            }
+                        }
                         //  Step 9: Add each timeDeposit instance to array list
-                        tdList.Add(myTD);
                     }
                 }
             }
