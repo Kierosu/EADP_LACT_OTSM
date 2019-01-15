@@ -16,6 +16,7 @@ public partial class TripMoreInfo : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         string tripId = Session["ssTripId"].ToString();
+        double totalFee = 0;
 
         SqlDataAdapter da;
         DataSet ds = new DataSet();
@@ -49,7 +50,10 @@ public partial class TripMoreInfo : System.Web.UI.Page
             lblPlaneFee.Text = row["TripPlaneFee"].ToString();
             lblInsuFee.Text = row["TripInsuFee"].ToString();
             lblAccoFee.Text = row["TripAccoFee"].ToString();
-            lblDetails.Text = row["TripDetails"].ToString();        }
+            lblDetails.Text = row["TripDetails"].ToString();
+            totalFee = Convert.ToDouble(row["TripPlaneFee"]) + Convert.ToDouble(row["TripInsuFee"]) + Convert.ToDouble(row["TripAccoFee"]);
+            LblTotalFee.Text = totalFee.ToString();
+        }
         else
         {
 
