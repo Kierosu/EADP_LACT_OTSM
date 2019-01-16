@@ -9,51 +9,16 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class BlogView : System.Web.UI.Page
+public partial class BlogEdit : System.Web.UI.Page
 {
     string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
     int tripId = 0;
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        tripId = Convert.ToInt32(Session["ssTripId"]);
+        tripId = Convert.ToInt32(Session["ssBlogTripId"]);
         string adminNo = Session["ssUsername"].ToString();
         AddImages();
-        if (2 + 2 == 4)
-        {
-            // Show 1 picture from blog
-            SqlDataAdapter da;
-            DataSet ds = new DataSet();
-
-            //Create Adapter
-            //WRITE SQL Statement to retrieve all columns from Customer by customer Id using query parameter
-            StringBuilder sqlCommand = new StringBuilder();
-            sqlCommand.AppendLine("Select * from blogs where");
-            sqlCommand.AppendLine("TripId = @paraId");
-            //***TO Simulate system error  *****
-            // change custId in where clause to custId1 or 
-            // change connection string in web config to a wrong file name  
-
-            SqlConnection myConn = new SqlConnection(DBConnect);
-            da = new SqlDataAdapter(sqlCommand.ToString(), myConn);
-            da.SelectCommand.Parameters.AddWithValue("paraId", tripId);
-            // fill dataset
-            da.Fill(ds, "tripblogTable");
-            int rec_cnt = ds.Tables["tripblogTable"].Rows.Count;
-            if (rec_cnt > 0)
-            {
-                DataRow row = ds.Tables["tripblogTable"].Rows[0];  // Sql command returns only one record
-                lblBlogTitle.Text = row["BlogTitle"].ToString();
-                byte[] imageData = (Byte[])row["BlogImage"];
-                string img = Convert.ToBase64String(imageData, 0, imageData.Length);
-                Image1.ImageUrl = "data:image/png;base64," + img;
-                lblBlogDetails.Text = row["BlogDetails"].ToString();
-            }
-            else
-            {
-
-            }
-        }
         if (2 + 2 == 4)
         {
             TripInformations myTD = new TripInformations();
@@ -91,8 +56,7 @@ public partial class BlogView : System.Web.UI.Page
                 {
                     if (adminNo == row["student" + i.ToString()].ToString())
                     {
-                        Button1.Visible = true;
-                        Button2.Visible = true;
+                        GridViewTD.Visible = true;
                     }
                 }
             }
@@ -101,7 +65,7 @@ public partial class BlogView : System.Web.UI.Page
 
             }
         }
-        
+
 
     }
 
@@ -121,15 +85,11 @@ public partial class BlogView : System.Web.UI.Page
         }
     }
 
-    protected void Button1_Click(object sender, EventArgs e)
+    protected void GridViewTD_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        Session["ssBlogTripId"] = Session["ssTripId"];
-        Response.Redirect("BlogPost.aspx");
-    }
-
-    protected void Button2_Click(object sender, EventArgs e)
-    {
-        Session["ssBlogTripId"] = Session["ssTripId"];
-        Response.Redirect("BlogEdit.aspx");
+        int i = Convert.ToInt32(e.CommandArgument);
+        GridViewRow row = GridViewTD.Rows[i];
+        Session["ssId"] = row.Cells[0].Text;
+        Response.Redirect("BlogEAD.aspx");
     }
 }
