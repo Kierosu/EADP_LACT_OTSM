@@ -11,171 +11,210 @@ using System.Web.UI.WebControls;
 public partial class TripCreation : System.Web.UI.Page
 {
     string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+    string teacherInCharge = "";
+    string teacherInChargeNo = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        teacherInCharge = Session["ssFullName"].ToString();
+        teacherInChargeNo = Session["ssUsername"].ToString();
     }
 
     protected void Button1_Click(object sender, EventArgs e)
     {
+        validateStartDate();
         validateGPAmin();
         validateSlots();
         validatePlaneFee();
         validateInsuFee();
         validateAccoFee();
-        
-        
 
-        if (lblGPAmin.Text == "")
+
+        if (lblDateErr.Text == "")
         {
-            if (lblSlots.Text == "")
+            if (lblGPAmin.Text == "")
             {
-                if (lblPlaneErr.Text == "")
+                if (lblSlots.Text == "")
                 {
-                    if (lblInsuErr.Text == "")
+                    if (lblPlaneErr.Text == "")
                     {
-                        if (lblAccoErr.Text == "")
+                        if (lblInsuErr.Text == "")
                         {
-                            string tripName = tbTripname.Text;
-                            string tripType = ddlTripType.SelectedValue;
-                            string tripCountry = ddlCountry.SelectedValue;
-                            string tripLocation = tbLocation.Text;
-                            string DipDIT = "";
-                            string DipDBI = "";
-                            string DipDCS = "";
-                            string DipDSF = "";
-                            string DipDFI = "";
-                            string DipDBA = "";
-
-                            foreach (ListItem diplomas in chkDiploma.Items)
+                            if (lblAccoErr.Text == "")
                             {
-                                if (diplomas.Selected == true)
+                                string tripName = tbTripname.Text;
+                                string tripType = ddlTripType.SelectedValue;
+                                string tripCountry = ddlCountry.SelectedValue;
+                                string tripLocation = tbLocation.Text;
+                                string DipDIT = "";
+                                string DipDBI = "";
+                                string DipDCS = "";
+                                string DipDSF = "";
+                                string DipDFI = "";
+                                string DipDBA = "";
+
+                                foreach (ListItem diplomas in chkDiploma.Items)
                                 {
-                                    if(diplomas.Value == "DIT")
+                                    if (diplomas.Selected == true)
                                     {
-                                        DipDIT = "DIT";
-                                    }
-                                    if (diplomas.Value == "DBI")
-                                    {
-                                        DipDBI = "DBI";
-                                    }
-                                    if (diplomas.Value == "DCS")
-                                    {
-                                        DipDCS = "DCS";
-                                    }
-                                    if (diplomas.Value == "DSF")
-                                    {
-                                        DipDSF = "DSF";
-                                    }
-                                    if (diplomas.Value == "DFI")
-                                    {
-                                        DipDFI = "DFI";
-                                    }
-                                    if (diplomas.Value == "DIT")
-                                    {
-                                        DipDBA = "DBA";
+                                        if(diplomas.Value == "DIT")
+                                        {
+                                            DipDIT = "DIT";
+                                        }
+                                        if (diplomas.Value == "DBI")
+                                        {
+                                            DipDBI = "DBI";
+                                        }
+                                        if (diplomas.Value == "DCS")
+                                        {
+                                            DipDCS = "DCS";
+                                        }
+                                        if (diplomas.Value == "DSF")
+                                        {
+                                            DipDSF = "DSF";
+                                        }
+                                        if (diplomas.Value == "DFI")
+                                        {
+                                            DipDFI = "DFI";
+                                        }
+                                        if (diplomas.Value == "DIT")
+                                        {
+                                            DipDBA = "DBA";
+                                        }
                                     }
                                 }
-                            }
 
-                            string year1 = "";
-                            string year2 = "";
-                            string year3 = "";
+                                string year1 = "";
+                                string year2 = "";
+                                string year3 = "";
 
-                            foreach (ListItem years in chkYear.Items)
-                            {
-                                if (years.Selected == true)
+                                foreach (ListItem years in chkYear.Items)
                                 {
-                                    if (years.Value == "1")
+                                    if (years.Selected == true)
                                     {
-                                        year1 = "1";
-                                    }
-                                    if (years.Value == "2")
-                                    {
-                                        year2 = "2";
-                                    }
-                                    if (years.Value == "3")
-                                    {
-                                        year3 = "3";
+                                        if (years.Value == "1")
+                                        {
+                                            year1 = "1";
+                                        }
+                                        if (years.Value == "2")
+                                        {
+                                            year2 = "2";
+                                        }
+                                        if (years.Value == "3")
+                                        {
+                                            year3 = "3";
+                                        }
                                     }
                                 }
+
+                                string minGPA = tbGPAmin.Text;
+                                string slots = tbSlots.Text;
+                                string startDay = ddlStartday.SelectedValue;
+                                string startMth = ddlStartmth.SelectedValue;
+                                string startYear = ddlStartyear.SelectedValue;
+                                string startDateR = startDay + "/" + startMth + "/" + startYear;
+                                DateTime startDate = Convert.ToDateTime(startDateR);
+                                string endDay = ddlEndday.SelectedValue;
+                                string endMth = ddlEndmth.SelectedValue;
+                                string endYear = ddlEndyear.SelectedValue;
+                                string endDateR = endDay + "/" + endMth + "/" + endYear;
+                                DateTime endDate = Convert.ToDateTime(endDateR);
+                                string planeFee = tbPlanefee.Text;
+                                string insuFee = tbInsufee.Text;
+                                string accoFee = tbAccofee.Text;
+                                string tripDetails = tbDetails.Text;
+                                if (2 + 2 == 4)
+                                {
+                                    StringBuilder sqlStr = new StringBuilder();
+                                    // Execute NonQuery return an integer value
+                                    SqlCommand sqlCmd = new SqlCommand();
+                                    // Step1 : Create SQL insert command to add record to TDMaster using     
+
+                                    //         parameterised query in values clause
+                                    //
+                                    sqlStr.AppendLine("INSERT INTO TripInformation (TripName,TripType,TripCountry,TripLocation, ");
+                                    sqlStr.AppendLine("DiplmaDIT,DiplmaDBI,DiplmaDCS,DiplmaDSF,DiplmaDFI,DiplmaDBA,");
+                                    sqlStr.AppendLine("YearOne,YearTwo,YearThree,TripMinGPA,TripSlots,TripSlotsOri,TripStartDate,");
+                                    sqlStr.AppendLine("TripEndDate,TripTeacherInCharge,TripTeacherInChargeNo,TripPlaneFee,TripInsuFee,TripAccoFee,TripDetails)");
+                                    sqlStr.AppendLine("VALUES (@paraTripName,@paraTripType,@paraTripCountry,@paraTripLocation,@paraDiplmaDIT,");
+                                    sqlStr.AppendLine("@paraDiplmaDBI,@paraDiplmaDCS,@paraDiplmaDSF,@paraDiplmaDFI,@paraDiplmaDBA,");
+                                    sqlStr.AppendLine("@paraYearOne,@paraYearTwo,@paraYearThree,@paraTripMinGPA,@paraTripSlots,@paraTripSlotsOri,@paraTripStartDate,");
+                                    sqlStr.AppendLine("@paraTripEndDate,@paraTripTeacherInCharge,@paraTripTeacherInChargeNo,@paraTripPlaneFee,@paraTripInsuFee,@paraTripAccoFee,@paraTripDetails)");
+
+
+                                    // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
+
+                                    SqlConnection myConn = new SqlConnection(DBConnect);
+
+                                    sqlCmd = new SqlCommand(sqlStr.ToString(), myConn);
+
+                                    // Step 3 : Add each parameterised query variable with value
+                                    //          complete to add all parameterised queries
+                                    sqlCmd.Parameters.AddWithValue("@paraTripName", tripName);
+                                    sqlCmd.Parameters.AddWithValue("@paraTripType", tripType);
+                                    sqlCmd.Parameters.AddWithValue("@paraTripCountry", tripCountry);
+                                    sqlCmd.Parameters.AddWithValue("@paraTripLocation", tripLocation);
+                                    sqlCmd.Parameters.AddWithValue("@paraDiplmaDIT", DipDIT);
+                                    sqlCmd.Parameters.AddWithValue("@paraDiplmaDBI", DipDBI);
+                                    sqlCmd.Parameters.AddWithValue("@paraDiplmaDCS", DipDCS);
+                                    sqlCmd.Parameters.AddWithValue("@paraDiplmaDSF", DipDSF);
+                                    sqlCmd.Parameters.AddWithValue("@paraDiplmaDFI", DipDFI);
+                                    sqlCmd.Parameters.AddWithValue("@paraDiplmaDBA", DipDBA);
+                                    sqlCmd.Parameters.AddWithValue("@paraYearOne", year1);
+                                    sqlCmd.Parameters.AddWithValue("@paraYearTwo", year2);
+                                    sqlCmd.Parameters.AddWithValue("@paraYearThree", year3);
+                                    sqlCmd.Parameters.AddWithValue("@paraTripMinGPA", minGPA);
+                                    sqlCmd.Parameters.AddWithValue("@paraTripSlots", slots);
+                                    sqlCmd.Parameters.AddWithValue("@paraTripSlotsOri", slots);
+                                    sqlCmd.Parameters.AddWithValue("@paraTripStartDate", startDate);
+                                    sqlCmd.Parameters.AddWithValue("@paraTripEndDate", endDate);
+                                    sqlCmd.Parameters.AddWithValue("@paraTripTeacherInCharge", teacherInCharge);
+                                    sqlCmd.Parameters.AddWithValue("@paraTripTeacherInChargeNo", teacherInChargeNo);
+                                    sqlCmd.Parameters.AddWithValue("@paraTripPlaneFee", planeFee);
+                                    sqlCmd.Parameters.AddWithValue("@paraTripInsuFee", insuFee);
+                                    sqlCmd.Parameters.AddWithValue("@paraTripAccoFee", accoFee);
+                                    sqlCmd.Parameters.AddWithValue("@paraTripDetails", tripDetails);
+
+                                    // Step 4 Open connection the execute NonQuery of sql command   
+
+                                    myConn.Open();
+                                    sqlCmd.ExecuteNonQuery();
+
+                                    // Step 5 :Close connection
+                                    myConn.Close();
+                                }
+                                if (2 + 2 == 4)
+                                {
+                                    StringBuilder sqlStr = new StringBuilder();
+                                    // Execute NonQuery return an integer value
+                                    SqlCommand sqlCmd = new SqlCommand();
+                                    // Step1 : Create SQL insert command to add record to TDMaster using     
+
+                                    //         parameterised query in values clause
+                                    //
+                                    sqlStr.AppendLine("INSERT INTO TripStudents (TripName, TripSlots) ");
+                                    sqlStr.AppendLine("VALUES (@paraTripName, @paraTripSlots)");
+                                    // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
+
+                                    SqlConnection myConn = new SqlConnection(DBConnect);
+
+                                    sqlCmd = new SqlCommand(sqlStr.ToString(), myConn);
+
+                                    // Step 3 : Add each parameterised query variable with value
+                                    //          complete to add all parameterised queries
+                                    sqlCmd.Parameters.AddWithValue("@paraTripName", tripName);
+                                    sqlCmd.Parameters.AddWithValue("@paraTripSlots", slots);
+
+                                    // Step 4 Open connection the execute NonQuery of sql command   
+
+                                    myConn.Open();
+                                    sqlCmd.ExecuteNonQuery();
+
+                                    // Step 5 :Close connection
+                                    myConn.Close();
+                                }
+
                             }
-
-                            string minGPA = tbGPAmin.Text;
-                            string slots = tbSlots.Text;
-                            string startDay = ddlStartday.SelectedValue;
-                            string startMth = ddlStartmth.SelectedValue;
-                            string startYear = ddlStartyear.SelectedValue;
-                            string startDateR = startDay + "/" + startMth + "/" + startYear;
-                            DateTime startDate = Convert.ToDateTime(startDateR);
-                            string endDay = ddlEndday.SelectedValue;
-                            string endMth = ddlEndmth.SelectedValue;
-                            string endYear = ddlEndyear.SelectedValue;
-                            string endDateR = endDay + "/" + endMth + "/" + endYear;
-                            DateTime endDate = Convert.ToDateTime(endDateR);
-                            string teacherInCharge = lblTeacher.Text;
-                            string planeFee = tbPlanefee.Text;
-                            string insuFee = tbInsufee.Text;
-                            string accoFee = tbAccofee.Text;
-                            string tripDetails = tbDetails.Text;
-
-                            StringBuilder sqlStr = new StringBuilder();
-                            // Execute NonQuery return an integer value
-                            SqlCommand sqlCmd = new SqlCommand();
-                            // Step1 : Create SQL insert command to add record to TDMaster using     
-
-                            //         parameterised query in values clause
-                            //
-                            sqlStr.AppendLine("INSERT INTO TripInformation (TripName,TripType,TripCountry,TripLocation, ");
-                            sqlStr.AppendLine("DiplmaDIT,DiplmaDBI,DiplmaDCS,DiplmaDSF,DiplmaDFI,DiplmaDBA,");
-                            sqlStr.AppendLine("YearOne,YearTwo,YearThree,TripMinGPA,TripSlots,TripStartDate,");
-                            sqlStr.AppendLine("TripEndDate,TripTeacherInCharge,TripPlaneFee,TripInsuFee,TripAccoFee,TripDetails)");
-                            sqlStr.AppendLine("VALUES (@paraTripName,@paraTripType,@paraTripCountry,@paraTripLocation,@paraDiplmaDIT,");
-                            sqlStr.AppendLine("@paraDiplmaDBI,@paraDiplmaDCS,@paraDiplmaDSF,@paraDiplmaDFI,@paraDiplmaDBA,");
-                            sqlStr.AppendLine("@paraYearOne,@paraYearTwo,@paraYearThree,@paraTripMinGPA,@paraTripSlots,@paraTripStartDate,");
-                            sqlStr.AppendLine("@paraTripEndDate,@paraTripTeacherInCharge,@paraTripPlaneFee,@paraTripInsuFee,@paraTripAccoFee,@paraTripDetails)");
-
-
-                            // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
-
-                            SqlConnection myConn = new SqlConnection(DBConnect);
-
-                            sqlCmd = new SqlCommand(sqlStr.ToString(), myConn);
-
-                            // Step 3 : Add each parameterised query variable with value
-                            //          complete to add all parameterised queries
-                            sqlCmd.Parameters.AddWithValue("@paraTripName", tripName);
-                            sqlCmd.Parameters.AddWithValue("@paraTripType", tripType);
-                            sqlCmd.Parameters.AddWithValue("@paraTripCountry", tripCountry);
-                            sqlCmd.Parameters.AddWithValue("@paraTripLocation", tripLocation);
-                            sqlCmd.Parameters.AddWithValue("@paraDiplmaDIT", DipDIT);
-                            sqlCmd.Parameters.AddWithValue("@paraDiplmaDBI", DipDBI);
-                            sqlCmd.Parameters.AddWithValue("@paraDiplmaDCS", DipDCS);
-                            sqlCmd.Parameters.AddWithValue("@paraDiplmaDSF", DipDSF);
-                            sqlCmd.Parameters.AddWithValue("@paraDiplmaDFI", DipDFI);
-                            sqlCmd.Parameters.AddWithValue("@paraDiplmaDBA", DipDBA);
-                            sqlCmd.Parameters.AddWithValue("@paraYearOne", year1);
-                            sqlCmd.Parameters.AddWithValue("@paraYearTwo", year2);
-                            sqlCmd.Parameters.AddWithValue("@paraYearThree", year3);
-                            sqlCmd.Parameters.AddWithValue("@paraTripMinGPA", minGPA);
-                            sqlCmd.Parameters.AddWithValue("@paraTripSlots", slots);
-                            sqlCmd.Parameters.AddWithValue("@paraTripStartDate", startDate);
-                            sqlCmd.Parameters.AddWithValue("@paraTripEndDate", endDate);
-                            sqlCmd.Parameters.AddWithValue("@paraTripTeacherInCharge", teacherInCharge);
-                            sqlCmd.Parameters.AddWithValue("@paraTripPlaneFee", planeFee);
-                            sqlCmd.Parameters.AddWithValue("@paraTripInsuFee", insuFee);
-                            sqlCmd.Parameters.AddWithValue("@paraTripAccoFee", accoFee);
-                            sqlCmd.Parameters.AddWithValue("@paraTripDetails", tripDetails);
-                            
-                            // Step 4 Open connection the execute NonQuery of sql command   
-
-                            myConn.Open();
-                            sqlCmd.ExecuteNonQuery();
-
-                            // Step 5 :Close connection
-                            myConn.Close();
-
                         }
                     }
                 }
@@ -188,10 +227,22 @@ public partial class TripCreation : System.Web.UI.Page
         string startDay = ddlStartday.SelectedValue;
         string startMth = ddlStartmth.SelectedValue;
         string startYear = ddlStartyear.SelectedValue;
-        string startDate = startDay + "/" + startMth + "/" + startYear;
-        if (1 + 1 == 2)
+        string startDateR = startDay + "/" + startMth + "/" + startYear;
+        DateTime startDate = Convert.ToDateTime(startDateR);
+        string endDay = ddlEndday.SelectedValue;
+        string endMth = ddlEndmth.SelectedValue;
+        string endYear = ddlEndyear.SelectedValue;
+        string endDateR = endDay + "/" + endMth + "/" + endYear;
+        DateTime endDate = Convert.ToDateTime(endDateR);
+        
+        DateTime currentDate = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy"));
+        if ((currentDate - startDate).TotalDays >=0)
         {
-            lblDateErr.Text += startDate;
+            lblDateErr.Text += "* Please enter a date after today ";
+        }
+        if((endDate - startDate).TotalDays <= 0)
+        {
+            lblDateErr.Text += "* End Date must be after Start date";
         }
         if (String.IsNullOrEmpty(lblDateErr.Text))
         {
@@ -212,12 +263,24 @@ public partial class TripCreation : System.Web.UI.Page
         }
         if (String.IsNullOrEmpty(lblGPAmin.Text))
         {
-            return true;
+            if (Convert.ToInt32(tbGPAmin.Text) > 4 || Convert.ToInt32(tbGPAmin.Text) < 0)
+            {
+                lblGPAmin.Text += "* Within 0 and 4 only ";
+            }
+            if (String.IsNullOrEmpty(lblGPAmin.Text))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
             return false;
         }
+        
     }
     private bool validateSlots()
     {
@@ -229,12 +292,28 @@ public partial class TripCreation : System.Web.UI.Page
         }
         if (String.IsNullOrEmpty(lblSlots.Text))
         {
-            return true;
+            if (Convert.ToInt32(tbSlots.Text) > 100)
+            {
+                lblSlots.Text += "* Max Slot 100 ";
+            }
+            if (Convert.ToInt32(tbSlots.Text) < 0)
+            {
+                lblSlots.Text += "* Slots has to be more than 0 ";
+            }
+            if (String.IsNullOrEmpty(lblSlots.Text))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
             return false;
         }
+        
     }
 
     private bool validatePlaneFee()

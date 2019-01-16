@@ -58,6 +58,11 @@
     </div>
     <br />
     <div class="form-group">
+        <asp:Label ID="Label3" runat="server" Text="Total Fees : $"></asp:Label>
+        <asp:Label ID="LblTotalFee" runat="server"></asp:Label>
+    </div>
+    <br />
+    <div class="form-group">
         <asp:Label ID="LabelDetails" runat="server" Text="Details : "></asp:Label>
         <asp:Label ID="lblDetails" runat="server"></asp:Label>
     </div>
