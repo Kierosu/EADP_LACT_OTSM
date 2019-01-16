@@ -13,5 +13,9 @@ namespace LACTWebsite
         public string userEmail { get; set; }
         public string userRole { get; set; }
         public string userPhoneNo { get; set; }
+        public string userDiploma { get; set; }
+        public string userYear { get; set; }
+        public string userGPA { get; set; }
+        public string userModuleGroup { get; set; }
     }
 }
