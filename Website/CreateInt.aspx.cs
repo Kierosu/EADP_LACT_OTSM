@@ -40,7 +40,7 @@ public partial class CreateInt : System.Web.UI.Page
         }
         catch (FormatException)
         {
-            lbNotify.Text = "Select a renewal option!";
+            lbNotify.Text = "Check Interview Dates Entry!";
         }
     }
 }
