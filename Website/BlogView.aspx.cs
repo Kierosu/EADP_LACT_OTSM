@@ -45,7 +45,6 @@ public partial class BlogView : System.Web.UI.Page
                 byte[] imageData = (Byte[])row["BlogImage"];
                 string img = Convert.ToBase64String(imageData, 0, imageData.Length);
                 Image1.ImageUrl = "data:image/png;base64," + img;
-
                 lblBlogDetails.Text = row["BlogDetails"].ToString();
             }
             else
@@ -90,7 +89,7 @@ public partial class BlogView : System.Web.UI.Page
                 {
                     if (adminNo == row["student" + i.ToString()].ToString())
                     {
-
+                        Button1.Visible = true;
                     }
                 }
             }
@@ -100,5 +99,11 @@ public partial class BlogView : System.Web.UI.Page
             }
         }
 
+    }
+
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        Session["ssBlogTripId"] = Session["ssTripId"];
+        Response.Redirect("BlogPost.aspx");
     }
 }
