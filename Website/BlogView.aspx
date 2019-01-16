@@ -31,17 +31,15 @@
     </div>
     <br />
 
-    <asp:GridView ID="GridViewTD" runat="server" AutoGenerateColumns="False" Height="129px" Width="1599px" OnRowCommand="GridViewTD_RowCommand">
+    <asp:GridView ID="GridViewTD" runat="server" AutoGenerateColumns="False" Height="129px" Width="1599px">
         <Columns>
-            <asp:BoundField DataField="Id" HeaderText="Trip Id" />
-            <asp:BoundField HeaderText="Trip Name" DataField="TripName" />
-            <asp:BoundField HeaderText="Type Of Trip" DataField="TripType" />
-            <asp:BoundField HeaderText="Country" DataField="TripCountry" />
-            <asp:BoundField HeaderText="Location" DataField="TripLocation" />
-            <asp:BoundField HeaderText="Start Date" DataField="TripStartDate" />
-            <asp:BoundField HeaderText="Teacher-In-Charge" DataField="TripTeacherInCharge" />
-            <asp:BoundField HeaderText="Slots" DataField="TripSlots" />
-            <asp:CommandField HeaderText="Click For More Info" ShowHeader="True" ShowSelectButton="True" />
+            <asp:BoundField DataField="BlogTitle" HeaderText="Blog Name" />
+            <asp:TemplateField HeaderText="Blog Image">
+                <ItemTemplate>
+                    <asp:Image ID="Image1" runat="server" ImageUrl='<%#"ShowImage.ashx?getID="+Eval("characterID") %>' />
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:BoundField DataField="BlogDetails" HeaderText="Description" />
         </Columns>
     </asp:GridView>
     

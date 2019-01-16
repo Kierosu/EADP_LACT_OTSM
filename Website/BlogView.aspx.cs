@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 public partial class BlogView : System.Web.UI.Page
 {
     string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
-    
+
     protected void Page_Load(object sender, EventArgs e)
     {
         int tripId = Convert.ToInt32(Session["ssTripId"]);
@@ -55,7 +55,7 @@ public partial class BlogView : System.Web.UI.Page
         if (2 + 2 == 4)
         {
             TripInformations myTD = new TripInformations();
-            // Check if student belongs to trip
+            // If student belong to trip can Add blog
             DataSet ds = new DataSet();
             DataTable tdData = new DataTable();
             //
@@ -95,8 +95,57 @@ public partial class BlogView : System.Web.UI.Page
             }
             else
             {
-                
+
             }
+        }
+        List<BlogPosted> tdList = new List<BlogPosted>();
+        if (2 + 2 == 4)
+        {
+            BlogPosted myTD = new BlogPosted();
+            // Show Trips student is going
+            DataSet ds = new DataSet();
+            DataTable tdData = new DataTable();
+            //
+            // Step 3 :Create SQLcommand to select all columns from TDMaster by parameterised customer id
+            //          where TD is not matured yet
+
+            StringBuilder sqlStr = new StringBuilder();
+            sqlStr.AppendLine("SELECT * From blogs");
+
+            // Step 4 :Instantiate SqlConnection instance and SqlDataAdapter instance
+
+            SqlConnection myConn = new SqlConnection(DBConnect);
+            SqlDataAdapter da = new SqlDataAdapter(sqlStr.ToString(), myConn);
+
+            // Step 6: fill dataset
+            da.Fill(ds, "TableTD");
+
+            // Step 7: Iterate the rows from TableTD above to create a collection of TD
+            //         for this particular customer 
+
+            int rec_cnt = ds.Tables["TableTD"].Rows.Count;
+            if (rec_cnt > 0)
+            {
+                foreach (DataRow row in ds.Tables["TableTD"].Rows)
+                {
+                    if (tripId == Convert.ToInt32(row["tripId"]))
+                    {
+                        myTD.BlogTitle = row["BlogTitle"].ToString();
+                        byte[] imageData = (Byte[])row["BlogImage"];
+                        string img = Convert.ToBase64String(imageData, 0, imageData.Length);
+                        Image1.ImageUrl = "data:image/png;base64," + img;
+                        myTD.BlogImage = row["BlogImage"].ToString();
+                        myTD.BlogDetails = row["BlogDetails"].ToString();
+                        tdList.Add(myTD);
+                    }
+                }
+            }
+            else
+            {
+                tdList = null;
+            }
+            GridViewTD.DataSource = tdList;
+            GridViewTD.DataBind();
         }
 
     }
