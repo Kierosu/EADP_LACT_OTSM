@@ -330,10 +330,14 @@ public partial class _Default : System.Web.UI.Page
     protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
         int index = Convert.ToInt32(e.RowIndex);
-        DataTable dt = ViewState["dt"] as DataTable;
-        dt.Rows[index].Delete();
-        ViewState["dt"] = dt;
-        GridView1.DataBind();
+        string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+        SqlConnection myConn = new SqlConnection(DBConnect);
+        SqlCommand sqlCmd = new SqlCommand();
+        sqlCmd = new SqlCommand("DELETE FROM TableImages Where Id = @paraId", myConn);
+        sqlCmd.Parameters.AddWithValue("@paraId", index);
+        myConn.Open();
+        sqlCmd.ExecuteNonQuery();
+        myConn.Close();
     }
 
 }

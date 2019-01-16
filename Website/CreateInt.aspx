@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"%>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" EnableEventValidation="false" AutoEventWireup="true" CodeFile="CreateInt.aspx.cs" Inherits="CreateInt" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <link href="stylesheet/createInterview.css" rel="stylesheet" /> 
@@ -18,7 +18,7 @@
     <!-- Default input -->
     <div class="form-group">
       <label for="inputEmail4">Interview For: </label>
-        <asp:DropDownList ID="ddlTrips" CssClass="form-control" runat="server">
+        <asp:DropDownList ID="DdlTrips" CssClass="form-control" runat="server">
             <asp:ListItem>Hiroshima (Japan) Trip</asp:ListItem>
             <asp:ListItem>Taiwan Trip</asp:ListItem>
             <asp:ListItem>Germany Trip</asp:ListItem>
@@ -32,11 +32,11 @@
   <div class="form-row">
   <div class="form-group col-md-6">
     <label for="dateFrom">Start Date: </label>
-      <asp:TextBox ID="tbFromDate" CssClass="form-control" type="date" runat="server"></asp:TextBox>
+      <asp:TextBox ID="tbStartDate" CssClass="form-control" type="date" runat="server"></asp:TextBox>
   </div>
   <div class="form-group col-md-6">
     <label for="dateTo">End Date: </label>
-      <asp:TextBox ID="tbToDate" CssClass="form-control" type="date" runat="server"></asp:TextBox>
+      <asp:TextBox ID="tbEndDate" CssClass="form-control" type="date" runat="server"></asp:TextBox>
   </div>
    </div>
   <!-- Default input -->
@@ -45,12 +45,13 @@
     <asp:TextBox ID="tbLocation" CssClass="form-control" runat="server"></asp:TextBox>
   </div>
   <div class="form-group">
-    <label for="interviewLocation">Reminder: </label>
+    <label for="interviewReminder">Reminder: </label>
     <asp:TextBox ID="tbReminder" CssClass="form-control" runat="server"></asp:TextBox>
   </div>
   <div class="form-group">
-    <asp:Button ID="btSubmit" CssClass="btn btn cyan darken-4  btn-md" runat="server" Text="Create" />
+    <asp:Button ID="btCreate" CssClass="btn btn cyan darken-4  btn-md" Text="Create" OnClick="btCreate_Click" runat="server"/>
   </div>
+    <asp:Label ID="lbNotify" runat="server" Text=""></asp:Label>
 </form>
 </div>
 <!-- Extended default form grid -->

@@ -12,9 +12,11 @@ using System.Web.UI.WebControls;
 public partial class TripMoreInfo : System.Web.UI.Page
 {
     string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+    
     protected void Page_Load(object sender, EventArgs e)
     {
-        string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+        string tripId = Session["ssTripId"].ToString();
+        double totalFee = 0;
 
         SqlDataAdapter da;
         DataSet ds = new DataSet();
@@ -30,7 +32,7 @@ public partial class TripMoreInfo : System.Web.UI.Page
 
         SqlConnection myConn = new SqlConnection(DBConnect);
         da = new SqlDataAdapter(sqlCommand.ToString(), myConn);
-        da.SelectCommand.Parameters.AddWithValue("paraId", 1);
+        da.SelectCommand.Parameters.AddWithValue("paraId", tripId);
         // fill dataset
         da.Fill(ds, "tripinfoTable");
         int rec_cnt = ds.Tables["tripinfoTable"].Rows.Count;
@@ -48,7 +50,10 @@ public partial class TripMoreInfo : System.Web.UI.Page
             lblPlaneFee.Text = row["TripPlaneFee"].ToString();
             lblInsuFee.Text = row["TripInsuFee"].ToString();
             lblAccoFee.Text = row["TripAccoFee"].ToString();
-            lblDetails.Text = row["TripDetails"].ToString();        }
+            lblDetails.Text = row["TripDetails"].ToString();
+            totalFee = Convert.ToDouble(row["TripPlaneFee"]) + Convert.ToDouble(row["TripInsuFee"]) + Convert.ToDouble(row["TripAccoFee"]);
+            LblTotalFee.Text = totalFee.ToString();
+        }
         else
         {
 
@@ -58,35 +63,76 @@ public partial class TripMoreInfo : System.Web.UI.Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-        int currTripSlots = Convert.ToInt16(lblSlots.Text) - 1;
-        StringBuilder sqlStr = new StringBuilder();
-        // Execute NonQuery return an integer value
-        SqlCommand sqlCmd = new SqlCommand();
-        // Step1 : Create SQL insert command to add record to TDMaster using     
+        string adminNo = Session["ssUsername"].ToString();
+        if (2 + 2 == 4)
+        {
+            //Function: Minus 1 when student creates
+            string tripId = Session["ssTripId"].ToString();
+            int currTripSlots = Convert.ToInt16(lblSlots.Text) - 1;
+            StringBuilder sqlStr = new StringBuilder();
+            // Execute NonQuery return an integer value
+            SqlCommand sqlCmd = new SqlCommand();
+            // Step1 : Create SQL insert command to add record to TDMaster using     
 
-        //         parameterised query in values clause
-        //
-        sqlStr.AppendLine("UPDATE TripInformation SET TripSlots = @paraTripSlots");
-        sqlStr.AppendLine("WHERE Id = @paraId");
+            //         parameterised query in values clause
+            //
+            sqlStr.AppendLine("UPDATE TripInformation SET TripSlots = @paraTripSlots");
+            sqlStr.AppendLine("WHERE Id = @paraId");
 
 
-        // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
+            // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
 
-        SqlConnection myConn = new SqlConnection(DBConnect);
+            SqlConnection myConn = new SqlConnection(DBConnect);
 
-        sqlCmd = new SqlCommand(sqlStr.ToString(), myConn);
+            sqlCmd = new SqlCommand(sqlStr.ToString(), myConn);
 
-        // Step 3 : Add each parameterised query variable with value
-        //          complete to add all parameterised queries
-        sqlCmd.Parameters.AddWithValue("@paraId", 1);
-        sqlCmd.Parameters.AddWithValue("@paraTripSlots", currTripSlots);
+            // Step 3 : Add each parameterised query variable with value
+            //          complete to add all parameterised queries
+            sqlCmd.Parameters.AddWithValue("@paraId", tripId);
+            sqlCmd.Parameters.AddWithValue("@paraTripSlots", currTripSlots);
 
-        // Step 4 Open connection the execute NonQuery of sql command   
+            // Step 4 Open connection the execute NonQuery of sql command   
 
-        myConn.Open();
-        sqlCmd.ExecuteNonQuery();
+            myConn.Open();
+            sqlCmd.ExecuteNonQuery();
 
-        // Step 5 :Close connection
-        myConn.Close();
+            // Step 5 :Close connection
+            myConn.Close();
+        }
+        if (2 + 2 == 4)
+        {
+            // Function: Add student into trip
+            string tripId = Session["ssTripId"].ToString();
+            StringBuilder sqlStr = new StringBuilder();
+            // Execute NonQuery return an integer value
+            SqlCommand sqlCmd = new SqlCommand();
+            // Step1 : Create SQL insert command to add record to TDMaster using     
+
+            //         parameterised query in values clause
+            //
+            sqlStr.AppendLine("UPDATE TripStudents SET student" + Convert.ToInt16(lblSlots.Text) + " = @paraTripSlots");
+            sqlStr.AppendLine("WHERE Id = @paraId");
+
+
+            // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
+
+            SqlConnection myConn = new SqlConnection(DBConnect);
+
+            sqlCmd = new SqlCommand(sqlStr.ToString(), myConn);
+
+            // Step 3 : Add each parameterised query variable with value
+            //          complete to add all parameterised queries
+            sqlCmd.Parameters.AddWithValue("@paraId", tripId);
+            sqlCmd.Parameters.AddWithValue("@paraTripSlots", adminNo);
+
+            // Step 4 Open connection the execute NonQuery of sql command   
+
+            myConn.Open();
+            sqlCmd.ExecuteNonQuery();
+
+            // Step 5 :Close connection
+            myConn.Close();
+        }
+
     }
 }

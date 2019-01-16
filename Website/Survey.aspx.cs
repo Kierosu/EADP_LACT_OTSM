@@ -118,9 +118,8 @@ public partial class Default2 : System.Web.UI.Page
             result = sqlCmd.ExecuteNonQuery();
 
             myConn.Close();
-
-
-
+            
+            Response.Redirect("SurveyComplete.aspx");
         }
 
     }
