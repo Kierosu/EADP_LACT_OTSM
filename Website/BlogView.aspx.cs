@@ -18,42 +18,7 @@ public partial class BlogView : System.Web.UI.Page
     {
         tripId = Convert.ToInt32(Session["ssTripId"]);
         string adminNo = Session["ssUsername"].ToString();
-        AddImages();
-        if (2 + 2 == 4)
-        {
-            // Show 1 picture from blog
-            SqlDataAdapter da;
-            DataSet ds = new DataSet();
-
-            //Create Adapter
-            //WRITE SQL Statement to retrieve all columns from Customer by customer Id using query parameter
-            StringBuilder sqlCommand = new StringBuilder();
-            sqlCommand.AppendLine("Select * from blogs where");
-            sqlCommand.AppendLine("TripId = @paraId");
-            //***TO Simulate system error  *****
-            // change custId in where clause to custId1 or 
-            // change connection string in web config to a wrong file name  
-
-            SqlConnection myConn = new SqlConnection(DBConnect);
-            da = new SqlDataAdapter(sqlCommand.ToString(), myConn);
-            da.SelectCommand.Parameters.AddWithValue("paraId", tripId);
-            // fill dataset
-            da.Fill(ds, "tripblogTable");
-            int rec_cnt = ds.Tables["tripblogTable"].Rows.Count;
-            if (rec_cnt > 0)
-            {
-                DataRow row = ds.Tables["tripblogTable"].Rows[0];  // Sql command returns only one record
-                lblBlogTitle.Text = row["BlogTitle"].ToString();
-                byte[] imageData = (Byte[])row["BlogImage"];
-                string img = Convert.ToBase64String(imageData, 0, imageData.Length);
-                Image1.ImageUrl = "data:image/png;base64," + img;
-                lblBlogDetails.Text = row["BlogDetails"].ToString();
-            }
-            else
-            {
-
-            }
-        }
+        AddBlogs();
         if (2 + 2 == 4)
         {
             TripInformations myTD = new TripInformations();
@@ -105,10 +70,9 @@ public partial class BlogView : System.Web.UI.Page
 
     }
 
-    private void AddImages()
+    private void AddBlogs()
     {
         //Add into trips
-        string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
         using (SqlConnection con = new SqlConnection(DBConnect))
         {
             SqlCommand cmd = new SqlCommand("Select * from blogs where TripId = @paraTripId", con);

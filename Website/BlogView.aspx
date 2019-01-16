@@ -9,30 +9,7 @@
         <asp:Button ID="Button1" CssClass="btn btn-info" runat="server" Height="54px" Text="Add Blog" Width="133px" Visible="False" OnClick="Button1_Click" />
         &nbsp;&nbsp;&nbsp;&nbsp;
         <asp:Button ID="Button2" CssClass="btn btn-success" runat="server" Height="54px" Text="Edit Blog" Width="133px" Visible="False" OnClick="Button2_Click" />
-    <br />    
-    <div class="form-group">
-        <asp:Label ID="Label1" runat="server" Text="Blog Title : "></asp:Label>
-        
-        <asp:Label ID="lblBlogTitle" runat="server"></asp:Label>
-        
-    </div>
-    <br />
-    <div class="form-group">
-        <asp:Label ID="Label2" runat="server" Text="Upload Image : "></asp:Label>
-        
-        <asp:Image ID="Image1" runat="server" Height="316px" Width="700px" />
-        
-    </div>
-    <br />
-    <div class="form-group">
-        <asp:Label ID="Label3" runat="server" Text="Description : "></asp:Label>
-        <asp:Label ID="lblBlogDetails" runat="server"></asp:Label>
-        
-        <br />
-        
-    </div>
-    <br />
-
+    <br />   
     <asp:GridView ID="GridViewTD" runat="server" AutoGenerateColumns="False" Height="129px" Width="1599px" >
         <Columns>
             <asp:BoundField DataField="BlogTitle" HeaderText="Blog Name" />

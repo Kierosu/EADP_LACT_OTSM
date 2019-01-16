@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <br /> <br /> <br /> <br /> <br /> 
-    <asp:Label ID="Label4" runat="server" Text="Blog Edit and delere" Font-Size="30px"></asp:Label>
+    <asp:Label ID="Label4" runat="server" Text="Blog Edit and Delete" Font-Size="30px"></asp:Label>
     <br />    
     <div class="form-group">
     <asp:Label ID="Label1" runat="server" Text="Blog Title : "></asp:Label>
