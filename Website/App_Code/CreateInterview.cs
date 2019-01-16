@@ -7,6 +7,10 @@ namespace LACTWebsite
 {
     public class CreateInterview
     {
+        public CreateInterview()
+        {
+        }
+         
         public string interviewName { get; set; }
         public DateTime interviewStartDate { get; set; }
         public DateTime interviewEndDate { get; set; }
