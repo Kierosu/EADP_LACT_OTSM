@@ -1,10 +1,37 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Masterpage.master" AutoEventWireup="true" CodeFile="Survey.aspx.cs" Inherits="Default2" %>
-
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<!DOCTYPE html>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Survey</title>
+    <style type="text/css" media="Screen">/*\*/@import url("css/layout-1-master.css");/**/</style>
+    <link rel="stylesheet" type="text/css" href="http://skfox.com/jqExamples/jq14_jqui172_find_bug/jq132/css/ui-lightness/jquery-ui-1.7.2.custom.css"/>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("ul.droptrue").sortable({
+                connectWith: 'ul',
+                opacity: 0.6,
+                update: updatePostOrder
+            });
+
+            $("#sortable1, #sortable2").disableSelection();
+            $("#sortable1, #sortable2").css('minHeight', $("#sortable1").height() + "px");
+            updatePostOrder();
+        });
+
+        function updatePostOrder() {
+            var arr = [];
+            $("#sortable2 li").each(function () {
+                arr.push($(this).attr('id'));
+            });
+            $('#postOrder').val(arr.join(','));
+        }
+    </script>
     <style type="text/css">
-        .TextboxComment {
+    .TextboxComment {
             resize:none;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -70,12 +97,34 @@
              font-size: 14px;  
              margin: 4px 2px;  
              cursor: pointer; 
+         }
+        .listBlock {
+            float: left;
         }
-    </style>
+        #sortable1, #sortable2 { 
+            list-style-type: none; 
+            margin: 0; 
+            padding: 0; 
+            margin-right: 100px; 
+            background: #eee; 
+            padding: 5px; 
+            width: 300px; 
+            border: 1px solid black;
 
-</asp:Content>
-
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+        }
+        #sortable1 li, #sortable2 li {
+            cursor: move;
+            margin: 5px;
+            padding: 5px;
+            font-size: 1.2em;
+            width: 250px;
+            background: none;
+            background-color: white;
+        }
+</style>
+</head>
+<body>
+    <form id="form1" runat="server">
     <h3 class="title"style="background-color: black; color: #FFFFFF;">NYP Trip Survey</h3>
     <div>
     
@@ -144,22 +193,26 @@
                 </p>
             </div>
         </div></td>
-                <td class="auto-style1"><asp:Panel ID="Panel1" runat="server">
-                         
-                        <asp:ListBox CssClass="listbox" ID="ListBox1" runat="server" Rows="6" ToolTip="List of aspects " Font-Italic="True">
-                        <asp:ListItem Value="1">Learning</asp:ListItem>
-                        <asp:ListItem Value="2">Sightseeing</asp:ListItem>
-                        <asp:ListItem Value="3">Shopping</asp:ListItem>
-                        <asp:ListItem Value="4">Culture</asp:ListItem>
-                        <asp:ListItem Value="5">Meals</asp:ListItem>
-                        <asp:ListItem Value="6">Hotel</asp:ListItem>
-                    </asp:ListBox> 
-
-                    <asp:Button ID="ButtonRemove" runat="server" OnClick="ButtonRemove_Click"  Text="&lt;" CausesValidation="False" ToolTip="Click to remove an aspect from your list" />
-                    <asp:Button ID="ButtonEnter" runat="server" OnClick="ButtonEnter_Click"  Text="&gt;" CausesValidation="False" ToolTip="Click to add an aspect to your list" /> 
-
-                    <asp:ListBox CssClass="listbox" ID="ListBox2" runat="server" BackColor="White" Rows="6" ToolTip="Your order of aspects"></asp:ListBox>
-                    </asp:Panel>
+                <td class="auto-style1">
+                    <div class="listBlock"> 
+    <ul id="sortable1" class="droptrue ui-sortable"  style="-moz-user-select: none; min-height: 126px;">
+        <li class="ui-state-default" id="Learning" style="opacity: 1;" >Learning</li>
+        <li class="ui-state-default" id="Sightseeing" style="opacity: 1;" >Sightseeing</li>
+        <li class="ui-state-default" id="Shopping" style="opacity: 1;" >Shopping</li>	
+        <li class="ui-state-default" id="Culture" style="opacity: 1;" >Culture</li>	
+        <li class="ui-state-default" id="Meals" style="opacity: 1;" >Meals</li>	
+        <li class="ui-state-default" id="Hotel" style="opacity: 1;">Hotel</li>	
+						</ul>
+        </div>
+                   <asp:TextBox ID="postOrder" runat="server"></asp:TextBox>
+             
+        <div class="listBlock">
+        <ul id="sortable2" class="droptrue ui-sortable"  " style="-moz-user-select: none; min-height: 126px;">
+						  
+						 </ul>
+            <asp:ListBox ID="ListBox1" runat="server"></asp:ListBox>
+        </div>
+                   
                      
                    </td>
             
@@ -284,5 +337,6 @@
              </Animations>
         </asp:animationextender>
  
-
-</asp:Content>
+    </form>
+</body>
+</html>
