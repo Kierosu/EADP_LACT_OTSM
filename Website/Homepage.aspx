@@ -206,6 +206,11 @@
                                     <asp:ChartArea Name="ChartArea1">
                                     </asp:ChartArea>
                                 </chartareas>
+                                <Titles>
+                                    <asp:Title Font="Aharoni, 12pt, style=Bold, Italic" Name="Title1" 
+            Text="Trip Rating (per student)" Alignment="MiddleCenter">
+                                    </asp:Title>
+                                </Titles>
                             </asp:Chart>
                             <asp:Chart ID="Chart2" runat="server" Palette="SemiTransparent" Width="400px">
                                 <Series>
@@ -220,15 +225,21 @@
                                     <asp:Legend Name="Legend1">
                                     </asp:Legend>
                                 </Legends>
+                                <Titles>
+                                    <asp:Title Font="Aharoni, 12pt, style=Bold, Italic" Name="Title1" 
+            Text="Trip Aspect Statistics" Alignment="MiddleCenter">
+                                    </asp:Title>
+                                </Titles>
                             </asp:Chart>
                                   <%-- COMMENTS --%>
                                   <h4 style="text-decoration:underline;">Comments:</h4>
+                                  <div style="border-style: inherit; border-color: #000000; overflow:auto; height:230px;" visible="False" id="Border_Roles">
             <asp:Repeater ID="Repeater1" runat="server">
                 <ItemTemplate>
                     <div class="commentbox">
                         <b>
-                        <asp:Label ID="Label1" runat="server" Text='<%#Eval("tdRating") %>'>'></asp:Label> stars {</b>&nbsp;<asp:Label ID="Label2" runat="server" Text='<%#Eval("tdReview") %>'>'></asp:Label> }<br />
-                        Order : <asp:Label ID="Label3" runat="server" Text='<%#Eval("tdAspect") %>'></asp:Label><br />
+                        <asp:Label ID="Label1" runat="server" Text='<%#Eval("tdRating") %>'>'></asp:Label> stars</b>&nbsp; Order : <asp:Label ID="Label3" runat="server" Text='<%#Eval("tdAspect") %>'></asp:Label><br />
+                        <asp:Label ID="Label2" runat="server" Text='<%#Eval("tdReview") %>'>'></asp:Label><hr />
                     </div>
                 </ItemTemplate>
             </asp:Repeater>
@@ -243,7 +254,7 @@
                     </ItemTemplate>
                 </asp:Repeater>      
             </div>
-          
+          </div>
         </div>    
                                    
         <%--extra information part --%> 
