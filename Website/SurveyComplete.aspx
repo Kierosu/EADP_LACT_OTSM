@@ -1,7 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="SurveyComplete.aspx.cs" Inherits="_Default" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default2.aspx.cs" Inherits="Default2" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<!DOCTYPE html>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
     <style>
         .wrapper-1{
   width:100%;
@@ -81,9 +84,10 @@ h1{
   
 }
     </style>
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
+</head>
+<body>
+    <form id="form1" runat="server">
+     <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
         </asp:ToolkitScriptManager>
   <div class="content">
   <div class="wrapper-1">
@@ -118,5 +122,6 @@ h1{
 
 
 <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Source+Sans+Pro" rel="stylesheet"/>
-</asp:Content>
-
+    </form>
+</body>
+</html>
