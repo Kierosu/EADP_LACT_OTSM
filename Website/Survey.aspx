@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Survey.aspx.cs" Inherits="_Default" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <!DOCTYPE html>
 
@@ -172,7 +172,7 @@
             
             </tr>
             <tr>
-                <td class="auto-style2" colspan="1">Favourite aspect of the trip: <asp:Button ID="btnInfo" runat="server" OnClientClick="return false;" Text="[?]" BorderStyle="None" ForeColor="#000066"/>
+                <td class="auto-style2" colspan="1">Favourite aspects of the trip: <asp:Button ID="btnInfo" runat="server" OnClientClick="return false;" Text="[?]" BorderStyle="None" ForeColor="#000066"/>
                     <!-- "Wire frame" div used to transition from the button to the info panel -->
         <div id="flyout" style="display: none; overflow: hidden; z-index: 2; background-color: #FFFFFF; border: solid 1px #D0D0D0;"></div>
         
@@ -207,10 +207,10 @@
                    <asp:TextBox ID="postOrder" runat="server"></asp:TextBox>
              
         <div class="listBlock">
-        <ul id="sortable2" class="droptrue ui-sortable"  " style="-moz-user-select: none; min-height: 126px;">
+        <ul id="sortable2" class="droptrue ui-sortable"  style="-moz-user-select: none; min-height: 126px;">
 						  
 						 </ul>
-            <asp:ListBox ID="ListBox1" runat="server"></asp:ListBox>
+            <asp:ListBox ID="ListBox1" runat="server" Visible="False"></asp:ListBox>
         </div>
                    
                      
