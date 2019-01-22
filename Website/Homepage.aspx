@@ -120,77 +120,12 @@
             <td rowspan="3">
                 <asp:MultiView ID="MultiViewTrip" runat="server" ActiveViewIndex="0">
                     <asp:View ID="ViewDetails" runat="server"><p>Trip information here.</p>
-                        <asp:DetailsView ID="DetailsView1" runat="server" Height="50px" Width="125px" AutoGenerateRows="False" DataKeyNames="Id" DataSourceID="SqlDataSource2">
-                            <Fields>
-                                <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
-                                <asp:BoundField DataField="TripName" HeaderText="TripName" SortExpression="TripName" />
-                                <asp:BoundField DataField="TripType" HeaderText="TripType" SortExpression="TripType" />
-                                <asp:BoundField DataField="TripCountry" HeaderText="TripCountry" SortExpression="TripCountry" />
-                                <asp:BoundField DataField="TripLocation" HeaderText="TripLocation" SortExpression="TripLocation" />
-                                <asp:BoundField DataField="DiplmaDIT" HeaderText="DiplmaDIT" SortExpression="DiplmaDIT" />
-                                <asp:BoundField DataField="DiplmaDBI" HeaderText="DiplmaDBI" SortExpression="DiplmaDBI" />
-                                <asp:BoundField DataField="DiplmaDCS" HeaderText="DiplmaDCS" SortExpression="DiplmaDCS" />
-                                <asp:BoundField DataField="DiplmaDSF" HeaderText="DiplmaDSF" SortExpression="DiplmaDSF" />
-                                <asp:BoundField DataField="DiplmaDFI" HeaderText="DiplmaDFI" SortExpression="DiplmaDFI" />
-                                <asp:BoundField DataField="DiplmaDBA" HeaderText="DiplmaDBA" SortExpression="DiplmaDBA" />
-                                <asp:BoundField DataField="YearOne" HeaderText="YearOne" SortExpression="YearOne" />
-                                <asp:BoundField DataField="YearTwo" HeaderText="YearTwo" SortExpression="YearTwo" />
-                                <asp:BoundField DataField="YearThree" HeaderText="YearThree" SortExpression="YearThree" />
-                                <asp:BoundField DataField="TripMinGPA" HeaderText="TripMinGPA" SortExpression="TripMinGPA" />
-                                <asp:BoundField DataField="TripSlots" HeaderText="TripSlots" SortExpression="TripSlots" />
-                                <asp:BoundField DataField="TripStartDate" HeaderText="TripStartDate" SortExpression="TripStartDate" />
-                                <asp:BoundField DataField="TripEndDate" HeaderText="TripEndDate" SortExpression="TripEndDate" />
-                                <asp:BoundField DataField="TripTeacherInCharge" HeaderText="TripTeacherInCharge" SortExpression="TripTeacherInCharge" />
-                                <asp:BoundField DataField="TripPlaneFee" HeaderText="TripPlaneFee" SortExpression="TripPlaneFee" />
-                                <asp:BoundField DataField="TripInsuFee" HeaderText="TripInsuFee" SortExpression="TripInsuFee" />
-                                <asp:BoundField DataField="TripAccoFee" HeaderText="TripAccoFee" SortExpression="TripAccoFee" />
-                                <asp:BoundField DataField="TripDetails" HeaderText="TripDetails" SortExpression="TripDetails" />
-                            </Fields>
-                        </asp:DetailsView>
+                        <%-- MUN HONG ADD TRIP DETAILS HERE INSIDE VIEWDETAILS --%> 
 
                     </asp:View>
                     <asp:View ID="ViewBlog" runat="server">
-                        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" GridLines="Horizontal" CssClass="blog" OnRowDataBound="GridView1_RowDataBound" OnRowDeleting="GridView1_RowDeleting">
-                            <%-- BLOGS --%>
-                            <Columns>
-                                <%--<asp:BoundField DataField="Id" HeaderText ="Id" />
-                                <asp:BoundField DataField="Name" HeaderText ="Name" />
-                                <asp:BoundField DataField="Size" HeaderText ="Size (bytes)" />
-                                <asp:BoundField DataField="Comment" HeaderText ="Blog Comment" />--%>
-                                 
-                                <asp:TemplateField  ShowHeader="True" HeaderText="Blog" ItemStyle-Width="300px">
-                                    <ItemTemplate>
-                                   <%# "Uploaded " + Eval("TimeOfUpload") + "<br /> Title: " + Eval("Title") + "<br />" + Eval("Comment")%>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField ControlStyle-CssClass="comment">
-                                    <ItemTemplate>
-                                        <%--<%# "Time sent: " + DateTime.now.tostring() + "<br />" + Eval("Id") + " : " + Eval("Name") + Eval("Comment")%>--%>
-                                         <asp:Image ID="Image1" runat="server" Height="100px" Width="100px"
-                                                                            ImageUrl='<%#"data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("Imagedata")) %>' CssClass="image" />
-                                    </ItemTemplate>
-
-                                </asp:TemplateField>
-                                <asp:CommandField ShowDeleteButton="True" ButtonType="Button" DeleteText="X" />
-                               
-                            </Columns>
-                            <RowStyle Width="150px"/>
-                        </asp:GridView>
-                        <asp:FileUpload ID="FileUpload1" runat="server" CssClass="inlineBlock"/>
-                        <br />
-                        <asp:TextBox ID="TextBoxBlogTitle" runat="server" AutoCompleteType="Disabled" placeholder="Add blog title here" Width="376px" MaxLength="42"></asp:TextBox>
-                        <br />
-                        <asp:TextBox ID="TextBoxBlogComment" runat="server" AutoCompleteType="Disabled" TextMode="MultiLine" Rows="10" Height="200px" Width="376px" CssClass="TextboxComment"></asp:TextBox>
-                        <br />
-                        <asp:Button ID="btnUpload" runat="server" Text="Upload" OnClick="btnUpload_Click" />
-                        <br />
-                        <br />
-                        <asp:Label ID="lblMessage" runat="server"></asp:Label>
-                        <br />
-                        <br />
-                        <asp:HyperLink ID="hyperlink" runat="server">View Uploaded Image</asp:HyperLink>
-                        <br />
-                        <br />
+                            <%-- MUN HONG ADD YOUR BLOGS HERE --%>
+                             
                          
                     </asp:View>
                     <asp:View ID="ViewStats" runat="server">
