@@ -66,7 +66,7 @@ public partial class BookInterview : System.Web.UI.Page
         try
         {
             BookingInterviewDAO bookDAO = new BookingInterviewDAO();
-            int bookCnt = bookDAO.BookInterview(interviewName, interviewDate, userUsername, userAllergy, userDietRestrict, userMedication, userFirstTimeApply, userNationality);
+            int bookCnt = bookDAO.BookingInterview(interviewName, interviewDate, userUsername, userAllergy, userDietRestrict, userMedication, userFirstTimeApply, userNationality);
             if (bookCnt == 1)
             {
                 lbNotify.Text = "Booking Process Done!";
