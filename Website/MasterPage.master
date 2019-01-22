@@ -44,7 +44,7 @@
   <header>
 
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark cyan darken-4 scrolling-navbar">
-	<a class="navbar-brand" href="#">
+	<a class="navbar-brand" href="Homepage.aspx">
     <img src="img/lactLogo.PNG" height="55" alt="mdb logo"/>
   </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -68,7 +68,7 @@
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">View Interview </a>
+          <a class="nav-link" href="ViewInt.aspx">Ongoing Interviews </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Statistics </a>

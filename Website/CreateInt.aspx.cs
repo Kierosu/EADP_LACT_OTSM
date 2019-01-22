@@ -5,12 +5,25 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using LACTWebsite;
+using System.Configuration;
 
 public partial class CreateInt : System.Web.UI.Page
 {
+    string teacherName = "";
+    string teacherAdminNo = "";
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (Session["ssRole"]!= null)
+        {
+            if (Session["ssRole"].Equals("student"))
+            {
+                Response.Redirect("Error401.aspx");
+            }
+        }
+        else
+        {
+            Response.Redirect("loginFirst.aspx");
+        }
     }
 
     protected void btCreate_Click(object sender, EventArgs e)
@@ -21,7 +34,7 @@ public partial class CreateInt : System.Web.UI.Page
         DateTime interviewStartDate = Convert.ToDateTime(tbStartDate.Text);
         DateTime interviewEndDate = Convert.ToDateTime(tbEndDate.Text);
         String interviewLocation = tbLocation.Text.ToString();
-        String interviewReminder = tbReminder.Text.ToString();
+        String interviewReminder = tbRemind.Text.ToString();
 
         try
         {
@@ -31,12 +44,6 @@ public partial class CreateInt : System.Web.UI.Page
             {
                 lbNotify.Text = "Interview Dates Created!";
             }
-            else
-            {
-                lbNotify.Text = "Unable to create Interview Dates, please check entries!";
-
-            }
-
         }
         catch (FormatException)
         {

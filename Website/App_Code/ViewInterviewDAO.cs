@@ -55,5 +55,78 @@ namespace LACTWebsite
 
             return obj;
         }
+
+        string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+        public int deleteInterviewInfo(String interviewName)
+        {
+
+            StringBuilder sqlStr = new StringBuilder();
+            int result = 0;    // Execute NonQuery return an integer value
+            SqlCommand sqlCmd = new SqlCommand();
+            // Step1 : Create SQL insert command to add record to TDMaster using     
+
+            //         parameterised query in values clause
+            //
+            sqlStr.AppendLine("DELETE FROM CreateInterview");
+            sqlStr.AppendLine("WHERE interviewName = @paraInterviewName");
+
+            // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
+
+            SqlConnection myConn = new SqlConnection(DBConnect);
+
+            sqlCmd = new SqlCommand(sqlStr.ToString(), myConn);
+
+            // Step 3 : Add each parameterised query variable with value
+            //          complete to add all parameterised queries
+            sqlCmd.Parameters.AddWithValue("@paraInterviewName", interviewName);
+
+            // Step 4 Open connection the execute NonQuery of sql command   
+
+            myConn.Open();
+            result = sqlCmd.ExecuteNonQuery();
+
+            // Step 5 :Close connection
+            myConn.Close();
+
+            return result;
+        }
+
+        public int updateInterview(String interviewName, DateTime interviewStartDate, DateTime interviewEndDate, string interviewLocation, string interviewReminder)
+        {
+            StringBuilder sqlStr = new StringBuilder();
+            int result = 0;    // Execute NonQuery return an integer value
+            SqlCommand sqlCmd = new SqlCommand();
+            // Step1 : Create SQL insert command to add record to TDMaster using     
+
+            //         parameterised query in values clause
+            //
+            sqlStr.AppendLine("UPDATE CreateInterview set startDate = @paraInterviewStartDate, ");
+            sqlStr.AppendLine("endDate = @paraInterviewEndDate, location = @paraLocation, reminder = @paraReminder");
+            sqlStr.AppendLine("WHERE interviewName = @paraInterviewName");
+
+            // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
+
+            SqlConnection myConn = new SqlConnection(DBConnect);
+
+            sqlCmd = new SqlCommand(sqlStr.ToString(), myConn);
+
+            // Step 3 : Add each parameterised query variable with value
+            //          complete to add all parameterised queries
+            sqlCmd.Parameters.AddWithValue("@paraInterviewName", interviewName);
+            sqlCmd.Parameters.AddWithValue("@paraInterviewStartDate", interviewStartDate);
+            sqlCmd.Parameters.AddWithValue("@paraInterviewEndDate", interviewEndDate);
+            sqlCmd.Parameters.AddWithValue("@paraLocation", interviewLocation);
+            sqlCmd.Parameters.AddWithValue("@paraReminder", interviewReminder);
+
+            // Step 4 Open connection the execute NonQuery of sql command   
+
+            myConn.Open();
+            result = sqlCmd.ExecuteNonQuery();
+
+            // Step 5 :Close connection
+            myConn.Close();
+
+            return result;
+        }
     }
 }

@@ -5,86 +5,26 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using LACTWebsite;
+using System.Configuration;
 
 public partial class ViewInt : System.Web.UI.Page
 {
+    string studentName = "";
+    string studentAdminNo = "";
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        /*
-        CreateInterview intObj = new CreateInterview();
-        ViewInterviewDAO intDao = new ViewInterviewDAO();
-        intObj = intDao.getInterviewInfo(DdlTripInterview.Text);
-        DateTime startDate = intObj.interviewStartDate;
-        DateTime endDate = intObj.interviewEndDate;
-
-        // Create an instance of the collection class
-        DateTimeEnumerator dateTimeRange = new DateTimeEnumerator(startDate, endDate);
-        */
-     
-        /*
-        for(int i < )
+        try
         {
-
+            studentName = Session["ssFullName"].ToString();
+            studentAdminNo = Session["ssUsername"].ToString();
         }
-        */
-
-        /*
-        foreach (DateTime day in dateTimeRange)
+        catch
         {
-            // Testing output results in Debugger
-            foreach (var allDays in interviewDatesInstance)
-            {
-                System.Diagnostics.Debug.WriteLine(allDays.interviewTripName);
-                System.Diagnostics.Debug.WriteLine(allDays.interviewStartDate.ToShortDateString());
-                System.Diagnostics.Debug.WriteLine(allDays.interviewEndDate.ToShortDateString());
-                System.Diagnostics.Debug.WriteLine(allDays.interviewLocation);
-                System.Diagnostics.Debug.WriteLine(allDays.interviewReminder);
-            }
-        }
-        */
-    }
-
-    /*
-    public void loadIntInfo()
-    {
-        CreateInterview intObj = new CreateInterview();
-        ViewInterviewDAO intDao = new ViewInterviewDAO();
-        intObj = intDao.getInterviewInfo(DdlTripInterview.Text);
-
-        DateTime startDate = intObj.interviewStartDate;
-        DateTime endDate = intObj.interviewEndDate;
-
-        // Create an instance of the collection class
-        DateTimeEnumerator dateTimeRange = new DateTimeEnumerator(startDate, endDate);
-
-        // Iterate all days with foreach
-        foreach (DateTime day in dateTimeRange)
-        {
-            System.Diagnostics.Debug.WriteLine("test" + dateTimeRange);
+            Response.Redirect("Login.aspx");
         }
     }
 
-    */
-    // Enumerator for Dates in between Start and End
-    public class DateTimeEnumerator : System.Collections.IEnumerable
-    {
-        private DateTime startDate;
-        private DateTime endDate;
-
-        public DateTimeEnumerator(DateTime startDate, DateTime endDate)
-        {
-            // Create a defensive copy here...
-            this.startDate = startDate;
-            this.endDate = endDate;
-        }
-        public System.Collections.IEnumerator GetEnumerator()
-        {
-            for (DateTime date = startDate; date < endDate; date = date.AddDays(1))
-            {
-                yield return date;
-            }
-        }
-    }
     public int getDaysBetween()
     {
         int daysInBetween = (interviewDates()[0].interviewEndDate - interviewDates()[0].interviewStartDate).Days + 1;
@@ -92,16 +32,16 @@ public partial class ViewInt : System.Web.UI.Page
     }
     // Class to store all Interview Information
     // List to store Information
-    public List<CreateInterview> interviewDates()       
+    public List<CreateInterview> interviewDates()
     {
-        // Check why DAO runs null
         CreateInterview intObj = new CreateInterview();
         ViewInterviewDAO intDao = new ViewInterviewDAO();
         var interviewDatesInstance = new List<CreateInterview>();
         intObj = intDao.getInterviewInfo(DdlTripInterview.Text);
         if (intObj != null)
-        {        
-            interviewDatesInstance.Add(new CreateInterview() {
+        {
+            interviewDatesInstance.Add(new CreateInterview()
+            {
                 interviewName = intObj.interviewName,
                 interviewStartDate = intObj.interviewStartDate,
                 interviewEndDate = intObj.interviewEndDate,
@@ -114,6 +54,53 @@ public partial class ViewInt : System.Web.UI.Page
 
     protected void btBook_OnClick(object sender, EventArgs e)
     {
+        Session["ssInterviewName"] = interviewDates()[0].interviewName;
+        Session["ssInterviewStartDate"] = interviewDates()[0].interviewStartDate;
+        Session["ssInterviewEndDate"] = interviewDates()[0].interviewEndDate;
+        Session["ssLocation"] = interviewDates()[0].interviewLocation;
+        Session["ssReminder"] = interviewDates()[0].interviewReminder;
+        Response.Redirect("BookInterview.aspx");
+    }
 
+
+
+    protected void btDeleteInterview_Click(object sender, EventArgs e)
+    {
+        bool showModal = true;
+        if (showModal)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "myModal", "$('#myModal').modal('show');", true);
+        }
+    }
+
+    protected void btnYesDelete_Click(object sender, EventArgs e)
+    {
+        ViewInterviewDAO viewDAO = new ViewInterviewDAO();
+        int insCnt = viewDAO.deleteInterviewInfo(DdlTripInterview.Text);
+        if (insCnt == 1)
+        {
+            lbNotify.Text = "Interview has been deleted!";
+        }
+        DdlTripInterview.DataBind();
+    }
+
+    protected void btnNoDelete_Click(object sender, EventArgs e)
+    {
+        ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "myModal", "$('#myModal').modal('hide');", true);
+    }
+
+    protected void DdlTripInterview_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        lbNotify.Text = "";
+    }
+
+    protected void btEditInterview_Click(object sender, EventArgs e)
+    {
+        Session["ssInterviewName"] = interviewDates()[0].interviewName;
+        Session["ssInterviewStartDate"] = interviewDates()[0].interviewStartDate;
+        Session["ssInterviewEndDate"] = interviewDates()[0].interviewEndDate;
+        Session["ssLocation"] = interviewDates()[0].interviewLocation;
+        Session["ssReminder"] = interviewDates()[0].interviewReminder;
+        Response.Redirect("EditInterview.aspx");
     }
 }
