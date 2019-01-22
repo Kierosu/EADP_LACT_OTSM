@@ -24,7 +24,7 @@ public partial class BlogPost : System.Web.UI.Page
             int length = FileUpload1.PostedFile.ContentLength;
             byte[] blogImage = new byte[length];
             FileUpload1.PostedFile.InputStream.Read(blogImage, 0, length);
-            string tripId = "1";
+            string tripId = Session["ssBlogTripId"].ToString();
             string blogDetails = tbBlogDetails.Text;
 
             StringBuilder sqlStr = new StringBuilder();

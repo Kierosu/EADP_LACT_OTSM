@@ -9,16 +9,16 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class BlogView : System.Web.UI.Page
+public partial class BlogEdit : System.Web.UI.Page
 {
     string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
     int tripId = 0;
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        tripId = Convert.ToInt32(Session["ssTripId"]);
+        tripId = Convert.ToInt32(Session["ssBlogTripId"]);
         string adminNo = Session["ssUsername"].ToString();
-        AddBlogs();
+        AddImages();
         if (2 + 2 == 4)
         {
             TripInformations myTD = new TripInformations();
@@ -56,8 +56,7 @@ public partial class BlogView : System.Web.UI.Page
                 {
                     if (adminNo == row["student" + i.ToString()].ToString())
                     {
-                        Button1.Visible = true;
-                        Button2.Visible = true;
+                        GridViewTD.Visible = true;
                     }
                 }
             }
@@ -66,13 +65,14 @@ public partial class BlogView : System.Web.UI.Page
 
             }
         }
-        
+
 
     }
 
-    private void AddBlogs()
+    private void AddImages()
     {
         //Add into trips
+        string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
         using (SqlConnection con = new SqlConnection(DBConnect))
         {
             SqlCommand cmd = new SqlCommand("Select * from blogs where TripId = @paraTripId", con);
@@ -85,15 +85,11 @@ public partial class BlogView : System.Web.UI.Page
         }
     }
 
-    protected void Button1_Click(object sender, EventArgs e)
+    protected void GridViewTD_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        Session["ssBlogTripId"] = Session["ssTripId"];
-        Response.Redirect("BlogPost.aspx");
-    }
-
-    protected void Button2_Click(object sender, EventArgs e)
-    {
-        Session["ssBlogTripId"] = Session["ssTripId"];
-        Response.Redirect("BlogEdit.aspx");
+        int i = Convert.ToInt32(e.CommandArgument);
+        GridViewRow row = GridViewTD.Rows[i];
+        Session["ssId"] = row.Cells[0].Text;
+        Response.Redirect("BlogEAD.aspx");
     }
 }

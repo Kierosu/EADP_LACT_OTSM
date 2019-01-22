@@ -4,8 +4,10 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Web;
+using System.Web.Services;
 
 namespace LACTWebsite
 {
@@ -160,5 +162,26 @@ namespace LACTWebsite
 
             return result;
         }
+        public void SendMail(string userEmail, string message, string sender, string subject)
+        {
+            MailMessage mail = new MailMessage();
+
+            mail.From = new MailAddress("eadplact2018@gmail.com");
+            mail.To.Add(new MailAddress(userEmail));
+
+            mail.Subject = subject;
+            mail.IsBodyHtml = true;
+            mail.Body = "<h4>This is sent by " + sender + ".</h4><p>" + message + "</p>";
+
+            var mailclient = new SmtpClient();
+            mailclient.Host = "smtp.gmail.com";
+            mailclient.Port = 587;
+
+            mailclient.EnableSsl = true;
+
+            mailclient.Credentials = new System.Net.NetworkCredential("eadplact2018@gmail.com", "eadp2k19lact");
+            mailclient.Send(mail);
+        }
+        
     }
 }
