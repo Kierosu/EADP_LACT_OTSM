@@ -23,24 +23,11 @@ public partial class _Default : System.Web.UI.Page
             //ButtonBlog.Enabled = false;
             lblMessage.Visible = false;
             hyperlink.Visible = false;
-            LoadImages();
+           
             fillData();
         }
     }
-
-    private void LoadImages()
-    {
-        string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
-        using (SqlConnection con = new SqlConnection(DBConnect))
-        {
-            SqlCommand cmd = new SqlCommand("Select * from TableImages", con);
-            con.Open();
-            SqlDataReader rdr = cmd.ExecuteReader();
-            GridView1.DataSource = rdr;
-            GridView1.DataBind();
-            con.Close();
-        }
-    }
+ 
 
     protected override void OnPreInit(EventArgs e)
     {
@@ -210,134 +197,12 @@ public partial class _Default : System.Web.UI.Page
         myConn.Close();
     }
 
-    protected void btnUpload_Click(object sender, EventArgs e)
-    {
-        HttpPostedFile postedFile = FileUpload1.PostedFile;
-        string fileName = Path.GetFileName(postedFile.FileName);
-        string fileExtension = Path.GetExtension(fileName);
-        int fileSize = postedFile.ContentLength;
-        string blogtitle = TextBoxBlogTitle.Text;
-        string blogcomment = TextBoxBlogComment.Text;
-        string blogtime = DateTime.Now.ToString("dd MMMM yyyy hh:mm tt");
-
-        if (fileExtension.ToLower() == ".jpg" || fileExtension.ToLower() == ".bmp" ||
-            fileExtension.ToLower() == ".gif" || fileExtension.ToLower() == ".png")
-        {
-            Stream stream = postedFile.InputStream;
-            BinaryReader binaryReader = new BinaryReader(stream);
-            byte[] bytes = binaryReader.ReadBytes((int)stream.Length);
-
-            string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
-
-            //connect to database and insert info
-            using (SqlConnection con = new SqlConnection(DBConnect))
-            {
-                SqlCommand cmd = new SqlCommand("spUploadBlog", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                SqlParameter paramName = new SqlParameter()
-                {
-                    ParameterName = "@Name",
-                    Value = fileName
-                };
-                cmd.Parameters.Add(paramName);
-
-                SqlParameter paramSize = new SqlParameter()
-                {
-                    ParameterName = "@Size",
-                    Value = fileSize
-                };
-                cmd.Parameters.Add(paramSize);
-
-                SqlParameter paramImagedata = new SqlParameter()
-                {
-                    ParameterName = "@Imagedata",
-                    Value = bytes
-                };
-                cmd.Parameters.Add(paramImagedata);
-
-                SqlParameter paramComment = new SqlParameter()
-                {
-                    ParameterName = "@Comment",
-                    Value = blogcomment
-                };
-                cmd.Parameters.Add(paramComment);
-
-                SqlParameter paramNewTitle = new SqlParameter()
-                {
-                    ParameterName = "@Title",
-                    Value = blogtitle
-                };
-                cmd.Parameters.Add(paramNewTitle);
-
-                SqlParameter paramNewTimeOfUpload = new SqlParameter()
-                {
-                    ParameterName = "@TimeOfUpload",
-                    Value = blogtime
-                };
-                cmd.Parameters.Add(paramNewTimeOfUpload);
-
-                SqlParameter paramNewId = new SqlParameter()
-                {
-                    ParameterName = "@NewId",
-                    Value = -1,
-                    Direction = ParameterDirection.Output
-                };
-                cmd.Parameters.Add(paramNewId);
-
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-
-                lblMessage.Visible = true;
-                lblMessage.Text = "Upload successful";
-                lblMessage.ForeColor = System.Drawing.Color.Green;
-                hyperlink.Visible = true;
-                TextBoxBlogTitle.Text = "";
-                TextBoxBlogComment.Text = "";
-                LoadImages();
-            }
-        }
-        else
-        {
-            lblMessage.Visible = true;
-            lblMessage.ForeColor = System.Drawing.Color.Red;
-            lblMessage.Text = "Only images (.jpg, .png, .gif and .bmp) can be uploaded";
-            hyperlink.Visible = false;
-        }
-    }
+     
 
     protected void ButtonMore_Click(object sender, EventArgs e)
     {
 
     }
-
-    protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            string item = e.Row.Cells[0].Text;
-            foreach (Button button in e.Row.Cells[2].Controls.OfType<Button>())
-            {
-                if (button.CommandName == "Delete")
-                {
-                    button.Attributes["onclick"] = "if(!confirm('Do you want to delete " + item + "?')){ return false; };";
-                }
-            }
-        }
-    }
-
-    protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
-    {
-        int index = Convert.ToInt32(e.RowIndex);
-        string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
-        SqlConnection myConn = new SqlConnection(DBConnect);
-        SqlCommand sqlCmd = new SqlCommand();
-        sqlCmd = new SqlCommand("DELETE FROM TableImages Where Id = @paraId", myConn);
-        sqlCmd.Parameters.AddWithValue("@paraId", index);
-        myConn.Open();
-        sqlCmd.ExecuteNonQuery();
-        myConn.Close();
-    }
+ 
 
 }
