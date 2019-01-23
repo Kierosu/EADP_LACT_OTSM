@@ -16,9 +16,9 @@ public partial class Default2 : System.Web.UI.Page
         Response.Redirect("Homepage.aspx");
     }
 
-    protected void Button1_Click(object sender, EventArgs e)
+    protected void CheckBox1_CheckedChanged(object sender, EventArgs e)
     {
         Label1.Text = string.Format("You indicated that you <b>{0}</b> the survey.",
-            (CheckBox1.Checked ? "like" : "hate"));
+                    (CheckBox1.Checked ? "like" : "hate"));
     }
 }
