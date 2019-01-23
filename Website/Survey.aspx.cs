@@ -22,26 +22,19 @@ public partial class _Default : System.Web.UI.Page
     int aspShopping;
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (Session["ssUsername"] != null)
+        {
+            LabelAdminNumber.Text = Session["ssUsername"].ToString();
+            LabelName.Text = Session["ssFullName"].ToString();
+        }
+        else
+        {
+            Response.Redirect("Login.aspx");
+        }
     }
 
  
- 
-    protected void ButtonClear_Click(object sender, EventArgs e)
-    {
-        // Find your Account Sid and Token at twilio.com / console
-        //const string accountSid = "AC438c503e0ec86213653311e200474196";
-        //const string authToken = "05fcee3b0a642a1fa3f727861d51f1bc";
-
-        //TwilioClient.Init(accountSid, authToken);
-
-        //var message = MessageResource.Create(
-        //    body: "Your {{1}} code is {{2}}",
-        //    from: new Twilio.Types.PhoneNumber("whatsapp:+18144085587"),
-        //    to: new Twilio.Types.PhoneNumber("whatsapp:+6591306364")
-        //);
-        //Console.WriteLine(message.Sid);
-    }
+         
     protected void ButtonSubmit_Click(object sender, EventArgs e)
     {
         //if (ListBox1.Items.Count > 0)
@@ -112,8 +105,8 @@ public partial class _Default : System.Web.UI.Page
         StringBuilder sqlCommand = new StringBuilder();
         //Query to insert survey info into TableStats
         //2 queries for 2 tables
-        sqlCommand.AppendLine("INSERT INTO TableStats (tdRating, tdReview, tdAspect, tdSuggestion)");
-        sqlCommand.AppendLine("VALUES (@paratdRating, @paratdReview, @paratdAspect, @paratdSuggestion);");
+        sqlCommand.AppendLine("INSERT INTO TableStats (tdRating, tdReview, tdAspect, tdSuggestion, reviewName, reviewAdminId, reviewTripId)");
+        sqlCommand.AppendLine("VALUES (@paratdRating, @paratdReview, @paratdAspect, @paratdSuggestion, @parareviewName, @parareviewAdminId, @parareviewTripId);");
         sqlCommand.AppendLine("INSERT INTO TableAspects (Learning, Sightseeing, Shopping, Culture, Meals, Hotel)");
         sqlCommand.AppendLine("VALUES (@paraLearning, @paraSightseeing, @paraShopping, @paraCulture, @paraMeals, @paraHotel);");
         sqlCmd = new SqlCommand(sqlCommand.ToString(), myConn);
@@ -122,6 +115,9 @@ public partial class _Default : System.Web.UI.Page
         sqlCmd.Parameters.AddWithValue("@paratdReview", review);
         sqlCmd.Parameters.AddWithValue("@paratdAspect", data);
         sqlCmd.Parameters.AddWithValue("@paratdSuggestion", TextBoxSuggestions.Text);
+        sqlCmd.Parameters.AddWithValue("@parareviewName", Session["ssFullName"].ToString());
+        sqlCmd.Parameters.AddWithValue("@parareviewAdminId", Session["ssUsername"].ToString());
+        sqlCmd.Parameters.AddWithValue("@parareviewTripId", DropDownListTripId.SelectedValue.ToString());
         //for TableAspects
         sqlCmd.Parameters.AddWithValue("@paraLearning", aspLearning);
         sqlCmd.Parameters.AddWithValue("@paraSightseeing", aspSightseeing);
@@ -139,4 +135,5 @@ public partial class _Default : System.Web.UI.Page
         //}
 
     }
+
 }
