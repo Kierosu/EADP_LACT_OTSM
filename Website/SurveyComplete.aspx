@@ -101,18 +101,10 @@ h1{
       <p>Please rate our survey
        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
-                <asp:CheckBox ID="CheckBox1" Checked="true" Text="I like the survey." runat="server"/><br />
-                <asp:ToggleButtonExtender ID="ToggleButtonExtender1" runat="server"
-                    TargetControlID="CheckBox1"
-                    ImageWidth="19"
-                    ImageHeight="19"
-                    UncheckedImageUrl="images/Star.gif"
-                    CheckedImageUrl="images/FilledStar.gif"
-                    CheckedImageAlternateText="Check"
-                    UncheckedImageAlternateText="UnCheck" />
-                <asp:Button ID="Button1" runat="server" Text="Submit" OnClick="Button1_Click" />
+                <asp:CheckBox ID="CheckBox1" runat="server" OnCheckedChanged="CheckBox1_CheckedChanged" AutoPostBack="True"/><br />
+                 
                 <br /><br />
-                <asp:Label ID="Label1" runat="server" Text="[No response provided yet]" />
+                <asp:Label ID="Label1" runat="server" Text="You indicated that you hate the survey." />
             </ContentTemplate>
         </asp:UpdatePanel>
       </p>
