@@ -107,7 +107,8 @@ public partial class _Default : System.Web.UI.Page
         //2 queries for 2 tables
         sqlCommand.AppendLine("INSERT INTO TableStats (tdRating, tdReview, tdAspect, tdSuggestion, reviewName, reviewAdminId, reviewTripId)");
         sqlCommand.AppendLine("VALUES (@paratdRating, @paratdReview, @paratdAspect, @paratdSuggestion, @parareviewName, @parareviewAdminId, @parareviewTripId);");
-        sqlCommand.AppendLine("INSERT INTO TableAspects (Learning, Sightseeing, Shopping, Culture, Meals, Hotel)");
+        sqlCommand.AppendLine("UPDATE TableAspects SET Learning = Learning + @paraLearning, Sightseeing = Sightseeing + @paraSightseeing, Shopping = Shopping + @paraShopping, Culture = Culture + @paraCulture, Meals = Meals + @paraMeals, Hotel = Hotel + @paraHotel WHERE aspectTripId = @paraTripId");
+        sqlCommand.AppendLine("IF @@ROWCOUNT=0 INSERT INTO TableAspects (Learning, Sightseeing, Shopping, Culture, Meals, Hotel)");
         sqlCommand.AppendLine("VALUES (@paraLearning, @paraSightseeing, @paraShopping, @paraCulture, @paraMeals, @paraHotel);");
         sqlCmd = new SqlCommand(sqlCommand.ToString(), myConn);
         //add values in parameters (prevent sql injection) for TableStats
@@ -119,6 +120,7 @@ public partial class _Default : System.Web.UI.Page
         sqlCmd.Parameters.AddWithValue("@parareviewAdminId", Session["ssUsername"].ToString());
         sqlCmd.Parameters.AddWithValue("@parareviewTripId", DropDownListTripId.SelectedValue.ToString());
         //for TableAspects
+        sqlCmd.Parameters.AddWithValue("@paraTripId", DropDownListTripId.SelectedValue.ToString());
         sqlCmd.Parameters.AddWithValue("@paraLearning", aspLearning);
         sqlCmd.Parameters.AddWithValue("@paraSightseeing", aspSightseeing);
         sqlCmd.Parameters.AddWithValue("@paraShopping", aspShopping);
