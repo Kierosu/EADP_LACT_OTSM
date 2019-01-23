@@ -148,7 +148,10 @@
                 <td class="auto-style2" colspan="1">Trip ID :&nbsp; 
                     </td>
                 <td class="auto-style1">
-                    <asp:TextBox ID="TextBoxTripID" runat="server" cssclass="txtbox"></asp:TextBox>
+    <asp:DropDownList ID="DropDownListTripId" runat="server" DataSourceID="SqlDataSourceTripIds" DataTextField="Id" DataValueField="Id"></asp:DropDownList>
+                     
+                    <asp:SqlDataSource ID="SqlDataSourceTripIds" runat="server" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Shafter-san\Downloads\DB\LACT.mdf;Integrated Security=True;Connect Timeout=30" ProviderName="System.Data.SqlClient" SelectCommand="SELECT [Id] FROM [TripInformation]"></asp:SqlDataSource>
+                     
                 </td>
             
             </tr>
@@ -228,7 +231,6 @@
             <tr>
                 <td class="auto-style2" colspan="1"></td>
                 <td class="auto-style1">
-                    <asp:Button ID="ButtonClear" runat="server" Text="Clear All" CssClass="clearbtn" OnClick="ButtonClear_Click" />
                     <asp:Button ID="ButtonSubmit" runat="server" Text="Submit" CssClass="auto-style3" OnClick="ButtonSubmit_Click" />
                    </td>
             
